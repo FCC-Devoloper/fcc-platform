@@ -1,0 +1,42 @@
+<!-- CHAT WIDGET & DRAWER -->
+        <div id="chat-widget-btn" onclick="toggleChatWindow()" aria-label="Открыть чат">
+            <span class="chat-fab-ico">💬</span>
+            <span class="chat-fab-label">Чат</span>
+            <span class="unread-badge" id="unread-count" style="display:none;">0</span>
+        </div>
+
+        <div id="promo-widget-btn" class="promo-widget-btn" onclick="togglePromoPopup()" aria-label="Открыть акцию" style="display:none;">
+            <span class="promo-widget-percent" id="promo-widget-percent">%</span>
+            <span class="promo-widget-label">Акция</span>
+        </div>
+
+        <div id="promo-popup" class="promo-popup" aria-hidden="true">
+            <div class="promo-popup-card">
+                <button class="close-btn promo-popup-close" type="button" onclick="closePromoPopup()">✕</button>
+                <div class="promo-popup-kicker">АКТУАЛЬНОЕ ПРЕДЛОЖЕНИЕ</div>
+                <div class="promo-popup-discount" id="promo-popup-discount">-0%</div>
+                <h3 id="promo-popup-title">Акция</h3>
+                <p class="promo-popup-target" id="promo-popup-target"></p>
+                <p id="promo-popup-description"></p>
+                <a id="promo-popup-action" class="btn-primary promo-popup-action" href="#" style="display:none;">Подробнее</a>
+            </div>
+        </div>
+
+        <div id="chat-drawer" class="chat-drawer">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <span class="status-dot"></span>
+                    <span id="chat-target-name">Бот-помощник FCC</span>
+                </div>
+                <button class="close-btn" type="button" onclick="toggleChatWindow()">✕</button>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="message bot">
+                    <div class="msg-text">Здравствуйте! Я автоматический ассистент FCC. Чем могу помочь?</div>
+                </div>
+            </div>
+            <form class="chat-input-area" id="chat-form" onsubmit="sendChatMessage(event)">
+                <input type="text" id="chat-input" placeholder="Введите сообщение..." required autocomplete="off">
+                <button type="submit">➔</button>
+            </form>
+        </div>

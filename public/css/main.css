@@ -1,0 +1,10 @@
+/* FCC MATRIX main.css — клиентские стили разбиты на модули в css/client/ */
+@import url("client/01-variables.css");
+@import url("client/02-header.css");
+@import url("client/03-buttons.css");
+@import url("client/04-sections-hero.css");
+@import url("client/05-grids-cards.css");
+@import url("client/06-intro.css");
+@import url("client/07-chat-modals.css");
+@import url("client/08-animations.css");
+@import url("client/09-responsive.css");

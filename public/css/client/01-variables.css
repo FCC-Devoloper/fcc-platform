@@ -1,0 +1,36 @@
+/* FCC client CSS: 01-variables.css */
+/* ==========================================================================
+   1. VARIABLES & GLOBAL RESETS
+   ========================================================================== */
+:root {
+  --bg-color: #050505;
+  --card-bg: #111111;
+  --card-border: #222222;
+  --text-main: #e8e8e8;
+  --text-muted: #888888;
+  --accent: #00ff9d;
+  --accent-hover: #00cc7a;
+  --font-text: 'Inter', sans-serif;
+  --font-logo: 'Space Grotesk', sans-serif;
+  --radius: 4px;
+  --radius-lg: 12px;
+  --glow: 0 0 22px rgba(0, 255, 157, 0.28);
+  --nav-bg: rgba(5, 5, 5, 0.85);
+  --hero-spot: rgba(0, 255, 157, 0.05);
+  --btn-fg: #000;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { 
+  background-color: var(--bg-color); 
+  color: var(--text-main); 
+  font-family: var(--font-text); 
+  line-height: 1.6; 
+  transition: background-color 0.45s ease, color 0.45s ease; 
+}
+
+.inner-page { padding-top: 88px; }
+.page-main { display: block !important; }
+.scanlines { pointer-events: none; }
+

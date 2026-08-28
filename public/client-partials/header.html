@@ -1,0 +1,27 @@
+<header id="navbar">
+            <div class="logo">FCC<span class="dot">.</span></div>
+            <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Меню">☰</button>
+            <nav id="site-nav">
+                <a href="#services">Услуги</a>
+                <a href="projects.html">Проекты</a>
+                <a href="news.html">Новости</a>
+                <a href="plans.html">Планы</a>
+                <a href="contacts.html">Контакты</a>
+            </nav>
+            <div class="header-right">
+                <div class="status-indicator online" id="status-badge">
+                    <span class="status-dot"></span> <span id="status-text">ONLINE</span>
+                </div>
+                <button class="btn-outline" type="button" id="auth-header-btn" onclick="goToCabinet()">Вход / Регистрация</button>
+                <button class="btn-primary" type="button" onclick="openOrderModal()">Оставить заявку</button>
+                <div class="theme-switcher">
+                    <button class="btn-outline" type="button" id="theme-toggle">Тема</button>
+                    <div class="theme-menu" id="theme-menu">
+                        <button type="button" data-theme="theme-original.css">FCC Original</button>
+                        <button type="button" data-theme="theme-cyber.css">Cyber</button>
+                        <button type="button" data-theme="theme-space.css">Space</button>
+                        <button type="button" data-theme="theme-glass.css">Glass</button>
+                    </div>
+                </div>
+            </div>
+        </header>

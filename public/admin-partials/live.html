@@ -1,0 +1,23 @@
+<!-- Live Hub -->
+<h2>Dispatcher Hub</h2>
+            <div class="hub-stats" id="hub-stats">
+                <div class="stat-card"><span>Online</span><strong id="stat-online">0</strong></div>
+                <div class="stat-card"><span>Новые заявки</span><strong id="stat-orders">0</strong></div>
+                <div class="stat-card"><span>Unread</span><strong id="stat-unread">0</strong></div>
+                <div class="stat-card"><span>WS</span><strong id="ws-status-badge">—</strong></div>
+            </div>
+            <div class="hub-grid">
+                <div class="card">
+                    <h3>Активные Сессии</h3>
+                    <div id="active-clients-list"><p class="muted">Пока нет активных пользователей</p></div>
+                </div>
+                <div class="card chat-panel">
+                    <h3 id="admin-chat-title">Чат</h3>
+                    <div id="admin-chat-log" class="admin-chat-log"></div>
+                    <form id="admin-chat-form" onsubmit="sendAdminChat(event)">
+                        <input type="file" id="admin-chat-file" style="margin:6px 0; width:100%;">
+                        <input type="text" id="admin-chat-input" placeholder="Ответ клиенту..." autocomplete="off">
+                        <button type="submit" class="btn-action">Отправить</button>
+                    </form>
+                </div>
+            </div>

@@ -1,0 +1,66 @@
+/* Cyber — neon magenta + acid green, scan grid, hard edges */
+:root {
+    --bg-color: #05020a;
+    --card-bg: #12061a;
+    --card-border: #ff2bd633;
+    --text-main: #f6e9ff;
+    --text-muted: #b48cc4;
+    --accent: #ff2bd6;
+    --accent-hover: #00f0ff;
+    --radius: 0px;
+    --radius-lg: 2px;
+    --glow: 0 0 18px rgba(255, 43, 214, 0.45), 0 0 36px rgba(0, 240, 255, 0.18);
+    --nav-bg: rgba(8, 0, 14, 0.9);
+    --hero-spot: rgba(255, 43, 214, 0.12);
+    --btn-fg: #120018;
+}
+
+html[data-theme="theme-cyber"] body {
+    background-image:
+        linear-gradient(rgba(255, 43, 214, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.04) 1px, transparent 1px);
+    background-size: 42px 42px;
+}
+html[data-theme="theme-cyber"] #navbar {
+    border-bottom: 1px solid #ff2bd6;
+    box-shadow: 0 0 24px rgba(255, 43, 214, 0.2);
+}
+html[data-theme="theme-cyber"] .logo .dot { color: #00f0ff; }
+html[data-theme="theme-cyber"] .hero-content h1 {
+    text-shadow: 2px 0 #ff2bd6, -2px 0 #00f0ff;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    font-size: 3.1rem;
+}
+html[data-theme="theme-cyber"] .tag {
+    color: #00f0ff;
+    border: 1px solid #00f0ff;
+    padding: 4px 10px;
+    display: inline-block;
+}
+html[data-theme="theme-cyber"] .btn-primary {
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    box-shadow: 4px 4px 0 #00f0ff;
+}
+html[data-theme="theme-cyber"] .btn-python,
+html[data-theme="theme-cyber"] .btn-outline,
+html[data-theme="theme-cyber"] .btn-secondary {
+    clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+}
+html[data-theme="theme-cyber"] .card,
+html[data-theme="theme-cyber"] .project-card {
+    border-left: 3px solid #ff2bd6;
+    background: linear-gradient(180deg, #1a0824, #0c0412);
+}
+html[data-theme="theme-cyber"] .cta-box {
+    border: 1px solid #00f0ff;
+    box-shadow: inset 0 0 40px rgba(255, 43, 214, 0.12);
+}
+html[data-theme="theme-cyber"] .fx-orbs span:nth-child(2) {
+    background: radial-gradient(circle, #00f0ff, transparent 70%);
+}
+html[data-theme="theme-cyber"] #chat-widget-btn {
+    background: #ff2bd6;
+    box-shadow: 0 0 0 3px #00f0ff, 0 0 24px #ff2bd6;
+    border-radius: 4px;
+}

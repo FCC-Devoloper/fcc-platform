@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <title>FCC MATRIX // Панель Главного Диспетчера</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <script src="https://grok.com/grok-app-builder/extensions.js"></script>
+</head>
+<body class="admin-body">
+
+    <aside class="sidebar">
+        <div>
+            <h1>FCC MATRIX</h1>
+            <p class="sidebar-sub">Главный Диспетчер</p>
+            <button class="nav-btn active" data-tab="live" type="button">Live / Hub</button>
+            <button class="nav-btn" data-tab="visual" type="button">Visual Editor</button>
+            <button class="nav-btn" data-tab="notifications" type="button">📢 Уведомления</button>
+            <button class="nav-btn" data-tab="projects" type="button">Проекты</button>
+            <button class="nav-btn" data-tab="news" type="button">Новости & Визуал</button>
+            <button class="nav-btn" data-tab="promos" type="button">Акции & Скидки</button>
+            <button class="nav-btn" data-tab="site-cms" type="button">Тексты сайта</button>
+            <button class="nav-btn" data-tab="contacts" type="button">Контакты</button>
+            <button class="nav-btn" data-tab="plans" type="button">Планы</button>
+            <button class="nav-btn" data-tab="orders" type="button">Заявки</button>
+            <button class="nav-btn" data-tab="users" type="button">Админы</button>
+        </div>
+        <button class="nav-btn logout" type="button" onclick="logoutAdmin()">Выйти</button>
+    </aside>
+
+    <main class="main-content">
+        <section id="tab-live" class="tab-content active" data-partial="live"></section>
+
+        <section id="tab-visual" class="tab-content" data-partial="visual" style="display:none;"></section>
+
+        <section id="tab-notifications" class="tab-content" data-partial="notifications" style="display:none;"></section>
+
+        <section id="tab-news" class="tab-content" data-partial="news" style="display:none;"></section>
+
+        <section id="tab-promos" class="tab-content" data-partial="promos" style="display:none;"></section>
+
+        <section id="tab-projects" class="tab-content" data-partial="projects" style="display:none;"></section>
+
+        <section id="tab-site-cms" class="tab-content" data-partial="site-cms" style="display:none;"></section>
+
+        <section id="tab-contacts" class="tab-content" data-partial="contacts" style="display:none;"></section>
+
+        <section id="tab-plans" class="tab-content" data-partial="plans" style="display:none;"></section>
+
+        <section id="tab-orders" class="tab-content" data-partial="orders" style="display:none;"></section>
+
+        <section id="tab-users" class="tab-content" data-partial="users" style="display:none;"></section>
+    </main>
+
+    <!-- Модальное окно просмотра условий акции -->
+    <div id="promo-modal-overlay" class="modal-overlay" onclick="closePromoModal(event)">
+        <div class="modal-box card">
+            <span class="modal-close" onclick="closePromoModal()">&times;</span>
+            <span id="modal-promo-badge" class="promo-badge-red">-0%</span>
+            <h2 id="modal-promo-title" style="margin-top:10px;">Заголовок акции</h2>
+            <p id="modal-promo-target" class="promo-target-text"></p>
+            <hr style="border-color:#222; margin: 15px 0;">
+            <p id="modal-promo-desc" style="line-height:1.5;"></p>
+            <div style="margin-top:20px; text-align:right;">
+                <button type="button" class="btn-action" onclick="closePromoModal()">Понятно</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Авторизация -->
+    <div id="admin-auth-overlay">
+        <div class="auth-box">
+            <h2>FCC MATRIX</h2>
+            <form onsubmit="handleAdminLogin(event)">
+                <input type="text" id="admin-user" placeholder="Логин администратора" required>
+                <input type="password" id="admin-pass" placeholder="Пароль" required>
+                <button type="submit" class="btn-action" style="width:100%;">Войти в панель</button>
+            </form>
+            <div id="auth-error"></div>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

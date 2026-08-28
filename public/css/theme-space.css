@@ -1,0 +1,73 @@
+/* Space — deep navy, gold stars, round, nebula drift */
+:root {
+    --bg-color: #070b1c;
+    --card-bg: #10183a;
+    --card-border: #3a4a88;
+    --text-main: #eef2ff;
+    --text-muted: #9aa6d4;
+    --accent: #f5c16c;
+    --accent-hover: #ffe0a3;
+    --radius: 999px;
+    --radius-lg: 28px;
+    --glow: 0 12px 40px rgba(80, 110, 255, 0.28);
+    --nav-bg: rgba(7, 11, 28, 0.82);
+    --hero-spot: rgba(90, 120, 255, 0.22);
+    --btn-fg: #1a1408;
+}
+
+html[data-theme="theme-space"] body {
+    background-image:
+        radial-gradient(1px 1px at 12% 18%, #fff 50%, transparent 51%),
+        radial-gradient(1px 1px at 72% 28%, #fff 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 40% 70%, #f5c16c 50%, transparent 51%),
+        radial-gradient(1px 1px at 88% 76%, #fff 50%, transparent 51%),
+        radial-gradient(900px 500px at 80% -10%, rgba(70, 90, 220, 0.35), transparent 60%);
+}
+html[data-theme="theme-space"] #navbar {
+    border-bottom: 0;
+    border-radius: 0 0 28px 28px;
+}
+html[data-theme="theme-space"] .status-indicator {
+    background: rgba(245, 193, 108, 0.08);
+    border-color: #f5c16c55;
+}
+html[data-theme="theme-space"] .hero-content h1 {
+    background: linear-gradient(90deg, #fff, #f5c16c 55%, #9bb0ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+html[data-theme="theme-space"] .btn-primary,
+html[data-theme="theme-space"] .btn-python,
+html[data-theme="theme-space"] .btn-outline,
+html[data-theme="theme-space"] .btn-secondary {
+    border-radius: 999px;
+    padding-left: 26px;
+    padding-right: 26px;
+}
+html[data-theme="theme-space"] .card,
+html[data-theme="theme-space"] .project-card,
+html[data-theme="theme-space"] .team-card,
+html[data-theme="theme-space"] .news-card {
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(28, 38, 82, 0.95), rgba(10, 14, 40, 0.95));
+    box-shadow: 0 20px 50px rgba(0, 0, 40, 0.35);
+}
+html[data-theme="theme-space"] .member-avatar {
+    border-color: #f5c16c;
+    box-shadow: 0 0 20px rgba(245, 193, 108, 0.35);
+}
+html[data-theme="theme-space"] .cta-box {
+    border-radius: 40px;
+    background: radial-gradient(circle at 30% 0%, rgba(245, 193, 108, 0.18), #10183a 55%);
+}
+html[data-theme="theme-space"] .fx-orbs span:nth-child(1) {
+    background: radial-gradient(circle, #6b7cff, transparent 70%);
+}
+html[data-theme="theme-space"] .fx-orbs span:nth-child(3) {
+    background: radial-gradient(circle, #f5c16c, transparent 70%);
+}
+html[data-theme="theme-space"] #chat-widget-btn {
+    background: #f5c16c;
+    color: #1a1408;
+}

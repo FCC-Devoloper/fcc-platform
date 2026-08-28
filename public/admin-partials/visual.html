@@ -1,0 +1,28 @@
+<!-- Расширенный Visual Editor -->
+<h2>Visual Emulator & Live Style Editor</h2>
+            <p class="muted">Выделите элемент на превью для правки текста, цвета, размера и позиционирования.</p>
+            <div id="ve-toolbar" class="ve-toolbar" hidden>
+                <div class="ve-toolbar-grid">
+                    <label>Текст <input id="ve-text" type="text"></label>
+                    <label>Цвет текста <input id="ve-color" type="color" value="#ffffff"></label>
+                    <label>Размер (px) <input id="ve-size" type="number" placeholder="16"></label>
+                    <label>Выравнивание
+                        <select id="ve-align">
+                            <option value="left">По левому краю</option>
+                            <option value="center">По центру</option>
+                            <option value="right">По правому краю</option>
+                        </select>
+                    </label>
+                    <label>Действие
+                        <select id="ve-action">
+                            <option value="modal">Открыть модалку</option>
+                            <option value="url">Перейти по URL</option>
+                            <option value="scroll">Прокрутить к секции</option>
+                            <option value="chat">Открыть чат</option>
+                        </select>
+                    </label>
+                    <label>URL / Цель <input id="ve-url" type="text"></label>
+                </div>
+                <button type="button" class="btn-action" onclick="saveElementMeta()">Сохранить изменения элемента</button>
+            </div>
+            <iframe id="visual-frame" class="visual-frame" title="FCC preview"></iframe>

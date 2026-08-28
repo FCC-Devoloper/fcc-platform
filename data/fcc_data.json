@@ -1,0 +1,951 @@
+{
+  "site_texts": {
+    "hero_tag": {
+      "value_ru": "[ FULL-CYCLE DEVELOPMENT ]",
+      "value_en": "[ FULL-CYCLE DEVELOPMENT ]"
+    },
+    "hero_title": {
+      "value_ru": "Создаём цифровую инфраструктуру будущего",
+      "value_en": "Building the digital infrastructure of the future"
+    },
+    "hero_desc": {
+      "value_ru": "Веб-сервисы, архитектура высоконагруженных систем, Telegram-боты и 3D-интерфейсы под ключ.",
+      "value_en": "Web services, high-load systems, Telegram bots and 3D interfaces."
+    },
+    "contact.telegram": {
+      "value_ru": "https://t.me/fcc_studio",
+      "value_en": "https://t.me/fcc_studio"
+    },
+    "contact.email": {
+      "value_ru": "",
+      "value_en": ""
+    },
+    "contact.phone": {
+      "value_ru": "",
+      "value_en": ""
+    },
+    "contact.hours": {
+      "value_ru": "",
+      "value_en": ""
+    },
+    "hero.primaryButton": {
+      "value_ru": "Заказать проект",
+      "value_en": "Заказать проект"
+    },
+    "hero.tag": {
+      "value_ru": "[ FULL-CYCLE DEVELOPMENT ]",
+      "value_en": "[ FULL-CYCLE DEVELOPMENT ]"
+    }
+  },
+  "projects": [
+    {
+      "id": "proj-1",
+      "title_ru": "FCC Web Platform",
+      "description_ru": "Платформа с тикет-системой и WebSocket Live-чатом.",
+      "demo_url": "",
+      "technologies": "Node.js, JSON DB, WebSocket",
+      "popularity": 120,
+      "is_published": 1,
+      "created_at": "2026-08-18T18:00:00.000Z",
+      "reactions": {
+        "like": 2,
+        "fire": 2,
+        "heart": 2,
+        "wow": 2
+      },
+      "features": []
+    },
+    {
+      "id": "proj-2",
+      "title_ru": "Ops Telegram Bot",
+      "description_ru": "Бот для заявок, уведомлений и статусов заказов.",
+      "demo_url": "",
+      "technologies": "Python, Telegram, API",
+      "popularity": 95,
+      "is_published": 1,
+      "created_at": "2026-08-18T18:10:00.000Z",
+      "reactions": {
+        "like": 2,
+        "fire": 2,
+        "heart": 2,
+        "wow": 2
+      },
+      "features": []
+    },
+    {
+      "id": "proj-3",
+      "title_ru": "3D Portfolio Scene",
+      "description_ru": "Интерактивная WebGL-сцена для презентации продукта.",
+      "demo_url": "",
+      "technologies": "WebGL, Three.js",
+      "popularity": 80,
+      "is_published": 1,
+      "created_at": "2026-08-18T18:20:00.000Z",
+      "reactions": {
+        "like": 2,
+        "fire": 2,
+        "heart": 2,
+        "wow": 2
+      },
+      "features": []
+    },
+    {
+      "id": "proj-4",
+      "title_ru": "Internal CRM Lite",
+      "description_ru": "Лёгкая CRM на JSON для небольшой команды.",
+      "demo_url": "",
+      "technologies": "Node.js, Express",
+      "popularity": 40,
+      "is_published": 1,
+      "created_at": "2026-08-18T18:30:00.000Z",
+      "reactions": {
+        "like": 2,
+        "fire": 2,
+        "heart": 2,
+        "wow": 2
+      },
+      "features": []
+    },
+    {
+      "id": "proj_3fb2efc8",
+      "title_ru": "рр",
+      "description_ru": "вв",
+      "demo_url": "",
+      "technologies": "html",
+      "features": [],
+      "image": "",
+      "runtime": "",
+      "html_code": "<!DOCTYPE html>\n<html lang=\"ru\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>2 OCTA EDITS – Cinematic Intro</title>\n  <script src=\"https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js\"></script>\n  <style>\n    * { margin: 0; padding: 0; box-sizing: border-box; }\n\n    body {\n      width: 100vw;\n      height: 100vh;\n      overflow: hidden;\n      background: #05050a;\n      font-family: 'Segoe UI', system-ui, sans-serif;\n      perspective: 1600px;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      user-select: none;\n    }\n\n    body::before {\n      content: '';\n      position: fixed;\n      inset: 0;\n      background:\n        radial-gradient(ellipse at 30% 20%, rgba(30,40,90,0.22) 0%, transparent 50%),\n        radial-gradient(ellipse at 70% 80%, rgba(20,30,70,0.18) 0%, transparent 50%),\n        radial-gradient(ellipse at center, transparent 20%, rgba(0,0,0,0.88) 100%);\n      pointer-events: none;\n      z-index: 90;\n    }\n\n    #stars-canvas {\n      position: fixed;\n      inset: 0;\n      width: 100%;\n      height: 100%;\n      z-index: 1;\n      pointer-events: none;\n    }\n\n    #stage {\n      position: relative;\n      width: 100%;\n      height: 100%;\n      transform-style: preserve-3d;\n      z-index: 10;\n    }\n\n    /* ===== КАРТЫ ===== */\n    .card {\n      position: absolute;\n      width: 250px;\n      height: 355px;\n      left: 50%;\n      top: 50%;\n      margin-left: -125px;\n      margin-top: -177px;\n      transform-style: preserve-3d;\n      border-radius: 18px;\n      box-shadow:\n        0 25px 50px -12px rgba(0,0,0,0.9),\n        0 0 0 1px rgba(255,255,255,0.07);\n      will-change: transform;\n    }\n\n    .card-face {\n      position: absolute;\n      width: 100%;\n      height: 100%;\n      backface-visibility: hidden;\n      border-radius: 18px;\n      overflow: hidden;\n    }\n\n    .card-back {\n      background: linear-gradient(160deg, #1c1c2e 0%, #12121c 50%, #0b0b14 100%);\n      border: 1px solid rgba(255,255,255,0.08);\n      display: flex;\n      align-items: center;\n      justify-content: center;\n    }\n    .card-back::before {\n      content: '';\n      position: absolute;\n      inset: 12px;\n      border: 1px solid rgba(255,255,255,0.05);\n      border-radius: 12px;\n    }\n    .card-back::after {\n      content: '◆';\n      font-size: 44px;\n      color: rgba(255,255,255,0.09);\n      letter-spacing: 8px;\n    }\n\n    /* Чистый chroma-key зелёный */\n    .card-front {\n      background: #00FF00;\n      transform: rotateY(180deg);\n      position: relative;\n    }\n\n    .corner-text {\n      position: absolute;\n      font-size: 12px;\n      font-weight: 700;\n      letter-spacing: 1.4px;\n      color: rgba(0,0,0,0.82);\n      text-transform: uppercase;\n      white-space: nowrap;\n      z-index: 5;\n    }\n    .corner-text.top-left { top: 14px; left: 14px; }\n    .corner-text.bottom-right {\n      bottom: 14px;\n      right: 14px;\n      transform: rotate(180deg);\n    }\n\n    /* ===== КИБЕРПАНК ЛОГОТИП ===== */\n    #final-text {\n      position: absolute;\n      left: 50%;\n      top: 48%;\n      transform: translate(-50%, -50%) rotateX(12deg);\n      font-size: clamp(32px, 8vw, 92px);\n      font-weight: 800;\n      letter-spacing: 0.18em;\n      opacity: 0;\n      z-index: 60;\n      pointer-events: none;\n      white-space: nowrap;\n      transform-style: preserve-3d;\n      will-change: transform, opacity, filter;\n    }\n\n    #final-text .neon {\n      color: #e8e8e8;\n      text-shadow:\n        0 0 4px #ffffff,\n        0 0 12px #00f0ff,\n        0 0 28px #00aaff,\n        0 0 50px rgba(0,180,255,0.5),\n        0 2px 0 #111,\n        0 4px 0 #0a0a0a,\n        0 6px 12px rgba(0,0,0,0.6);\n      filter: drop-shadow(0 0 8px rgba(0,220,255,0.4));\n    }\n\n    #neon-line {\n      position: absolute;\n      left: 50%;\n      top: 58%;\n      height: 2px;\n      width: 0;\n      background: linear-gradient(90deg, transparent, #00f0ff, #ffffff, #00f0ff, transparent);\n      box-shadow:\n        0 0 10px #00f0ff,\n        0 0 25px rgba(0,200,255,0.6);\n      transform: translateX(-50%);\n      opacity: 0;\n      z-index: 59;\n      border-radius: 1px;\n    }\n  </style>\n</head>\n<body>\n  <canvas id=\"stars-canvas\"></canvas>\n\n  <div id=\"stage\">\n    <div class=\"card\" id=\"card-1\">\n      <div class=\"card-face card-back\"></div>\n      <div class=\"card-face card-front\">\n        <span class=\"corner-text top-left\">2 OCTA EDITS</span>\n        <span class=\"corner-text bottom-right\">2 OCTA EDITS</span>\n      </div>\n    </div>\n\n    <div class=\"card\" id=\"card-2\">\n      <div class=\"card-face card-back\"></div>\n      <div class=\"card-face card-front\">\n        <span class=\"corner-text top-left\">2 OCTA EDITS</span>\n        <span class=\"corner-text bottom-right\">2 OCTA EDITS</span>\n      </div>\n    </div>\n\n    <div class=\"card\" id=\"card-3\">\n      <div class=\"card-face card-back\"></div>\n      <div class=\"card-face card-front\">\n        <span class=\"corner-text top-left\">2 OCTA EDITS</span>\n        <span class=\"corner-text bottom-right\">2 OCTA EDITS</span>\n      </div>\n    </div>\n  </div>\n\n  <div id=\"final-text\"><span class=\"neon\">2 OCTA EDITS</span></div>\n  <div id=\"neon-line\"></div>\n\n  <script>\n    const T = {\n      enter:    1.7,\n      flip:     0.9,\n      gather:   0.9,\n      exit:     1.4,\n      textIn:   1.0,\n      textHold: 2.4,\n      textOut:  1.3\n    };\n\n    const c1 = document.getElementById('card-1');\n    const c2 = document.getElementById('card-2');\n    const c3 = document.getElementById('card-3');\n    const cards = [c1, c2, c3];\n    const finalText = document.getElementById('final-text');\n    const neonLine = document.getElementById('neon-line');\n\n    // ===== ЗВЁЗДОЧКИ =====\n    const canvas = document.getElementById('stars-canvas');\n    const ctx = canvas.getContext('2d');\n    let stars = [];\n\n    function resize() {\n      canvas.width = innerWidth;\n      canvas.height = innerHeight;\n    }\n    resize();\n    addEventListener('resize', resize);\n\n    function drawStar(x, y, size, alpha) {\n      ctx.save();\n      ctx.translate(x, y);\n      ctx.beginPath();\n      ctx.moveTo(0, -size);\n      ctx.lineTo(size * 0.28, -size * 0.28);\n      ctx.lineTo(size, 0);\n      ctx.lineTo(size * 0.28, size * 0.28);\n      ctx.lineTo(0, size);\n      ctx.lineTo(-size * 0.28, size * 0.28);\n      ctx.lineTo(-size, 0);\n      ctx.lineTo(-size * 0.28, -size * 0.28);\n      ctx.closePath();\n      ctx.fillStyle = `rgba(180, 220, 255, ${alpha})`;\n      ctx.fill();\n      ctx.restore();\n    }\n\n    for (let i = 0; i < 65; i++) {\n      stars.push({\n        x: Math.random() * innerWidth,\n        y: Math.random() * innerHeight,\n        size: Math.random() * 3.2 + 1.1,\n        speed: Math.random() * 0.6 + 0.18,\n        alpha: Math.random() * 0.5 + 0.25,\n        twinkle: Math.random() * Math.PI * 2\n      });\n    }\n\n    function animateStars() {\n      ctx.clearRect(0, 0, canvas.width, canvas.height);\n      stars.forEach(s => {\n        s.y -= s.speed;\n        s.twinkle += 0.03;\n        if (s.y < -10) {\n          s.y = canvas.height + 10;\n          s.x = Math.random() * canvas.width;\n        }\n        const a = s.alpha * (0.7 + Math.sin(s.twinkle) * 0.3);\n        drawStar(s.x, s.y, s.size, a);\n      });\n      requestAnimationFrame(animateStars);\n    }\n    animateStars();\n\n    // Начальные позиции\n    gsap.set(cards, {\n      x: -1100,\n      y: 0,\n      z: -200,\n      rotationY: 0,\n      rotationX: 8,\n      scale: 0.85,\n      opacity: 0\n    });\n    gsap.set(c1, { y: -120 });\n    gsap.set(c3, { y:  120 });\n    gsap.set(finalText, { opacity: 0, scale: 0.35, filter: 'blur(16px)' });\n    gsap.set(neonLine, { width: 0, opacity: 0 });\n\n    // ===== ТАЙМЛАЙН =====\n    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });\n\n    // 1. Вход слева (карты не пересекаются)\n    tl.to(cards, {\n      x: (i) => [-320, 0, 320][i],\n      opacity: 1,\n      scale: 1,\n      duration: T.enter,\n      stagger: 0.12,\n      ease: 'power4.out'\n    }, 0)\n    .to(c1, { z: -280, rotationY: -20, rotationX: 5, duration: T.enter }, 0)\n    .to(c3, { z: -280, rotationY:  20, rotationX: 5, duration: T.enter }, 0)\n    .to(c2, { z: 90, rotationX: 0, duration: T.enter }, 0);\n\n    // 2. Переворот главной\n    tl.to(c2, {\n      rotationY: 180,\n      duration: T.flip,\n      ease: 'power2.inOut'\n    }, '+=0.25');\n\n    // 3. Сборка — карты стоят рядом, не внутри друг друга\n    tl.to(cards, {\n      x: (i) => [-210, 0, 210][i],   // достаточный отступ\n      y: 0,\n      z: (i) => [-40, 80, -40][i],  // центральная ближе\n      rotationY: (i) => [165, 180, 195][i],\n      rotationX: 0,\n      scale: 0.95,\n      duration: T.gather,\n      ease: 'power2.inOut',\n      stagger: 0.04\n    }, '+=0.2');\n\n    // 4. Уход с явным 3D-поворотом\n    tl.to(cards, {\n      x: 1400,\n      z: -900,\n      y: (i) => [-90, 0, 90][i],\n      scale: 0.32,\n      rotationY: (i) => [220, 250, 280][i],\n      rotationX: -28,\n      rotationZ: (i) => [-12, 0, 12][i],\n      duration: T.exit,\n      ease: 'power3.in',\n      stagger: 0.09\n    }, '+=0.2')\n    .to(cards, {\n      opacity: 0,\n      duration: 0.35\n    }, `-=0.35`);\n\n    // 5. Киберпанк логотип\n    tl.to(finalText, {\n      opacity: 1,\n      scale: 1,\n      filter: 'blur(0px)',\n      duration: T.textIn,\n      ease: 'back.out(1.5)'\n    }, `-=${T.exit * 0.3}`)\n    .to(neonLine, {\n      width: 'min(480px, 78vw)',\n      opacity: 1,\n      duration: 0.85,\n      ease: 'power2.out'\n    }, '<0.3')\n    .to(finalText, {\n      filter: 'drop-shadow(0 0 14px rgba(0,220,255,0.8)) drop-shadow(0 0 30px rgba(0,180,255,0.4))',\n      duration: 0.9,\n      yoyo: true,\n      repeat: 1,\n      ease: 'sine.inOut'\n    }, '<0.2');\n\n    // 6. Выход\n    tl.to({}, { duration: T.textHold })\n    .to(finalText, {\n      opacity: 0,\n      scale: 1.2,\n      filter: 'blur(16px)',\n      y: '+=20',\n      duration: T.textOut,\n      ease: 'power2.in'\n    })\n    .to(neonLine, {\n      width: 0,\n      opacity: 0,\n      duration: T.textOut * 0.7,\n      ease: 'power2.in'\n    }, '<');\n\n    document.body.addEventListener('click', () => location.reload());\n  </script>\n</body>\n</html>",
+      "python_code": "",
+      "reactions": {
+        "like": 0,
+        "fire": 0,
+        "heart": 0,
+        "wow": 0
+      },
+      "created_at": "2026-08-27T06:36:00.643Z"
+    },
+    {
+      "id": "proj_c2535aa1",
+      "title_ru": "hhh",
+      "description_ru": "f",
+      "demo_url": "",
+      "technologies": "html",
+      "features": [],
+      "image": "",
+      "runtime": "",
+      "html_code": "<!DOCTYPE html>\n<html lang=\"tg\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>\n  <title>Саҳифаи графики! ✦ Аниматсия</title>\n  <style>\n    * {\n      margin: 0;\n      padding: 0;\n      box-sizing: border-box;\n    }\n\n    body {\n      height: 100vh;\n      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);\n      color: #fff;\n      font-family: 'Segoe UI', system-ui, sans-serif;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      overflow: hidden;\n    }\n\n    .loader {\n      position: fixed;\n      inset: 0;\n      background: #0f0c29;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      z-index: 9999;\n      transition: opacity 1s ease 3s;\n      opacity: 1;\n      pointer-events: none;\n    }\n\n    .loader.hidden {\n      opacity: 0;\n    }\n\n    .content {\n      text-align: center;\n      opacity: 0;\n      transform: translateY(40px);\n      transition: all 1.2s ease;\n    }\n\n    .content.show {\n      opacity: 1;\n      transform: translateY(0);\n    }\n\n    h1 {\n      font-size: 5.5rem;\n      margin-bottom: 1.5rem;\n      background: linear-gradient(90deg, #00d4ff, #ff00aa, #00ffea);\n      -webkit-background-clip: text;\n      -webkit-text-fill-color: transparent;\n      background-size: 200% auto;\n      animation: gradient 4s linear infinite;\n    }\n\n    .typing {\n      font-size: 2.2rem;\n      color: #a5d8ff;\n      font-weight: 300;\n      letter-spacing: 2px;\n      overflow: hidden;\n      white-space: nowrap;\n      border-right: 4px solid #00d4ff;\n      width: 0;\n      animation: typing 3.5s steps(18) forwards, blink 0.8s infinite;\n    }\n\n    @keyframes typing {\n      from { width: 0 }\n      to   { width: 100% }\n    }\n\n    @keyframes blink {\n      from, to   { border-color: transparent }\n      50%        { border-color: #00d4ff; }\n    }\n\n    @keyframes gradient {\n      0%   { background-position: 0% 50% }\n      50%  { background-position: 100% 50% }\n      100% { background-position: 0% 50% }\n    }\n\n    @media (max-width: 600px) {\n      h1 { font-size: 3.8rem; }\n      .typing { font-size: 1.6rem; }\n    }\n  </style>\n</head>\n<body>\n\n  <div class=\"loader\" id=\"loader\">\n    <!-- Агар хоҳӣ спиннер илова кунӣ, метавонӣ инро гузорӣ -->\n    <!-- <div class=\"spinner\"></div> -->\n  </div >\n\n  <div class=\"content\" id=\"content\">\n    <h1>Салом, Хонандаҳо!</h1>\n    <div class=\"typing\">Хуш омадед ба дарси ман...</div>\n  </div>\n\n  <script>\n    window.addEventListener('load', () => {\n      const loader = document.getElementById('loader');\n      const content = document.getElementById('content');\n\n      // Пас аз 1.0 сония loader-ро пинҳон мекунад\n      setTimeout(() => {\n        loader.classList.add('hidden');\n        setTimeout(() => {\n          content.classList.add('show');\n        }, 400); // каме таъхир барои эффект\n      }, 1500);\n    });\n  </script>\n\n</body>\n</html>",
+      "python_code": "",
+      "reactions": {
+        "like": 0,
+        "fire": 0,
+        "heart": 0,
+        "wow": 0
+      },
+      "created_at": "2026-08-27T06:37:45.895Z"
+    }
+  ],
+  "news": [
+    {
+      "id": "news-1",
+      "title_ru": "FCC запускает новую версию сайта",
+      "content_ru": "Клиентский сайт, онлайн-чат и проекты теперь объединены в одной системе.",
+      "media_type": "image",
+      "media_url": "",
+      "popularity": 150,
+      "is_published": 1,
+      "created_at": "2026-08-20T10:00:00.000Z"
+    },
+    {
+      "id": "news-2",
+      "title_ru": "Открыт Python-трек",
+      "content_ru": "Мы развиваем направление Python и собираем первые учебные и прикладные проекты.",
+      "media_type": "image",
+      "media_url": "",
+      "popularity": 110,
+      "is_published": 1,
+      "created_at": "2026-08-20T11:00:00.000Z"
+    },
+    {
+      "id": "news-3",
+      "title_ru": "Новые темы оформления",
+      "content_ru": "В FCC доступны несколько визуальных режимов: Original, Cyber, Space и Glass.",
+      "media_type": "image",
+      "media_url": "",
+      "popularity": 90,
+      "is_published": 1,
+      "created_at": "2026-08-20T12:00:00.000Z"
+    }
+  ],
+  "promotions": [
+    {
+      "id": "promo_launch",
+      "title_ru": "Летний буст — первый проект",
+      "description_ru": "Скидка на первый лендинг или Telegram-бота для новых клиентов FCC MATRIX.",
+      "discount": "-20%",
+      "target": "Веб и боты",
+      "action_link": "#order",
+      "is_active": 1,
+      "start_date": "2026-08-28",
+      "end_date": "2026-09-27",
+      "created_at": "2026-08-28T17:37:23.236Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "admin-fcc-001",
+      "username": "admin",
+      "password": "admin",
+      "role": "admin",
+      "name": "Главный Диспетчер",
+      "linked_guest_ids": [],
+      "last_seen": "2026-08-28T17:38:41.572Z"
+    },
+    {
+      "id": "usr_cb448324",
+      "username": "admin5",
+      "password": "$2a$10$7z/JEhNhqCB8Lzu/aSRqyeYdVmTtxroScPAFI.pwt5UnZiO5h0kGm",
+      "email": "barotovahmad38@gmail.com",
+      "role": "client",
+      "created_at": "2026-08-24T10:59:30.440Z",
+      "linked_guest_ids": []
+    },
+    {
+      "id": "usr_452817d9",
+      "username": "Ahmadshoh",
+      "password": "$2a$10$4irVrskSgBu6WlI49lZveedbs8CrRoVYpYDJmZPQPrfx6KisBOb7q",
+      "email": "",
+      "role": "client",
+      "created_at": "2026-08-25T09:18:37.054Z",
+      "linked_guest_ids": []
+    },
+    {
+      "id": "usr_9228a17b",
+      "username": "Ahmadshoh1",
+      "password": "$2a$10$pTfriXOfJNwLs/GNkpnNOu6TzeRkoAZ.Uvq3XtYKKJ398KTwNku6m",
+      "email": "barotovahmad38@gmail.com",
+      "role": "client",
+      "created_at": "2026-08-25T11:09:50.871Z",
+      "linked_guest_ids": [
+        "guest_MT8EKSS6UGTLKS"
+      ],
+      "name": "Ahmadshoh1",
+      "last_seen": "2026-08-28T17:37:23.235Z"
+    },
+    {
+      "id": "usr_8da73065",
+      "username": "admin1",
+      "password": "$2a$10$S7IQWQO4F/FaTkKWte8AlelV1JUsQnMHn.f0/rGoamEO1T2hcKeU2",
+      "email": "",
+      "role": "client",
+      "created_at": "2026-08-25T15:05:17.515Z",
+      "linked_guest_ids": [
+        "client_pkei30tlw"
+      ],
+      "name": "admin1",
+      "last_seen": "2026-08-28T17:37:23.234Z"
+    },
+    {
+      "id": "usr_56142525",
+      "username": "ashurovishoq@gmail.com",
+      "password": "$2a$10$KWeYTFzwLEvgi1NTyWkMs.jImENYAH0L1ED4obrPijFFpbgR7U0nC",
+      "email": "ashurovishoq@gmail.com",
+      "role": "client",
+      "created_at": "2026-08-26T07:31:29.736Z",
+      "linked_guest_ids": [
+        "client_rnfhvm69i"
+      ],
+      "name": "ashurovishoq@gmail.com",
+      "last_seen": "2026-08-28T17:37:23.235Z"
+    },
+    {
+      "id": "usr_8bab35fb",
+      "username": "demo_46acdb",
+      "password": "$2a$10$RYHJ7i5XClfj6dK0PTj5nOqctiGX5XAKPHsH4HHGH8n7XQzpNiBJ6",
+      "email": "demo@fcc.test",
+      "role": "client",
+      "name": "demo_46acdb",
+      "linked_guest_ids": [
+        "guest_TESTMERGE01"
+      ],
+      "created_at": "2026-08-28T17:38:14.895Z",
+      "last_seen": "2026-08-28T17:38:14.895Z"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ord_a2c2b953",
+      "title": "Хочу учить Python",
+      "category": "python",
+      "description": "Хочу начать обучение Python с нуля. Нужен трек и первый проект.",
+      "contact": "barotovahmad38@gmail.com",
+      "client_id": "client_cx9wexqc5",
+      "status": "done",
+      "created_at": "2026-08-24T15:17:44.040Z",
+      "updated_at": "2026-08-25T16:13:21.766Z",
+      "thread_id": "client_cx9wexqc5",
+      "status_history": [
+        {
+          "status": "done",
+          "at": "2026-08-24T15:17:44.040Z",
+          "by": "system",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "id": "ord_ddbba50b",
+      "title": "Хочу учить Python",
+      "category": "web",
+      "description": "3333",
+      "contact": "barotovahmad38@gmail.com",
+      "client_id": "guest_CBCAFB",
+      "status": "new",
+      "created_at": "2026-08-24T16:47:23.748Z",
+      "thread_id": "guest_CBCAFB",
+      "status_history": [
+        {
+          "status": "new",
+          "at": "2026-08-24T16:47:23.748Z",
+          "by": "system",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "id": "ord_2f1c93ef",
+      "title": "Ииммито",
+      "category": "3d",
+      "description": "Прмситмр",
+      "contact": "Римариим",
+      "client_id": "client_rnfhvm69i",
+      "status": "new",
+      "created_at": "2026-08-25T07:44:33.959Z",
+      "user_id": "usr_56142525",
+      "thread_id": "usr_56142525",
+      "client_name": "ashurovishoq@gmail.com",
+      "status_history": [
+        {
+          "status": "new",
+          "at": "2026-08-25T07:44:33.959Z",
+          "by": "system",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "id": "ord_75ec9d7a",
+      "title": "Хочу учить Python",
+      "category": "python",
+      "description": "Хочу начать обучение Python с нуля. Нужен трек и первый проект.",
+      "contact": "ashurovishoq@gmail.com",
+      "client_id": "client_rnfhvm69i",
+      "status": "in_progress",
+      "created_at": "2026-08-25T07:45:10.821Z",
+      "updated_at": "2026-08-25T07:45:22.472Z",
+      "user_id": "usr_56142525",
+      "thread_id": "usr_56142525",
+      "client_name": "ashurovishoq@gmail.com",
+      "status_history": [
+        {
+          "status": "in_progress",
+          "at": "2026-08-25T07:45:10.821Z",
+          "by": "system",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "id": "ord_afde9237",
+      "title": "Хочу учить Python",
+      "category": "python",
+      "description": "Хочу начать обучение Python с нуля. Нужен трек и первый проект.",
+      "contact": "barotovahmad38@gmail.com",
+      "client_id": "client_pkei30tlw",
+      "status": "new",
+      "created_at": "2026-08-25T15:10:05.524Z",
+      "user_id": "usr_8da73065",
+      "thread_id": "usr_8da73065",
+      "client_name": "admin1",
+      "status_history": [
+        {
+          "status": "new",
+          "at": "2026-08-25T15:10:05.524Z",
+          "by": "system",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "id": "ord_08c8a7af",
+      "title": "Хочу учить Python",
+      "category": "python",
+      "description": "Хочу начать обучение Python с нуля. Нужен трек и первый проект.",
+      "contact": "232233",
+      "client_id": "client_pkei30tlw",
+      "status": "new",
+      "created_at": "2026-08-26T07:32:31.781Z",
+      "user_id": "usr_8da73065",
+      "thread_id": "usr_8da73065",
+      "client_name": "admin1",
+      "status_history": [
+        {
+          "status": "new",
+          "at": "2026-08-26T07:32:31.781Z",
+          "by": "system",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "id": "ord_59593b4d",
+      "title": "Хочу учить Python",
+      "category": "web",
+      "description": "опиаолуил",
+      "contact": "barotovahmad38@gmail.com",
+      "client_id": "client_pkei30tlw",
+      "status": "new",
+      "created_at": "2026-08-27T05:46:46.921Z",
+      "user_id": "usr_8da73065",
+      "thread_id": "usr_8da73065",
+      "client_name": "admin1",
+      "status_history": [
+        {
+          "status": "new",
+          "at": "2026-08-27T05:46:46.921Z",
+          "by": "system",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "id": "ord_bd5526bb",
+      "title": "Тестовая заявка",
+      "category": "web",
+      "description": "Проверка identity",
+      "contact": "demo@fcc.test",
+      "client_id": "guest_TESTMERGE01",
+      "client_name": "demo_46acdb",
+      "status": "rejected",
+      "rejection_reason": "Не хватает ТЗ",
+      "result_url": null,
+      "result_file": null,
+      "deleted_at": null,
+      "status_history": [
+        {
+          "status": "new",
+          "at": "2026-08-28T17:38:14.899Z",
+          "by": "usr_8bab35fb",
+          "reason": null
+        },
+        {
+          "status": "rejected",
+          "at": "2026-08-28T17:38:14.904Z",
+          "by": "admin",
+          "reason": "Не хватает ТЗ"
+        }
+      ],
+      "created_at": "2026-08-28T17:38:14.899Z",
+      "user_id": "usr_8bab35fb",
+      "thread_id": "usr_8bab35fb",
+      "updated_at": "2026-08-28T17:38:14.904Z"
+    }
+  ],
+  "guests": [
+    {
+      "client_id": "guest_CBCAFB",
+      "name": null,
+      "is_online": 0,
+      "last_seen": "2026-08-24T16:40:57.665Z"
+    },
+    {
+      "client_id": "client_ke2zx02ee",
+      "name": null,
+      "is_online": 0,
+      "last_seen": "2026-08-24T11:58:47.282Z"
+    },
+    {
+      "client_id": "client_cx9wexqc5",
+      "name": null,
+      "is_online": 0,
+      "last_seen": "2026-08-24T15:45:13.117Z"
+    },
+    {
+      "client_id": "guest_657ED107C574",
+      "name": null,
+      "is_online": 0,
+      "last_seen": "2026-08-28T17:39:16.239Z"
+    }
+  ],
+  "messages": [
+    {
+      "id": "67161342-c662-41de-b116-9caa0c8f3683",
+      "client_id": "guest_CBCAFB",
+      "sender": "client",
+      "content": "привет",
+      "is_read": 1,
+      "created_at": "2026-08-24T11:08:18.567Z",
+      "thread_id": "guest_CBCAFB"
+    },
+    {
+      "id": "97166a5d-5bba-4baf-95af-4c4599524600",
+      "client_id": "client_ke2zx02ee",
+      "sender": "client",
+      "content": "Привет",
+      "is_read": 1,
+      "created_at": "2026-08-24T11:10:49.579Z",
+      "thread_id": "client_ke2zx02ee"
+    },
+    {
+      "id": "fe1a42eb-5bc7-4986-b6f9-6c70b19ff81b",
+      "client_id": "guest_CBCAFB",
+      "sender": "admin",
+      "content": "привет",
+      "is_read": 1,
+      "created_at": "2026-08-24T11:11:10.846Z",
+      "thread_id": "guest_CBCAFB"
+    },
+    {
+      "id": "0df03d30-51d3-4a35-b065-7c91d67e98cd",
+      "client_id": "client_ke2zx02ee",
+      "sender": "admin",
+      "content": "привет",
+      "is_read": 1,
+      "created_at": "2026-08-24T11:11:23.869Z",
+      "thread_id": "client_ke2zx02ee"
+    },
+    {
+      "id": "ee6bcbc0-1d8d-4048-969c-37b43642e11a",
+      "client_id": "client_ke2zx02ee",
+      "sender": "admin",
+      "content": "как дела",
+      "is_read": 1,
+      "created_at": "2026-08-24T11:11:30.481Z",
+      "thread_id": "client_ke2zx02ee"
+    },
+    {
+      "id": "6c1af189-a28e-4f5d-8e6d-511d8bcfac1a",
+      "client_id": "client_ke2zx02ee",
+      "sender": "admin",
+      "content": "что хотели ?",
+      "is_read": 1,
+      "created_at": "2026-08-24T11:11:38.741Z",
+      "thread_id": "client_ke2zx02ee"
+    },
+    {
+      "id": "374e0c43-46c0-4ac8-b258-ef7557a11ec6",
+      "client_id": "client_ke2zx02ee",
+      "sender": "admin",
+      "content": "хотите запустит проекть",
+      "is_read": 1,
+      "created_at": "2026-08-24T11:11:48.264Z",
+      "thread_id": "client_ke2zx02ee"
+    },
+    {
+      "id": "21258cab-76ec-406b-962a-1a35c75f1f11",
+      "client_id": "client_ke2zx02ee",
+      "sender": "admin",
+      "content": "алооо",
+      "is_read": 1,
+      "created_at": "2026-08-24T11:11:52.255Z",
+      "thread_id": "client_ke2zx02ee"
+    },
+    {
+      "id": "9c40a709-1414-4c1a-aaf8-4850f9342922",
+      "client_id": "client_ke2zx02ee",
+      "sender": "client",
+      "content": "Даа",
+      "is_read": 1,
+      "created_at": "2026-08-24T11:11:57.365Z",
+      "thread_id": "client_ke2zx02ee"
+    },
+    {
+      "id": "ecf21fd9-6890-4e80-b806-5c8aab73ec71",
+      "client_id": "client_ke2zx02ee",
+      "sender": "admin",
+      "content": "ну ладно освидание",
+      "is_read": 1,
+      "created_at": "2026-08-24T11:12:06.185Z",
+      "thread_id": "client_ke2zx02ee"
+    },
+    {
+      "id": "9608f725-a1d6-45b4-91b0-01dcc18698db",
+      "client_id": "client_rnfhvm69i",
+      "sender": "client",
+      "content": "Салом",
+      "is_read": 1,
+      "created_at": "2026-08-25T07:36:21.887Z",
+      "user_id": "usr_56142525",
+      "thread_id": "usr_56142525"
+    },
+    {
+      "id": "a29fc3b8-5780-46b7-8953-3a46caa1bc2d",
+      "client_id": "client_rnfhvm69i",
+      "sender": "bot",
+      "content": "Ваше сообщение перенаправлено диспетчеру. Он ответит при первой возможности!",
+      "is_read": 1,
+      "created_at": "2026-08-25T07:36:21.902Z",
+      "user_id": "usr_56142525",
+      "thread_id": "usr_56142525"
+    },
+    {
+      "id": "f6de175b-af67-4f83-9473-ac26f11d8e49",
+      "client_id": "client_rnfhvm69i",
+      "sender": "admin",
+      "content": "dj fktr cfkjv",
+      "is_read": 1,
+      "created_at": "2026-08-25T07:37:04.963Z",
+      "user_id": "usr_56142525",
+      "thread_id": "usr_56142525"
+    },
+    {
+      "id": "c0d72fcc-46ea-4388-a5b3-131e3561d433",
+      "client_id": "client_rnfhvm69i",
+      "sender": "client",
+      "content": "Егоиавеои",
+      "is_read": 1,
+      "created_at": "2026-08-25T07:37:15.115Z",
+      "user_id": "usr_56142525",
+      "thread_id": "usr_56142525"
+    },
+    {
+      "id": "9f0094a8-fb8f-43ea-9d25-e678c9bae72d",
+      "client_id": "client_pkei30tlw",
+      "sender": "client",
+      "content": "cfkjb",
+      "is_read": 1,
+      "created_at": "2026-08-25T07:38:16.395Z",
+      "user_id": "usr_8da73065",
+      "thread_id": "usr_8da73065"
+    },
+    {
+      "id": "c008b0ee-61f5-4769-9582-ace744416f01",
+      "client_id": "client_pkei30tlw",
+      "sender": "client",
+      "content": "dfjdhfkjdbkfjbdkj",
+      "is_read": 1,
+      "created_at": "2026-08-25T07:38:46.699Z",
+      "user_id": "usr_8da73065",
+      "thread_id": "usr_8da73065"
+    },
+    {
+      "id": "7a45f344-57b0-4761-a9c0-123af0800c46",
+      "client_id": "client_rnfhvm69i",
+      "sender": "client",
+      "content": "См Ти ппои",
+      "is_read": 1,
+      "created_at": "2026-08-25T07:39:05.183Z",
+      "user_id": "usr_56142525",
+      "thread_id": "usr_56142525"
+    },
+    {
+      "id": "80cb130f-5afc-457d-9447-51faa53b6347",
+      "client_id": "client_pkei30tlw",
+      "sender": "admin",
+      "content": "hello bro",
+      "is_read": 1,
+      "created_at": "2026-08-25T07:42:41.529Z",
+      "user_id": "usr_8da73065",
+      "thread_id": "usr_8da73065"
+    },
+    {
+      "id": "09e00ef2-7b42-445f-a2ba-97ee63f16693",
+      "client_id": "client_rnfhvm69i",
+      "sender": "client",
+      "content": "Тупой",
+      "is_read": 1,
+      "created_at": "2026-08-25T07:42:55.868Z",
+      "user_id": "usr_56142525",
+      "thread_id": "usr_56142525"
+    },
+    {
+      "id": "cd8a7615-3e23-4927-9922-2ad1f85f4906",
+      "client_id": "client_rnfhvm69i",
+      "sender": "admin",
+      "content": "hello gandon",
+      "is_read": 1,
+      "created_at": "2026-08-25T07:43:09.981Z",
+      "user_id": "usr_56142525",
+      "thread_id": "usr_56142525"
+    },
+    {
+      "id": "72bc1421-d9bd-44bd-8819-54682bef0a92",
+      "client_id": "client_rnfhvm69i",
+      "sender": "admin",
+      "content": "htllo again",
+      "is_read": 1,
+      "created_at": "2026-08-25T07:43:21.389Z",
+      "user_id": "usr_56142525",
+      "thread_id": "usr_56142525"
+    },
+    {
+      "id": "4516cad0-5afc-4c2e-baaa-604ab3d8ec1a",
+      "client_id": "client_rnfhvm69i",
+      "sender": "admin",
+      "content": "fick yoiu",
+      "is_read": 1,
+      "created_at": "2026-08-25T07:43:36.880Z",
+      "user_id": "usr_56142525",
+      "thread_id": "usr_56142525"
+    },
+    {
+      "id": "c5f9d346-1635-4d84-bb93-dca7a06211f3",
+      "client_id": "client_rnfhvm69i",
+      "sender": "admin",
+      "content": "bro",
+      "is_read": 1,
+      "created_at": "2026-08-25T07:43:43.311Z",
+      "user_id": "usr_56142525",
+      "thread_id": "usr_56142525"
+    },
+    {
+      "id": "e7d78a0c-5b14-4057-a293-a25454e6bbb5",
+      "client_id": "client_rnfhvm69i",
+      "sender": "client",
+      "content": "Фак ю",
+      "is_read": 1,
+      "created_at": "2026-08-25T07:43:47.537Z",
+      "user_id": "usr_56142525",
+      "thread_id": "usr_56142525"
+    },
+    {
+      "id": "bbc38f36-fe01-452a-8b4a-7fe36e404268",
+      "client_id": "client_rnfhvm69i",
+      "sender": "admin",
+      "content": "i'm fuck you",
+      "is_read": 1,
+      "created_at": "2026-08-25T07:43:55.000Z",
+      "user_id": "usr_56142525",
+      "thread_id": "usr_56142525"
+    },
+    {
+      "id": "0c578a56-94ef-4a70-a7c6-6cfac0a3df0f",
+      "client_id": "client_rnfhvm69i",
+      "sender": "admin",
+      "content": "restart  the pfge",
+      "is_read": 1,
+      "created_at": "2026-08-25T07:44:05.279Z",
+      "user_id": "usr_56142525",
+      "thread_id": "usr_56142525"
+    },
+    {
+      "id": "af49dae2-6a49-4b06-b45e-5952cebd1c43",
+      "client_id": "guest_MT8EKSS6UGTLKS",
+      "sender": "client",
+      "content": "Hello",
+      "is_read": 1,
+      "created_at": "2026-08-25T09:01:25.803Z",
+      "user_id": "usr_9228a17b",
+      "thread_id": "usr_9228a17b"
+    },
+    {
+      "id": "fb47ad22-74ba-4f81-a372-56889ab84eb0",
+      "client_id": "guest_MT8EKSS6UGTLKS",
+      "sender": "bot",
+      "content": "Ваше сообщение перенаправлено диспетчеру. Он ответит при первой возможности!",
+      "is_read": 1,
+      "created_at": "2026-08-25T09:01:25.835Z",
+      "user_id": "usr_9228a17b",
+      "thread_id": "usr_9228a17b"
+    },
+    {
+      "id": "15c3689c-7c23-4d3b-a9b6-f7b8fe68a122",
+      "client_id": "guest_MT8EKSS6UGTLKS",
+      "sender": "client",
+      "content": "Hello",
+      "is_read": 1,
+      "created_at": "2026-08-25T11:28:32.352Z",
+      "user_id": "usr_9228a17b",
+      "thread_id": "usr_9228a17b"
+    },
+    {
+      "id": "1cff2f71-1d05-404e-83c6-8f897ea3a454",
+      "client_id": "guest_MT8EKSS6UGTLKS",
+      "sender": "bot",
+      "content": "Ваше сообщение перенаправлено диспетчеру. Он ответит при первой возможности!",
+      "is_read": 1,
+      "created_at": "2026-08-25T11:28:32.392Z",
+      "user_id": "usr_9228a17b",
+      "thread_id": "usr_9228a17b"
+    },
+    {
+      "id": "23e15cd6-34b6-4c9f-b299-530e4427aa58",
+      "client_id": "client_rnfhvm69i",
+      "sender": "client",
+      "content": "Heelo",
+      "is_read": 1,
+      "created_at": "2026-08-26T07:30:00.000Z",
+      "user_id": "usr_56142525",
+      "thread_id": "usr_56142525"
+    },
+    {
+      "id": "87b59511-30e6-4e03-989d-6e25d1cd5cdf",
+      "client_id": "client_rnfhvm69i",
+      "sender": "client",
+      "content": "Hello",
+      "is_read": 1,
+      "created_at": "2026-08-26T07:30:12.331Z",
+      "user_id": "usr_56142525",
+      "thread_id": "usr_56142525"
+    },
+    {
+      "id": "9ca8081e-e8f0-4a94-85ee-e290fcb91884",
+      "client_id": "client_rnfhvm69i",
+      "sender": "admin",
+      "content": "p;=--=p;=;",
+      "is_read": 1,
+      "created_at": "2026-08-26T07:30:16.470Z",
+      "user_id": "usr_56142525",
+      "thread_id": "usr_56142525"
+    },
+    {
+      "id": "de37b97b-4c85-480f-8e0f-42681b24bdfc",
+      "client_id": "client_rnfhvm69i",
+      "sender": "client",
+      "content": "Fuck",
+      "is_read": 1,
+      "created_at": "2026-08-26T07:30:22.181Z",
+      "user_id": "usr_56142525",
+      "thread_id": "usr_56142525"
+    },
+    {
+      "id": "e215fee6-72e7-4d02-bb79-b1676dce9e78",
+      "client_id": "client_pkei30tlw",
+      "sender": "client",
+      "content": "кпк",
+      "is_read": 1,
+      "created_at": "2026-08-28T08:54:15.053Z",
+      "user_id": "usr_8da73065",
+      "thread_id": "usr_8da73065"
+    },
+    {
+      "id": "1df0d549-313e-4418-858e-b20c9e0aeed4",
+      "client_id": "client_pkei30tlw",
+      "sender": "client",
+      "content": "ммммм",
+      "is_read": 1,
+      "created_at": "2026-08-28T08:54:57.678Z",
+      "user_id": "usr_8da73065",
+      "thread_id": "usr_8da73065"
+    },
+    {
+      "id": "3c907a3b-d7b7-44b5-af4f-7cc014617d64",
+      "client_id": "client_pkei30tlw",
+      "sender": "bot",
+      "content": "Ваше сообщение перенаправлено диспетчеру. Он ответит при первой возможности!",
+      "is_read": 1,
+      "created_at": "2026-08-28T08:54:57.723Z",
+      "user_id": "usr_8da73065",
+      "thread_id": "usr_8da73065"
+    },
+    {
+      "id": "3cdae87d-7028-4cf2-979f-d1594d155d72",
+      "client_id": "client_pkei30tlw",
+      "sender": "client",
+      "content": "мммм",
+      "is_read": 1,
+      "created_at": "2026-08-28T08:55:03.688Z",
+      "user_id": "usr_8da73065",
+      "thread_id": "usr_8da73065"
+    },
+    {
+      "id": "bb77dc85-eb65-413a-a794-ef04a078fde3",
+      "client_id": "client_pkei30tlw",
+      "sender": "bot",
+      "content": "Ваше сообщение перенаправлено диспетчеру. Он ответит при первой возможности!",
+      "is_read": 1,
+      "created_at": "2026-08-28T08:55:03.691Z",
+      "user_id": "usr_8da73065",
+      "thread_id": "usr_8da73065"
+    }
+  ],
+  "comments": [
+    {
+      "id": "cmt-1",
+      "target": "home",
+      "target_id": "home",
+      "author": "Алекс",
+      "text": "Крутой вайб, жду демо проектов.",
+      "created_at": "2026-08-21T10:00:00.000Z"
+    },
+    {
+      "id": "cc29e31f-0d3c-4b8a-a7b1-81ff4e7c233a",
+      "target": "news",
+      "target_id": "news-2",
+      "author": "ofjkn",
+      "text": "dfcdv",
+      "created_at": "2026-08-24T10:59:41.903Z"
+    }
+  ],
+  "team": [],
+  "plans": [
+    {
+      "id": "plan-python",
+      "title_ru": "Python Learning Module",
+      "status": "now",
+      "eta": "Q3 2026",
+      "description_ru": "Полноценный трек обучения Python внутри FCC."
+    },
+    {
+      "id": "plan-visual",
+      "title_ru": "Visual Emulator 2.0",
+      "status": "now",
+      "eta": "Q3 2026",
+      "description_ru": "Клик-редактор всего сайта, кнопки и медиа."
+    },
+    {
+      "id": "plan-bots",
+      "title_ru": "Telegram Ops Bot",
+      "status": "next",
+      "eta": "Q4 2026",
+      "description_ru": "Заявки и чат в Telegram для диспетчера."
+    },
+    {
+      "id": "plan-3d",
+      "title_ru": "WebGL showroom",
+      "status": "later",
+      "eta": "2027",
+      "description_ru": "3D-витрина проектов FCC."
+    }
+  ],
+  "settings": {
+    "identity_migrated_at": "2026-08-28T17:37:23.235Z",
+    "identity_migration": {
+      "guestsMerged": 3,
+      "messagesStamped": 0,
+      "ordersStamped": 0,
+      "zombieGuestsRemoved": 0
+    }
+  },
+  "notifications": [
+    {
+      "id": "notif_welcome",
+      "title": "Диспетчерская FCC онлайн",
+      "tag": "Система",
+      "type": "system",
+      "date": "28.08.2026",
+      "text": "Личный кабинет, чат и заявки теперь живут под одной записью клиента. История не теряется после регистрации.",
+      "created_at": "2026-08-28T17:37:23.262Z",
+      "target": "all",
+      "target_type": "all",
+      "target_id": null,
+      "expires_at": null,
+      "readBy": []
+    },
+    {
+      "id": "4a2f318b-b9f8-4ed4-939b-74885f58023e",
+      "title": "Заявка «Тестовая заявка»",
+      "tag": "Система",
+      "type": "order",
+      "date": "28.08.2026",
+      "text": "Статус заявки: отклонена. Причина: Не хватает ТЗ",
+      "created_at": "2026-08-28T17:38:14.905Z",
+      "target": "specific",
+      "target_type": "user",
+      "target_id": "usr_8bab35fb",
+      "targetClientId": "usr_8bab35fb",
+      "expires_at": null,
+      "readBy": []
+    }
+  ]
+}

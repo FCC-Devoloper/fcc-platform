@@ -1,0 +1,33 @@
+<!-- Уведомления -->
+<h2>Уведомления для пользователей</h2>
+            <div class="card">
+			<form id="form-notification" onsubmit="saveDevNotification(event)">
+				<input type="hidden" id="notif-id">
+				
+				<input type="text" id="notif-title" placeholder="Заголовок объявления" required>
+				
+				<div style="display:flex; gap:10px; margin-bottom:10px;">
+					<select id="notif-tag" style="flex:1;">
+						<option value="Система">Система</option>
+						<option value="Фича">Фича</option>
+						<option value="Инфо">Инфо</option>
+					</select>
+					<input type="text" id="notif-date" placeholder="Дата (например: 26.08.2026)" style="flex:1;">
+				</div>
+
+				<textarea id="notif-text" placeholder="Текст уведомления..." rows="3" required></textarea>
+
+				<div style="margin: 12px 0; display:flex; gap:10px; align-items:center;">
+					<select id="notif-target" style="flex:1;">
+						<option value="all">Всем (включая оффлайн)</option>
+						<option value="online">Только онлайн</option>
+						<option value="specific">Конкретному клиенту</option>
+					</select>
+					<input type="text" id="notif-target-id" placeholder="id клиента или user_id" style="flex:1; display:none;">
+				</div>
+                <input type="datetime-local" id="notif-expires" placeholder="Срок действия (необязательно)">
+
+				<button type="submit" class="btn-action">Опубликовать</button>
+			</form>
+            </div>
+            <div id="notifications-list-container"></div>

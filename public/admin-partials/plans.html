@@ -1,0 +1,15 @@
+<h2>Планы / roadmap</h2>
+            <div class="card">
+                <form id="form-plan" onsubmit="savePlan(event)">
+                    <input type="text" id="plan-title" placeholder="Название этапа" required>
+                    <textarea id="plan-desc" placeholder="Описание" rows="2"></textarea>
+                    <select id="plan-status">
+                        <option value="now">Сейчас</option>
+                        <option value="next">Дальше</option>
+                        <option value="later">Позже</option>
+                    </select>
+                    <input type="text" id="plan-eta" placeholder="Срок (Q4 2026)">
+                    <button type="submit" class="btn-action">Добавить план</button>
+                </form>
+            </div>
+            <div id="plans-list"></div>

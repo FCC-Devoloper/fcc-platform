@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <title>Личный кабинет | Fast Coding Crew</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/cabinet.css">
+    <link id="site-theme" rel="stylesheet" href="css/theme-original.css">
+    <script src="https://grok.com/grok-app-builder/extensions.js"></script>
+</head>
+<body>
+
+    <div id="main-content" style="display: block;">
+        
+        <!-- Navbar -->
+        <header id="navbar">
+            <a class="logo" href="/">FCC<span class="dot">.</span></a>
+            <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Меню">☰</button>
+            <nav id="site-nav">
+                <a href="/">Главная</a>
+                <a href="/projects.html">Проекты</a>
+                <a href="/news.html">Новости</a>
+                <a href="/plans.html">Планы</a>
+                <a href="/cabinet.html" class="active">Кабинет</a>
+            </nav>
+            <div class="header-right">
+                <div class="status-indicator online" id="status-badge">
+                    <span class="status-dot"></span> <span id="status-text">ONLINE</span>
+                </div>
+                <div id="auth-btn-wrapper">
+                    <button class="btn-outline" type="button" id="auth-header-btn" onclick="openAuthModal()">Вход</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Cabinet Section -->
+        <main class="cabinet-page-section">
+            <div class="cabinet-container">
+                <div class="section-header" style="text-align: left; margin-bottom: 20px;">
+                    <h2>Личный кабинет</h2>
+                    <p class="section-subtitle">Панель управления профилем и уведомления системы</p>
+                </div>
+
+                <!-- Гость (Не авторизован) -->
+                <div id="cabinet-guest" class="cabinet-guest-card" style="display: none;">
+                    <div class="cabinet-guest-icon">🔒</div>
+                    <h3>Доступ ограничен</h3>
+                    <p>Авторизуйтесь в системе, чтобы получить доступ к профилю и важным уведомлениям от команды разработчиков.</p>
+                    <button class="btn-primary" type="button" onclick="openAuthModal()">Войти / Зарегистрироваться</button>
+                </div>
+
+                <!-- Авторизованный пользователь -->
+                <div id="cabinet-user" class="cabinet-grid" style="display: none;">
+                    
+                    <!-- Сайдбар Профиля -->
+                    <aside class="cabinet-card">
+                        <div class="profile-hero">
+                            <div class="profile-avatar" id="cab-avatar">FC</div>
+                            <div class="profile-info">
+                                <h3 id="cab-username">—</h3>
+                                <span class="profile-role-badge" id="cab-role">client</span>
+                            </div>
+                        </div>
+
+                        <div class="profile-meta-list">
+                            <div class="profile-meta-item">
+                                <span class="label">Статус:</span>
+                                <span class="status-pill">
+                                    <span class="status-pill-dot"></span> <span id="cab-status">В сети</span>
+                                </span>
+                            </div>
+                            <div class="profile-meta-item">
+                                <span class="label">Системный ID:</span>
+                                <span class="value" id="cab-user-id">—</span>
+                            </div>
+                            <div class="profile-meta-item">
+                                <span class="label">Client Key:</span>
+                                <span class="value" id="cab-guest-id">—</span>
+                            </div>
+                        </div>
+
+                        <div class="cabinet-actions">
+                            <button class="btn-danger-outline" type="button" onclick="handleCabinetLogout()" style="width: 100%;">
+                                Выйти из аккаунта
+                            </button>
+                        </div>
+                    </aside>
+
+                    <!-- Уведомления от разработчиков -->
+                    <section class="cabinet-card">
+                        <div class="notifications-header">
+                            <h3>Уведомления</h3>
+                            <button class="btn-outline" type="button" onclick="reloadNotifications()" style="padding: 4px 10px; font-size: 12px;">Обновить</button>
+                        </div>
+                        <div id="cab-notifications-list" class="notifications-list"></div>
+                    </section>
+
+                    <section class="cabinet-card" style="grid-column: 1 / -1;">
+                        <div class="notifications-header">
+                            <h3>Мои заявки</h3>
+                            <button class="btn-outline" type="button" onclick="reloadCabinetOrders()" style="padding: 4px 10px; font-size: 12px;">Обновить</button>
+                        </div>
+                        <div id="cab-orders-list" class="notifications-list"></div>
+                    </section>
+
+                </div>
+            </div>
+        </main>
+
+        <!-- Модалка авторизации -->
+        <div id="auth-modal" class="modal-overlay">
+            <div class="modal-content">
+                <button class="close-btn" type="button" onclick="closeAuthModal()">✕</button>
+                
+                <div class="auth-tabs" style="display:flex; gap:8px; margin-bottom:16px;">
+                    <button type="button" class="btn-outline auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Вход</button>
+                    <button type="button" class="btn-outline auth-tab" id="tab-register" onclick="switchAuthTab('register')">Регистрация</button>
+                </div>
+
+                <h3 id="auth-title">Вход в аккаунт</h3>
+
+                <form id="auth-form" onsubmit="handleAuthSubmit(event)">
+                    <input type="text" id="auth-username" placeholder="Логин" required maxlength="32" autocomplete="username">
+                    <input type="email" id="auth-email" placeholder="Email (необязательно)" style="display:none;" autocomplete="email">
+                    <input type="password" id="auth-password" placeholder="Пароль" required minlength="4" autocomplete="current-password">
+                    <button type="submit" class="btn-primary" style="width:100%; margin-top:12px;" id="auth-submit-btn">Войти</button>
+                </form>
+                <p id="auth-error" style="color:#ff6b6b; font-size:13px; margin-top:10px; display:none;"></p>
+            </div>
+        </div>
+
+        <!-- Модальное окно Личного Кабинета -->
+        <div id="cabinet-modal" class="modal-overlay" style="display: none;">
+            <div class="modal-content cabinet-modal-content">
+                <button class="close-btn" type="button" onclick="closeCabinetModal()">✕</button>
+                
+                <div class="profile-hero">
+                    <div class="profile-avatar" id="modal-avatar">FC</div>
+                    <div class="profile-info">
+                        <h3 id="modal-username">—</h3>
+                        <span class="profile-role-badge" id="modal-role">client</span>
+                    </div>
+                </div>
+
+                <div class="profile-meta-list">
+                    <div class="profile-meta-item">
+                        <span class="label">Статус:</span>
+                        <span class="status-pill">
+                            <span class="status-pill-dot"></span> <span id="modal-status">В сети</span>
+                        </span>
+                    </div>
+                    <div class="profile-meta-item">
+                        <span class="label">Системный ID:</span>
+                        <span class="value" id="modal-user-id">—</span>
+                    </div>
+                    <div class="profile-meta-item">
+                        <span class="label">Client Key:</span>
+                        <span class="value" id="modal-guest-id">—</span>
+                    </div>
+                </div>
+
+                <div class="notifications-header">
+                    <h3>📢 Последние объявления</h3>
+                </div>
+                
+                <div id="modal-notifications-list" class="notifications-list" style="max-height: 240px;">
+                    <!-- Загружается из JS -->
+                </div>
+
+                <div class="cabinet-actions" style="margin-top: 16px;">
+                    <button class="btn-danger-outline" type="button" onclick="handleCabinetLogout()" style="width: 100%;">
+                        Выйти
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JavaScript Base & Controllers -->
+    <script src="js/site-render.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/theme-manager.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/cabinet.js"></script>
+</body>
+</html>

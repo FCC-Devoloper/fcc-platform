@@ -1,0 +1,67 @@
+/* Glass — frosted panels, ice cyan, large blur, airy */
+:root {
+    --bg-color: #12161c;
+    --card-bg: rgba(255, 255, 255, 0.06);
+    --card-border: rgba(255, 255, 255, 0.18);
+    --text-main: #f7fbff;
+    --text-muted: #b7c2cc;
+    --accent: #7ee7ff;
+    --accent-hover: #c6f6ff;
+    --radius: 16px;
+    --radius-lg: 22px;
+    --glow: 0 10px 40px rgba(126, 231, 255, 0.18);
+    --nav-bg: rgba(18, 22, 28, 0.45);
+    --hero-spot: rgba(126, 231, 255, 0.16);
+    --btn-fg: #082026;
+}
+
+html[data-theme="theme-glass"] body {
+    background:
+        radial-gradient(900px 500px at 10% 0%, rgba(126, 231, 255, 0.12), transparent 50%),
+        radial-gradient(700px 400px at 100% 80%, rgba(180, 140, 255, 0.12), transparent 50%),
+        #12161c;
+}
+html[data-theme="theme-glass"] #navbar {
+    background: rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(22px) saturate(1.4);
+}
+html[data-theme="theme-glass"] .card,
+html[data-theme="theme-glass"] .project-card,
+html[data-theme="theme-glass"] .team-card,
+html[data-theme="theme-glass"] .news-card,
+html[data-theme="theme-glass"] .cta-box,
+html[data-theme="theme-glass"] .modal-content,
+html[data-theme="theme-glass"] .chat-drawer {
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(18px) saturate(1.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+html[data-theme="theme-glass"] .btn-primary {
+    background: linear-gradient(180deg, #c6f6ff, #7ee7ff);
+    border-radius: 16px;
+}
+html[data-theme="theme-glass"] .btn-secondary,
+html[data-theme="theme-glass"] .btn-outline,
+html[data-theme="theme-glass"] .btn-python {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+}
+html[data-theme="theme-glass"] .hero-content h1 {
+    font-weight: 600;
+    letter-spacing: -0.04em;
+}
+html[data-theme="theme-glass"] .project-preview {
+    background: linear-gradient(135deg, rgba(126, 231, 255, 0.15), rgba(180, 140, 255, 0.12));
+    border-radius: 16px;
+}
+html[data-theme="theme-glass"] #chat-widget-btn {
+    background: rgba(126, 231, 255, 0.9);
+    backdrop-filter: blur(8px);
+}
+html[data-theme="theme-glass"] .fx-orbs span {
+    filter: blur(8px);
+    opacity: 0.7;
+}

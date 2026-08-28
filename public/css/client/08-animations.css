@@ -1,0 +1,38 @@
+/* FCC client CSS: 08-animations.css */
+/* ==========================================================================
+   8. KEYFRAME ANIMATIONS (ALL RESTORED)
+   ========================================================================== */
+@keyframes startPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.98); }
+}
+@keyframes starsPulse {
+    0% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+    100% { opacity: 0.4; }
+}
+@keyframes orbitSpin {
+    0% { transform: rotateX(70deg) rotateY(-15deg) rotateZ(0deg); }
+    100% { transform: rotateX(70deg) rotateY(-15deg) rotateZ(360deg); }
+}
+@keyframes fccFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+@keyframes fccOrb {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.45; }
+    50% { transform: translate3d(-24px, 18px, 0) scale(1.12); opacity: 0.75; }
+}
+@keyframes fccShine {
+    from { left: -120%; }
+    to { left: 140%; }
+}
+@keyframes fccBtnIdle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+@keyframes fccModalIn {
+    from { opacity: 0; transform: translateY(12px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+

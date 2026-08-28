@@ -1,0 +1,49 @@
+/* FCC client CSS: 09-responsive.css */
+/* ==========================================================================
+   9. MEDIA QUERIES & MOBILE OPTIMIZATION
+   ========================================================================== */
+@media (max-width: 900px) {
+    #navbar { flex-wrap: wrap; padding: 14px 5%; gap: 10px; }
+    .nav-toggle { display: block; }
+    #site-nav { display: none; width: 100%; flex-direction: column; gap: 8px; }
+    #site-nav.open { display: flex; }
+    .header-right { width: 100%; flex-wrap: wrap; gap: 8px; }
+    .hero-content h1 { font-size: 2.1rem; }
+    .hero-section { padding: 100px 5% 40px; }
+    .section { padding: 70px 5%; }
+    .cta-box { padding: 28px 18px; }
+    
+    .chat-drawer { right: 12px; left: 12px; width: auto; bottom: 100px; z-index: 5001; }
+    #chat-widget-btn { height: 72px !important; min-width: 72px; right: 12px; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); font-size: 1rem; }
+    .chat-fab-label { display: inline; }
+}
+
+/* Адаптация интро и 3D сцены под телефоны (до 700px) */
+@media (max-width: 700px) {
+    .intro-scene {
+        /* Оставляем оригинальные размеры для правильной 3D математики */
+        width: 800px; 
+        height: 800px;
+        transform-origin: center center;
+        /* Аккуратно масштабируем всю сцену (алмаз, орбита, логотип) */
+        transform: scale(0.45) translate3d(0, 0, 0); 
+    }
+    
+    /* Уменьшаем текст стартового оверлея, чтобы не вылезал */
+    .start-overlay-title { font-size: 1.35rem; }
+    .start-overlay-brand { font-size: 1rem; }
+    .start-overlay-subtitle { font-size: 0.75rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fx-orbs span, .cards-grid .card, .projects-grid .project-card, .hero-actions .btn-primary, .hero-actions .btn-python, #chat-widget-btn, .start-overlay-title, .stars-container::before, .stars-container::after {
+        animation: none !important;
+    }
+    .btn-primary:hover, .btn-secondary:hover, .btn-outline:hover, .btn-python:hover {
+        transform: none;
+    }
+}
+/* Client news polish */
+.news-card h3 { margin: 12px 0 8px; font-family: var(--font-logo, sans-serif); }
+.news-card p { color: var(--text-muted); line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.news-card time { display: block; margin-top: 12px; }

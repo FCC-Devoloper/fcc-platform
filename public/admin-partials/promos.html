@@ -1,0 +1,19 @@
+<!-- Акции & Красные Скидки -->
+<h2>Акции и Промо-скидки</h2>
+            <div class="card">
+                <form id="form-promo" onsubmit="savePromotion(event)">
+                    <input type="text" id="promo-title" placeholder="Заголовок акции (напр. Летний Буст)" required>
+                    <div class="form-row-grid">
+                        <input type="text" id="promo-discount" placeholder="Размер скидки (напр. -30% или CODE2026)" required>
+                        <input type="text" id="promo-target" placeholder="На что действует (напр. На все веб-решения)" required>
+                    </div>
+                    <textarea id="promo-desc" placeholder="Полные условия акции и правила применения..." rows="3"></textarea>
+                    <input type="text" id="promo-action-link" placeholder="Ссылка или действие при клике">
+                    <div class="form-row-grid">
+                        <input type="date" id="promo-start" title="Дата начала">
+                        <input type="date" id="promo-end" title="Дата окончания">
+                    </div>
+                    <button type="submit" class="btn-action" style="margin-top: 10px;">Запустить акцию</button>
+                </form>
+            </div>
+            <div id="promotions-list"></div>

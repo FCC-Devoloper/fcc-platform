@@ -1,0 +1,15 @@
+/* FCC client CSS: 02-header.css */
+/* ==========================================================================
+   2. HEADER & NAVIGATION
+   ========================================================================== */
+#navbar { position: fixed; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: 20px 8%; background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); z-index: 1000; transition: 0.35s ease; }
+.logo { font-family: var(--font-logo); font-size: 1.8rem; font-weight: 700; color: #fff; text-decoration: none; }
+.logo .dot { color: var(--accent); }
+nav a { color: var(--text-muted); text-decoration: none; margin: 0 15px; font-size: 0.95rem; transition: 0.3s; }
+nav a:hover { color: var(--accent); }
+.header-right { display: flex; align-items: center; gap: 20px; }
+.status-indicator { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-family: var(--font-logo); padding: 6px 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--card-border); border-radius: 20px; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: #ff4757; }
+.status-indicator.online .status-dot { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+.nav-toggle { display: none; background: transparent; border: 1px solid var(--card-border); color: var(--text-main); padding: 8px 12px; border-radius: 4px; cursor: pointer; }
+

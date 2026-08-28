@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <title>Демо проекта | FCC</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link id="site-theme" rel="stylesheet" href="css/theme-original.css">
+    <style>
+        .runner-wrap { max-width: 1280px; margin: 0 auto; padding: 28px 20px 60px; }
+        .runner-head { display:flex; justify-content:space-between; gap:20px; align-items:flex-start; margin-bottom:18px; }
+        .runner-head h1 { margin:0 0 8px; }
+        .runner-frame { width:100%; min-height:70vh; border:1px solid rgba(255,255,255,.12); border-radius:18px; background:#0b0f14; }
+        #python-output { min-height:420px; margin:0; padding:18px; border-radius:16px; background:#080b10; color:#d9f7e8; overflow:auto; white-space:pre-wrap; font:14px/1.6 Consolas,monospace; }
+        #runner-error { display:none; margin-top:24px; padding:20px; border-radius:16px; background:rgba(255,80,80,.08); border:1px solid rgba(255,80,80,.25); }
+        .runner-status { opacity:.75; margin-top:6px; }
+    </style>
+</head>
+<body class="inner-page">
+    <header id="navbar">
+        <a class="logo" href="index.html">FCC<span class="dot">.</span></a>
+        <nav id="site-nav">
+            <a href="index.html">Главная</a>
+            <a href="projects.html">Проекты</a>
+            <a href="news.html">Новости</a>
+            <a href="contacts.html">Контакты</a>
+        </nav>
+    </header>
+    <main class="runner-wrap">
+        <div class="runner-head">
+            <div>
+                <div class="tag">LIVE DEMO</div>
+                <h1 id="project-title">Загрузка…</h1>
+                <p id="project-description"></p>
+                <div class="runner-status" id="runner-status">Подготовка демо…</div>
+            </div>
+            <a class="btn-outline" href="projects.html">← Назад</a>
+        </div>
+        <section id="runner-shell" class="card">
+            <div id="html-runner">
+                <iframe id="html-frame" class="runner-frame" title="Демо проекта" sandbox="allow-scripts allow-forms"></iframe>
+            </div>
+            <div id="python-runner" style="display:none;">
+                <pre id="python-output">Подготовка Python…</pre>
+            </div>
+        </section>
+        <div id="runner-error"></div>
+    </main>
+    <script src="js/theme-manager.js"></script>
+    <script src="js/project-runner.js"></script>
+</body>
+</html>

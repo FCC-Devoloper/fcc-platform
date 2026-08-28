@@ -1,0 +1,44 @@
+<!-- Расширенные Новости & Визуальная вёрстка -->
+<h2>Новости & Конструктор медиа-блоков</h2>
+            <div class="card">
+                <form id="form-news" onsubmit="saveNews(event)">
+                    <input type="hidden" id="news-id">
+                    <input type="text" id="news-title" placeholder="Главный заголовок новости" required>
+                    <input type="text" id="news-subtitle" placeholder="Подзаголовок / Краткое введение">
+                    <textarea id="news-content" placeholder="Основной текст новости..." rows="4"></textarea>
+                    
+                    <div class="form-row-grid">
+                        <div>
+                            <label>Тип медиа</label>
+                            <select id="news-media-type">
+                                <option value="image">Картинка (URL)</option>
+                                <option value="video">Видео (URL / HTML5)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Расположение медиа</label>
+                            <select id="news-media-align">
+                                <option value="full">На всю ширину (Top Full)</option>
+                                <option value="left">Слева от текста</option>
+                                <option value="center">По центру (Centered)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Масштаб / Ширина (%)</label>
+                            <input type="number" id="news-media-scale" placeholder="100" min="20" max="100" value="100">
+                        </div>
+                    </div>
+
+                    <input type="url" id="news-media-url" placeholder="Ссылка на медиафайл">
+                    <label>Или загрузить файл с компьютера</label>
+                    <input type="file" id="news-file" accept="image/*,video/*">
+
+                    <div class="form-row-grid" style="margin-top: 10px;">
+                        <input type="text" id="news-btn-text" placeholder="Текст кнопки-ссылки (напр. Узнать больше)">
+                        <input type="url" id="news-btn-url" placeholder="Ссылка для кнопки (https://...)">
+                    </div>
+
+                    <button type="submit" class="btn-action" style="margin-top: 10px;">Опубликовать новость</button>
+                </form>
+            </div>
+            <div id="news-list-container"></div>
