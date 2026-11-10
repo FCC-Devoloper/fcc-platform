@@ -1,10 +1,12 @@
 <h2>Тексты сайта</h2>
-            <div class="card">
-                <label>Верхний тег</label>
-                <input type="text" id="setting-hero-tag">
-                <label>Главный заголовок</label>
-                <input type="text" id="setting-hero-title">
-                <label>Описание</label>
-                <textarea id="setting-hero-desc" rows="3"></textarea>
-                <button type="button" onclick="saveAllSiteTexts()" class="btn-action">Сохранить тексты</button>
-            </div>
+<p class="muted">Здесь все тексты главной страницы: о студии, цифры, услуги, шаги работы, подвал, контакты. Если поле очистить, сайт покажет текст по умолчанию (он виден серым в подсказке). Точечно править можно и в «Visual Editor».</p>
+<div class="texts-toolbar">
+    <button type="button" class="btn-action" onclick="saveAllSiteTexts()">💾 Сохранить все тексты</button>
+    <button type="button" class="btn-outline" onclick="toggleTextGroups(true)">Раскрыть все</button>
+    <button type="button" class="btn-outline" onclick="toggleTextGroups(false)">Свернуть все</button>
+    <span class="muted" id="texts-dirty"></span>
+</div>
+<div id="site-texts-form"><p class="muted">Загрузка…</p></div>
+<div class="texts-toolbar">
+    <button type="button" class="btn-action" onclick="saveAllSiteTexts()">💾 Сохранить все тексты</button>
+</div>

@@ -1,9 +1,18 @@
-<h2>Администраторы</h2>
-            <div class="card">
-                <form onsubmit="createNewAdmin(event)">
-                    <input type="text" id="new-admin-user" placeholder="Логин" required>
-                    <input type="password" id="new-admin-pass" placeholder="Пароль" required>
-                    <button type="submit" class="btn-action">Добавить админа</button>
-                </form>
-            </div>
-            <div id="admins-list"></div>
+<h2>Staff: admin + dev</h2>
+<p class="muted">
+  Новый staff создаётся только как <b>dev</b>. Invite code обязателен.
+  После создания — <code>access_key</code> для <a href="/dev.html" target="_blank">/dev.html</a> и /team-portal.html.
+  Корневого admin нельзя удалить, если он один.
+</p>
+<div class="card">
+  <form onsubmit="createNewAdmin(event)">
+    <input type="text" id="new-admin-user" placeholder="Логин dev" required autocomplete="off">
+    <input type="password" id="new-admin-pass" placeholder="Пароль" required autocomplete="new-password">
+    <input type="email" id="new-admin-email" placeholder="Email dev (желательно)">
+    <input type="hidden" id="new-admin-role" value="dev">
+    <input type="password" id="new-admin-invite" placeholder="Код приглашения (по умолчанию FCC-ADMIN-SETUP)" required>
+    <button type="submit" class="btn-action">Добавить разработчика</button>
+  </form>
+  <pre id="new-user-result" class="muted" style="margin-top:12px;white-space:pre-wrap;"></pre>
+</div>
+<div id="admins-list"></div>

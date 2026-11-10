@@ -1,0 +1,33 @@
+<h2>Фоны</h2>
+<p class="muted">Поставьте фон на любой блок сайта или на раздел админки: цвет, градиент или картинка. Пустое поле = без изменений. Кнопка «Сбросить» убирает фон.</p>
+<div class="card" id="bg-root">
+    <label>Где менять</label>
+    <select id="bg-target"></select>
+    <div class="form-row-grid">
+        <div><label>Цвет фона</label><input type="color" id="bg-color" value="#0b0f14"> <label class="muted"><input type="checkbox" id="bg-use-color"> использовать цвет</label></div>
+        <div><label>Градиент</label>
+            <select id="bg-gradient">
+                <option value="">Без градиента</option>
+                <option value="linear-gradient(135deg,#0f2027,#203a43,#2c5364)">Океан</option>
+                <option value="linear-gradient(135deg,#1a0033,#4a0e7a,#ff2bd6)">Неон</option>
+                <option value="linear-gradient(135deg,#0b0f14,#12382d,#00ff9d33)">Матрица</option>
+                <option value="linear-gradient(135deg,#2b1055,#7597de)">Закат</option>
+                <option value="radial-gradient(circle at 20% 20%,#1d2b64,#0b0f14 70%)">Космос</option>
+            </select></div>
+    </div>
+    <label>Картинка (адрес или загрузка)</label>
+    <input type="text" id="bg-image" placeholder="/uploads/... или https://...">
+    <input type="file" id="bg-file" accept="image/png,image/jpeg,image/webp,image/gif">
+    <div class="form-row-grid">
+        <div><label>Затемнение картинки: <span id="bg-overlay-val">30</span>%</label><input type="range" id="bg-overlay" min="0" max="85" value="30"></div>
+        <div><label>Размер</label>
+            <select id="bg-size"><option value="cover">Заполнить (cover)</option><option value="contain">Вписать (contain)</option><option value="repeat">Плитка</option></select>
+            <label class="muted"><input type="checkbox" id="bg-fixed"> фиксированный при прокрутке</label></div>
+    </div>
+    <div id="bg-preview" class="bg-preview">Предпросмотр</div>
+    <div class="btn-row">
+        <button type="button" class="btn-action" id="bg-save">Сохранить фон</button>
+        <button type="button" class="btn-outline" id="bg-reset">Сбросить</button>
+    </div>
+</div>
+<style>.bg-preview{height:110px;border:1px dashed #345;border-radius:10px;margin:12px 0;display:flex;align-items:center;justify-content:center;color:#9ab}.btn-row{display:flex;gap:10px;flex-wrap:wrap}</style>

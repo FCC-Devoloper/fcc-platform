@@ -302,3 +302,57 @@
 @media (max-width: 560px) {
     .hub-stats, .hub-grid { grid-template-columns: 1fr; }
 }
+
+/* Compact orders list */
+#orders-list-container { max-height: calc(100vh - 220px); overflow: hidden; display: flex; flex-direction: column; }
+.orders-scroll { overflow-y: auto; max-height: calc(100vh - 220px); padding-right: 4px; }
+.order-row.compact { padding: 10px 12px; margin-bottom: 8px; gap: 10px; align-items: flex-start; }
+.order-row.compact .order-title-line { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.order-row.compact .order-meta { font-size: 12px; margin-top: 2px; }
+.order-row.compact .order-desc { font-size: 12px; margin-top: 4px; line-height: 1.35; max-width: 100%; }
+.order-row.compact .order-actions { display: flex; flex-wrap: wrap; gap: 4px; flex-shrink: 0; }
+.order-row.compact .order-actions button { padding: 4px 8px; font-size: 12px; }
+.staff-row { align-items: flex-start; }
+
+/* ===== Редакторы (новости, проекты, тексты, Visual Editor) ===== */
+.admin-body label { display: block; font-size: 0.8rem; color: #888; margin: 10px 0 4px; }
+.admin-body label.check { display: inline-flex; align-items: center; gap: 8px; color: #ccc; font-size: 0.9rem; margin: 6px 18px 6px 0; cursor: pointer; }
+.admin-body label.check input { width: auto; margin: 0; }
+.mono { font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.check-row { margin: 12px 0 4px; }
+.form-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.btn-outline { background: transparent; border: 1px solid #333; color: #ccc; padding: 9px 14px; border-radius: 8px; cursor: pointer; font: inherit; font-size: 0.85rem; }
+.btn-outline:hover, .btn-outline.on { border-color: #00ff9d; color: #00ff9d; }
+.edit-banner { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; background: rgba(255,179,0,.1); border: 1px solid #ffb300; color: #ffd36b; border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; }
+.edit-banner[hidden] { display: none; }
+.media-preview { margin-top: 10px; max-width: 320px; }
+.media-preview img, .media-preview video { max-width: 100%; max-height: 180px; border-radius: 8px; border: 1px solid #222; }
+.list-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 26px 0 10px; }
+.list-toolbar h3 { margin: 0; }
+.list-toolbar select { width: auto; }
+.item-row { display: flex; gap: 14px; align-items: flex-start; }
+.item-row.is-hidden { opacity: .6; }
+.item-info { flex: 1; min-width: 0; }
+.item-badges { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 6px 0; }
+.item-desc { margin: 4px 0 0; overflow-wrap: anywhere; }
+.item-actions { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
+.item-actions button { padding: 7px 12px; font-size: 0.8rem; white-space: nowrap; }
+.thumb { width: 84px; height: 60px; border-radius: 6px; overflow: hidden; background: #0a0a0a; border: 1px solid #222; flex-shrink: 0; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb-empty { display: flex; align-items: center; justify-content: center; text-align: center; font-size: 11px; color: #555; line-height: 1.2; }
+.pill-off { border-color: #666 !important; color: #999 !important; }
+.pill-hot { background: #00ff9d; color: #04110a !important; border-color: #00ff9d !important; }
+.texts-toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 14px 0; }
+.texts-group { border: 1px solid #222; border-radius: 10px; margin-bottom: 10px; background: #0d0d12; }
+.texts-group summary { cursor: pointer; padding: 12px 16px; font-weight: 700; color: #00ff9d; }
+.texts-fields { padding: 4px 16px 16px; display: grid; gap: 4px; }
+.text-field span { display: block; margin-bottom: 4px; }
+.text-field code, .ve-title code { font-size: 0.7rem; color: #667; margin-left: 6px; }
+.ve-devices { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 10px 0; }
+.ve-title { margin-bottom: 8px; font-weight: 600; }
+.visual-frame-wrap { background: #08080c; border: 1px solid #222; border-radius: 10px; padding: 8px; display: flex; justify-content: center; }
+.visual-frame-wrap .visual-frame { max-width: 100%; transition: width .25s ease; border: 0; background: #050505; }
+@media (max-width: 800px) {
+    .item-row { flex-wrap: wrap; }
+    .item-actions { flex-direction: row; flex-wrap: wrap; width: 100%; }
+}

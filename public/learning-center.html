@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <title>FCC Learning Center — Гиссар и Душанбе</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/client/09-responsive.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+</head>
+<body>
+    <div id="learning-page-shell" style="max-width:1220px;margin:0 auto;padding:24px 18px 48px;">
+        <div id="learning-center-page"></div>
+    </div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script>
+    (async function () {
+        const mount = document.getElementById('learning-center-page');
+        try {
+            const res = await fetch('/client-partials/learning-center.html', { cache: 'no-store' });
+            if (!res.ok) throw new Error(res.status);
+            mount.innerHTML = await res.text();
+        } catch (e) {
+            mount.innerHTML = '<div class="card"><h2>Ошибка загрузки</h2><p>Не удалось открыть Learning Center.</p></div>';
+            return;
+        }
+        const script = document.createElement('script');
+        script.src = '/js/learning-center.js';
+        script.onload = function () { window.dispatchEvent(new Event('fcc-learning-page-ready')); };
+        document.body.appendChild(script);
+    })();
+    </script>
+</body>
+</html>

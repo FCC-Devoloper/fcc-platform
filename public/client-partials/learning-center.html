@@ -1,0 +1,70 @@
+<section id="learning-center" class="section learning-center-section" aria-label="FCC Learning Center">
+    <div class="section-header">
+        <h2>FCC Learning Center</h2>
+        <p>Курсҳои компютерӣ барои мактаббачагон ва навомӯзон</p>
+    </div>
+
+    <div class="learning-center-poster-wrap">
+        <img src="/uploads/fcc-learning-center.png" alt="FCC Learning Center — курсҳои компютерӣ" loading="lazy" class="learning-center-poster">
+    </div>
+
+    <div class="learning-center-grid">
+        <div class="card learning-center-form-card">
+            <div class="lc-form-heading">
+                <div>
+                    <h3>Запись в FCC Learning Center</h3>
+                    <p class="muted">Для первых учеников действует скидка <strong>25%</strong> на все тарифы.</p>
+                </div>
+                <span class="lc-discount-badge">-25%</span>
+            </div>
+
+            <form id="learning-center-form" novalidate>
+                <div class="lc-form-grid">
+                    <label>Имя ученика*<input id="lc-student-name" name="studentName" type="text" required maxlength="120" autocomplete="name" placeholder="Например: Али" /></label>
+                    <label>Имя родителя*<input id="lc-parent-name" name="parentName" type="text" required maxlength="120" autocomplete="name" placeholder="Например: Мухаммад" /></label>
+                    <label>Телефон*<input id="lc-phone" name="phone" type="tel" required maxlength="40" autocomplete="tel" placeholder="+992 ..." /></label>
+                    <label>Email<input id="lc-email" name="email" type="email" maxlength="160" autocomplete="email" placeholder="example@mail.com" /></label>
+                    <label>Город / район<input type="text" value="Гиссар" readonly /></label>
+                    <label>Село / джамоат<input id="lc-village" name="village" type="text" maxlength="120" placeholder="Название села / джамоата" /></label>
+                    <label class="lc-full">Адрес (необязательно)<input id="lc-address" name="address" type="text" maxlength="250" placeholder="Улица, ориентир" /></label>
+                    <label class="lc-full">Комментарий / пожелание<textarea id="lc-comment" name="comment" rows="3" maxlength="1000" placeholder="Например: удобные дни, уровень знаний, дополнительные пожелания..."></textarea></label>
+                </div>
+
+                <div class="lc-tariff-box">
+                    <div class="lc-tariff-title">Выберите тариф*</div>
+                    <div id="lc-tariffs" class="lc-tariffs" role="radiogroup" aria-label="Тариф обучения">
+                        <label class="lc-tariff"><input type="radio" name="tariff" value="basic" checked><span><b>Базовый</b><small><s>250</s> → <strong>187.5 сомонӣ/мох</strong></small></span></label>
+                        <label class="lc-tariff"><input type="radio" name="tariff" value="standard"><span><b>Стандарт</b><small><s>300</s> → <strong>225 сомонӣ/мох</strong></small></span></label>
+                        <label class="lc-tariff"><input type="radio" name="tariff" value="intensive"><span><b>Интенсив</b><small><s>500</s> → <strong>375 сомонӣ/мох</strong></small></span></label>
+                    </div>
+                </div>
+
+                <label class="lc-consent"><input id="lc-consent" type="checkbox" required> <span>Я подтверждаю, что данные указаны правильно и согласен(на) на связь по этой заявке.</span></label>
+                <div class="lc-form-actions">
+                    <button type="submit" class="btn-primary">Записаться со скидкой 25%</button>
+                    <span id="lc-form-message" class="muted" aria-live="polite"></span>
+                </div>
+            </form>
+        </div>
+
+        <div class="card learning-center-info-card">
+            <div class="lc-info-title">Гиссар — место обучения</div>
+            <p class="muted">Центр работает для учеников из Гиссара и ближайших сёл. Село и адрес можно указать в форме.</p>
+            <div class="lc-map-toolbar" role="group" aria-label="Слой карты">
+                <button type="button" class="btn-outline lc-map-layer active" data-layer="street">Улицы</button>
+                <button type="button" class="btn-outline lc-map-layer" data-layer="satellite">Спутник</button>
+            </div>
+            <div id="lc-map" class="lc-map-wrap" aria-label="Карта Гиссара"></div>
+            <div class="lc-map-links">
+                <a href="https://www.openstreetmap.org/?mlat=38.52504&amp;mlon=68.55124#map=14/38.52504/68.55124" target="_blank" rel="noopener noreferrer">Открыть карту</a>
+                <span>Гиссар · 38.52504, 68.55124</span>
+            </div>
+            <div class="lc-feature-list">
+                <div><i data-icon="users"></i> <b>То 4 нафар</b><span>гурӯҳҳои хурд</span></div>
+                <div><i data-icon="clock"></i> <b>60–90 дақиқа</b><span>давомнокии дарс</span></div>
+                <div><i data-icon="code"></i> <b>Амалӣ + мантиқ</b><span>кор дар компютер</span></div>
+                <div><i data-icon="award"></i> <b>25% скидка</b><span>барои аввалин хонандагон</span></div>
+            </div>
+        </div>
+    </div>
+</section>

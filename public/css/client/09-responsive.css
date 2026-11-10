@@ -47,3 +47,45 @@
 .news-card h3 { margin: 12px 0 8px; font-family: var(--font-logo, sans-serif); }
 .news-card p { color: var(--text-muted); line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .news-card time { display: block; margin-top: 12px; }
+
+/* FCC Learning Center — isolated module */
+.learning-center-section .learning-center-poster-wrap { display:flex; justify-content:center; }
+.learning-center-poster { display:block; width:min(100%,1023px); height:auto; border-radius:18px; box-shadow:0 14px 40px rgba(0,0,0,.18); }
+.learning-center-grid { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(320px,.8fr); gap:22px; margin-top:28px; }
+.learning-center-form-card, .learning-center-info-card { min-width:0; }
+.lc-form-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:18px; margin-bottom:18px; }
+.lc-form-heading h3 { margin:0 0 6px; }
+.lc-form-heading p { margin:0; }
+.lc-discount-badge { flex:0 0 auto; font-weight:800; color:#ff6b5c; border:1px solid rgba(255,107,92,.4); border-radius:12px; padding:8px 12px; }
+.lc-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.lc-form-grid label, .lc-full { display:flex; flex-direction:column; gap:7px; font-size:.85rem; color:var(--text-muted); }
+.lc-form-grid input, .lc-form-grid textarea { width:100%; box-sizing:border-box; padding:12px 13px; border-radius:10px; border:1px solid var(--card-border); background:rgba(0,0,0,.14); color:var(--text-main); }
+.lc-form-grid textarea { resize:vertical; }
+.lc-full { grid-column:1 / -1; }
+.lc-tariff-box { margin-top:18px; }
+.lc-tariff-title { font-weight:700; margin-bottom:10px; }
+.lc-tariffs { display:grid; gap:10px; }
+.lc-tariff { display:flex; gap:10px; align-items:flex-start; padding:12px 13px; border:1px solid var(--card-border); border-radius:12px; cursor:pointer; }
+.lc-tariff:has(input:checked) { border-color:var(--accent); box-shadow:var(--glow); }
+.lc-tariff input { margin-top:3px; }
+.lc-tariff span { display:flex; flex-direction:column; gap:4px; }
+.lc-tariff small { color:var(--text-muted); }
+.lc-consent { display:flex; gap:9px; align-items:flex-start; margin-top:16px; font-size:.84rem; color:var(--text-muted); }
+.lc-consent input { margin-top:3px; }
+.lc-form-actions { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:18px; }
+.lc-info-title { font-size:1.1rem; font-weight:800; margin-bottom:8px; }
+.lc-map-wrap { margin-top:14px; border-radius:14px; overflow:hidden; border:1px solid var(--card-border); }
+.lc-map-wrap iframe { display:block; width:100%; min-height:300px; border:0; }
+.lc-map-links { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; margin-top:8px; font-size:.8rem; color:var(--text-muted); }
+.lc-map-links a { color:var(--accent); }
+.lc-feature-list { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:18px; }
+.lc-feature-list div { display:flex; flex-direction:column; gap:3px; padding:11px; border:1px solid var(--card-border); border-radius:10px; }
+.lc-feature-list span { color:var(--text-muted); font-size:.78rem; }
+@media (max-width: 900px) { .learning-center-grid { grid-template-columns:1fr; } }
+@media (max-width: 640px) { .lc-form-grid { grid-template-columns:1fr; } .lc-full { grid-column:auto; } .lc-feature-list { grid-template-columns:1fr; } .lc-form-heading { flex-direction:column; } }
+
+/* FCC Learning Center map layers */
+.learning-center-section .lc-map-toolbar, .lc-map-toolbar { display:flex; gap:8px; margin-top:14px; flex-wrap:wrap; }
+.lc-map-layer.active { box-shadow: var(--glow); }
+.lc-map-wrap { min-height:300px; height:380px; background:#d9dde3; }
+.lc-map-wrap .leaflet-container { width:100%; height:100%; }

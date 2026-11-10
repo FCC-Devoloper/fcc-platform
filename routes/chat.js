@@ -24,7 +24,7 @@ router.get('/history/:clientId', optionalAuth, (req, res) => {
         return res.json(messagesFor(store, guestHeader));
     }
 
-    return res.json(messagesFor(store, req.params.clientId));
+    return res.status(403).json({ error: 'Нет доступа к этой переписке' });
 });
 
 router.get('/sessions', authenticateToken, requireAdmin, (req, res) => {
