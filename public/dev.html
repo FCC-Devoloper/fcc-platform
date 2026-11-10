@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FCC · Dev Panel</title>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --card: #12121a;
+      --border: #2a2a38;
+      --text: #eee;
+      --muted: #888;
+      --accent: #5b8cff;
+      --danger: #ff5b4d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, sans-serif;
+      padding: 24px 16px 48px;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; }
+    h1 { font-size: 1.35rem; margin: 0 0 6px; }
+    .sub { color: var(--muted); font-size: 13px; margin: 0 0 20px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 12px 0;
+    }
+    input, button {
+      font: inherit;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #0a0a0f;
+      color: var(--text);
+      width: 100%;
+      margin: 6px 0;
+    }
+    button {
+      cursor: pointer;
+      background: linear-gradient(90deg, #00ff9d, #5b8cff);
+      color: #04110a;
+      border: 0;
+      font-weight: 700;
+    }
+    button.ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      font-weight: 500;
+      width: auto;
+    }
+    .err { color: var(--danger); font-size: 13px; display: none; margin-top: 8px; }
+    .muted { color: var(--muted); }
+    .msg, .ord {
+      margin: 8px 0;
+      padding: 10px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    code { font-size: 12px; background: #1a1a24; padding: 2px 6px; border-radius: 4px; }
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>FCC · Панель разработчика</h1>
+    <p class="sub">Отдельный вход для role=dev. Свои заявки и сообщения от диспетчера. CSS/JS только внутри этой страницы.</p>
+
+    <div id="login-box" class="card">
+      <form id="dev-login-form">
+        <input type="text" id="dev-user" placeholder="Логин" required autocomplete="username">
+        <input type="password" id="dev-pass" placeholder="Пароль" required autocomplete="current-password">
+        <button type="submit">Войти</button>
+      </form>
+      <p class="muted" style="font-size:12px;margin-top:10px">
+        Альтернатива: <a href="/team-portal.html">team-portal</a> по access_key
+      </p>
+      <div id="dev-err" class="err"></div>
+    </div>
+
+    <div id="panel" style="display:none">
+      <div class="topbar card">
+        <div>Вы: <strong id="dev-name"></strong> · <code id="dev-role"></code></div>
+        <button type="button" class="ghost" id="btn-logout">Выйти</button>
+      </div>
+      <div class="card">
+        <h3 style="margin:0 0 8px;font-size:1rem">Сообщения от диспетчера</h3>
+        <div id="dev-msgs"><p class="muted">Загрузка…</p></div>
+      </div>
+      <div class="card">
+        <h3 style="margin:0 0 8px;font-size:1rem">Мои заявки</h3>
+        <div id="dev-orders"><p class="muted">Загрузка…</p></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    var tokKey = 'fcc_dev_token';
+
+    function headers() {
+      var t = localStorage.getItem(tokKey);
+      var h = { 'Content-Type': 'application/json' };
+      if (t) h.Authorization = 'Bearer ' + t;
+      return h;
+    }
+
+    function showErr(m) {
+      var el = document.getElementById('dev-err');
+      if (!el) return;
+      el.style.display = m ? 'block' : 'none';
+      el.textContent = m || '';
+    }
+
+    function logout() {
+      localStorage.removeItem(tokKey);
+      location.reload();
+    }
+
+    function esc(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    async function boot() {
+      if (!localStorage.getItem(tokKey)) return;
+      document.getElementById('login-box').style.display = 'none';
+      document.getElementById('panel').style.display = 'block';
+
+      var meRes = await fetch('/api/dev/me', { headers: headers() });
+      var me = await meRes.json().catch(function () { return null; });
+      if (!meRes.ok || !me || !me.success) {
+        logout();
+        return;
+      }
+      document.getElementById('dev-name').textContent = me.user.username;
+      document.getElementById('dev-role').textContent = me.user.role;
+
+      var msgs = await fetch('/api/dev/messages', { headers: headers() }).then(function (r) { return r.json(); }).catch(function () { return {}; });
+      var msgsEl = document.getElementById('dev-msgs');
+      if ((msgs.messages || []).length) {
+        msgsEl.innerHTML = msgs.messages.map(function (m) {
+          return '<div class="msg"><b>' + esc(m.from_name || '') + '</b> ' +
+            '<span class="muted">' + esc(m.created_at || '') + '</span>' +
+            '<p style="margin:6px 0 0">' + esc(m.text || '') + '</p></div>';
+        }).join('');
+      } else {
+        msgsEl.innerHTML = '<p class="muted">Пусто</p>';
+      }
+
+      var ord = await fetch('/api/dev/orders', { headers: headers() }).then(function (r) { return r.json(); }).catch(function () { return {}; });
+      var ordEl = document.getElementById('dev-orders');
+      if ((ord.orders || []).length) {
+        ordEl.innerHTML = ord.orders.map(function (o) {
+          return '<div class="ord"><strong>' + esc(o.title || '') + '</strong> — ' +
+            esc(o.status || '') + '<br><span class="muted">' + esc(o.description || '') + '</span></div>';
+        }).join('');
+      } else {
+        ordEl.innerHTML = '<p class="muted">Нет назначенных заявок</p>';
+      }
+    }
+
+    document.getElementById('dev-login-form').onsubmit = async function (e) {
+      e.preventDefault();
+      showErr('');
+      var res = await fetch('/api/auth/dev-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: document.getElementById('dev-user').value.trim(),
+          password: document.getElementById('dev-pass').value
+        })
+      });
+      var data = await res.json().catch(function () { return {}; });
+      if (!res.ok) {
+        showErr(data.error || 'Ошибка входа');
+        return;
+      }
+      localStorage.setItem(tokKey, data.token);
+      boot();
+    };
+
+    document.getElementById('btn-logout').onclick = logout;
+    boot();
+  })();
+  </script>
+</body>
+</html>

@@ -12,57 +12,28 @@
                         <option value="python">Python обучение</option>
                         <option value="other">Другое</option>
                     </select>
-                    <textarea id="order-desc" placeholder="Краткое описание требований..." rows="4" required></textarea>
-                    <input type="text" id="order-contact" placeholder="Ваш Telegram или Email" required>
-                    <button type="submit" class="btn-primary" style="width:100%;">Отправить тикет</button>
+                    <textarea id="order-desc" placeholder="Описание" rows="3"></textarea>
+                    <input type="text" id="order-contact" placeholder="Контакт (Telegram / телефон)" required>
+                    <button type="submit" class="btn-primary">Отправить заявку</button>
                 </form>
             </div>
         </div>
 
-        <!-- MODAL: AUTHENTICATION -->
+        <!-- AUTH: redirect to dedicated pages -->
         <div id="auth-modal" class="modal-overlay">
-            <div class="modal-content">
+            <div class="modal-content auth-modal-box" style="max-width:380px;text-align:center;">
                 <button class="close-btn" type="button" onclick="closeAuthModal()">✕</button>
-                
-                <div class="auth-tabs" style="display:flex; gap:8px; margin-bottom:16px;">
-                    <button type="button" class="btn-outline auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Вход</button>
-                    <button type="button" class="btn-outline auth-tab" id="tab-register" onclick="switchAuthTab('register')">Регистрация</button>
-                </div>
-
-                <h3 id="auth-title">Вход в аккаунт</h3>
-
-                <form id="auth-form" onsubmit="handleAuthSubmit(event)">
-                    <input type="text" id="auth-username" placeholder="Логин" required maxlength="32" autocomplete="username">
-                    <input type="email" id="auth-email" placeholder="Email (необязательно)" style="display:none;" autocomplete="email">
-                    <input type="password" id="auth-password" placeholder="Пароль" required minlength="4" autocomplete="current-password">
-                    <button type="submit" class="btn-primary" style="width:100%; margin-top:12px;" id="auth-submit-btn">Войти</button>
-                </form>
-
-                <p id="auth-error" style="color:#ff6b6b; font-size:13px; margin-top:10px; display:none;"></p>
+                <h3 style="margin:8px 0 18px;">Войти в аккаунт</h3>
+                <a class="auth-provider-btn" href="/login.html" style="display:flex;text-decoration:none;margin:8px 0;">G · Войти через Google / Email</a>
+                <a class="auth-provider-btn" href="/register.html" style="display:flex;text-decoration:none;margin:8px 0;">Создать аккаунт</a>
             </div>
         </div>
 
-        <!-- MODAL: PYTHON -->
         <div id="python-modal" class="modal-overlay">
-            <div class="modal-content python-modal">
+            <div class="modal-content">
                 <button class="close-btn" type="button" onclick="closePythonModal()">✕</button>
-                <div class="python-kicker">PYTHON LEARNING</div>
-                <h3>Хочу учить Python</h3>
-                <p class="python-lead">Изучай Python с нуля:</p>
-                <ul class="python-list">
-                    <li>базовый синтаксис</li>
-                    <li>функции</li>
-                    <li>ООП</li>
-                    <li>работа с файлами</li>
-                    <li>API</li>
-                    <li>Telegram-боты</li>
-                    <li>реальные проекты</li>
-                </ul>
-                <div class="python-actions">
-                    <button class="btn-primary" type="button" onclick="startPythonTrack()">Начать обучение</button>
-                    <button class="btn-outline" type="button" onclick="closePythonModal(); toggleChatWindow();">Связаться с FCC</button>
-                </div>
+                <h3>Python Learning</h3>
+                <p class="muted">Начать трек обучения Python в FCC</p>
+                <button type="button" class="btn-primary" onclick="startPythonTrack()">Начать</button>
             </div>
         </div>
-
-    </div>

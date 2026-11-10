@@ -1,0 +1,119 @@
+/* FCC client CSS: 10-content.css — карточки новостей/проектов, окна, разделы «О нас» */
+
+/* ---------- карточки с медиа ---------- */
+.project-card, .news-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+.project-card { animation: none !important; }
+.project-info, .news-body { padding: 20px 22px 22px; display: flex; flex-direction: column; flex: 1; }
+.card-media { position: relative; aspect-ratio: 16 / 9; background: #0a0a0a; overflow: hidden; }
+.card-media img, .card-media video { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+.project-card:hover .card-media img, .news-card:hover .card-media img { transform: scale(1.05); }
+.card-media-ph { display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 22%, #0a0a0a), #0a0a0a 70%); }
+.card-media-ph span { font-family: var(--font-logo); font-size: 2.6rem; font-weight: 700; color: var(--accent); letter-spacing: .06em; opacity: .9; }
+
+.card-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; min-height: 0; }
+.card-badges:empty { display: none; }
+.badge { font-size: .72rem; line-height: 1; padding: 5px 9px; border-radius: 999px; border: 1px solid var(--accent); color: var(--accent); background: transparent; }
+.badge-dim { border-color: var(--card-border); color: var(--text-muted); }
+.badge-hot { background: var(--accent); color: var(--btn-fg); border-color: var(--accent); font-weight: 700; }
+
+.project-info h3, .news-body h3 { font-family: var(--font-logo); font-size: 1.15rem; margin: 2px 0 8px; line-height: 1.3; }
+.card-text { color: var(--text-muted); font-size: .93rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.card-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 16px; }
+.card-actions a, .card-actions button { text-decoration: none; font-size: .88rem; padding: 9px 14px; }
+.project-info .tags { margin-top: 12px; flex-wrap: wrap; }
+.project-info .emotion-bar { margin-top: 14px; }
+.tags-center { justify-content: center; flex-wrap: wrap; }
+.news-card { cursor: pointer; }
+.news-card.is-pinned { border-color: color-mix(in srgb, var(--accent) 55%, var(--card-border)); }
+.news-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.read-more { margin-top: 14px; color: var(--accent); font-size: .88rem; font-weight: 600; }
+.news-card time { display: inline; margin: 0; }
+.empty-note { padding: 24px 0; }
+
+/* ---------- фильтры ---------- */
+.filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
+.filter-chip { background: transparent; border: 1px solid var(--card-border); color: var(--text-muted); border-radius: 999px; padding: 7px 14px; font: inherit; font-size: .85rem; cursor: pointer; transition: .2s; }
+.filter-chip:hover { color: var(--text-main); border-color: var(--accent); }
+.filter-chip.on { background: var(--accent); color: var(--btn-fg); border-color: var(--accent); font-weight: 600; }
+
+/* ---------- окно «Подробнее» ---------- */
+.fcc-modal { position: fixed; inset: 0; z-index: 9000; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(0,0,0,.72); backdrop-filter: blur(4px); }
+.fcc-modal.open { display: flex; }
+.fcc-modal-box { position: relative; width: min(760px, 100%); max-height: 90vh; overflow-y: auto; background: var(--card-bg); color: var(--text-main); border: 1px solid var(--card-border); border-radius: var(--radius-lg); padding: 28px; box-shadow: var(--glow); }
+.fcc-modal-close { position: sticky; top: 0; float: right; margin: -10px -10px 0 8px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--text-main); cursor: pointer; font-size: 1rem; z-index: 2; }
+.fcc-modal-close:hover { border-color: var(--accent); color: var(--accent); }
+.fcc-modal-lock { overflow: hidden; }
+.fcc-modal h2 { font-family: var(--font-logo); font-size: 1.55rem; line-height: 1.25; margin: 4px 0 12px; }
+.fcc-modal h4 { margin: 20px 0 8px; font-family: var(--font-logo); color: var(--accent); font-size: .95rem; letter-spacing: .04em; text-transform: uppercase; }
+.modal-cover { width: 100%; max-height: 340px; object-fit: cover; border-radius: 8px; margin-bottom: 18px; background: #0a0a0a; display: block; }
+.modal-lead { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 12px; }
+.modal-text p { margin-bottom: 12px; line-height: 1.7; }
+.modal-meta { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 6px 0 16px; padding: 12px 0; border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border); }
+.modal-meta dt { font-size: .72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .06em; }
+.modal-meta dd { margin: 2px 0 0; font-weight: 600; }
+.modal-result { margin: 16px 0; padding: 14px 16px; border-left: 3px solid var(--accent); background: color-mix(in srgb, var(--accent) 8%, transparent); border-radius: 0 8px 8px 0; }
+.modal-result strong { display: block; color: var(--accent); margin-bottom: 4px; }
+.modal-result p:last-child { margin-bottom: 0; }
+.modal-actions { padding-top: 22px; }
+.fcc-modal .feat-list { margin-left: 18px; }
+
+/* ---------- О нас ---------- */
+.about-section .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 36px; align-items: start; }
+.about-kicker { color: var(--accent); font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 10px; }
+.about-section h2 { font-family: var(--font-logo); font-size: clamp(1.5rem, 3vw, 2.1rem); line-height: 1.25; margin-bottom: 18px; }
+.about-text p { color: var(--text-muted); margin-bottom: 14px; line-height: 1.75; }
+.about-values { display: grid; gap: 14px; }
+.about-values .value { border: 1px solid var(--card-border); background: var(--card-bg); border-radius: var(--radius-lg); padding: 18px 20px; border-left: 3px solid var(--accent); }
+.about-values .value h3 { font-family: var(--font-logo); font-size: 1.02rem; margin-bottom: 6px; }
+.about-values .value p { color: var(--text-muted); font-size: .92rem; }
+
+.stats-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; margin-top: 34px; }
+.stat { text-align: center; padding: 22px 12px; border: 1px solid var(--card-border); border-radius: var(--radius-lg); background: var(--card-bg); }
+.stat-value { display: block; font-family: var(--font-logo); font-size: 2.2rem; font-weight: 700; color: var(--accent); line-height: 1.1; }
+.stat-label { display: block; margin-top: 6px; color: var(--text-muted); font-size: .85rem; }
+
+/* ---------- Как мы работаем ---------- */
+.process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; counter-reset: step; }
+.process-step { position: relative; padding: 26px 22px 22px; border: 1px solid var(--card-border); background: var(--card-bg); border-radius: var(--radius-lg); counter-increment: step; }
+.process-step::before { content: counter(step, decimal-leading-zero); display: block; font-family: var(--font-logo); font-size: 2rem; font-weight: 700; color: var(--accent); opacity: .85; margin-bottom: 10px; }
+.process-step h3 { font-family: var(--font-logo); margin-bottom: 8px; }
+.process-step p { color: var(--text-muted); font-size: .93rem; }
+
+/* ---------- Команда / планы ---------- */
+.team-photo { width: 92px; height: 92px; border-radius: 50%; object-fit: cover; margin: 0 auto 14px; display: block; border: 1px solid var(--accent); }
+.team-photo-placeholder { display: flex; align-items: center; justify-content: center; font-family: var(--font-logo); font-size: 2rem; color: var(--accent); background: #1a1a1a; }
+.team-role { color: var(--accent); font-size: .88rem; margin-bottom: 10px; }
+.team-bio { color: var(--text-muted); font-size: .9rem; margin: 12px 0 16px; }
+.plan-card { padding: 22px; border: 1px solid var(--card-border); border-radius: var(--radius-lg); background: var(--card-bg); }
+.plan-card h3 { font-family: var(--font-logo); margin: 8px 0; }
+.plan-card p { color: var(--text-muted); font-size: .93rem; }
+.plan-card time { display: block; margin-top: 10px; color: var(--text-muted); font-size: .8rem; }
+.plan-status { font-size: .72rem; padding: 4px 9px; border-radius: 999px; border: 1px solid var(--card-border); color: var(--text-muted); }
+.plan-card.status-now .plan-status { border-color: var(--accent); color: var(--accent); }
+.plan-card.status-done .plan-status { background: var(--accent); color: var(--btn-fg); border-color: var(--accent); }
+
+/* ---------- Подвал ---------- */
+.site-footer { margin-top: 50px; padding: 36px 20px 26px; border-top: 1px solid var(--card-border); }
+.footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 28px; }
+.footer-inner h4 { font-family: var(--font-logo); margin-bottom: 10px; font-size: .95rem; }
+.footer-inner p, .footer-inner a { color: var(--text-muted); font-size: .9rem; text-decoration: none; display: block; margin-bottom: 6px; }
+.footer-inner a:hover { color: var(--accent); }
+.footer-copy { max-width: 1100px; margin: 22px auto 0; padding-top: 16px; border-top: 1px solid var(--card-border); color: var(--text-muted); font-size: .82rem; text-align: center; }
+
+/* ---------- Правки в режиме визуального редактора ---------- */
+body.ve-active [data-cms-key] { outline: 1px dashed rgba(0,255,157,.45); outline-offset: 2px; cursor: pointer; }
+body.ve-active [data-cms-key]:hover { outline-color: #00ff9d; background: rgba(0,255,157,.08); }
+body.ve-active [data-cms-key].ve-selected { outline: 2px solid #00ff9d; background: rgba(0,255,157,.12); }
+
+@media (max-width: 800px) {
+  .about-section .about-grid, .footer-inner { grid-template-columns: 1fr; }
+  .fcc-modal-box { padding: 20px 16px; }
+  .card-actions a, .card-actions button { flex: 1 1 auto; text-align: center; }
+}
+
+/* Сетки: карточки не растягиваются на всю ширину, если их мало */
+.projects-grid, .news-grid { grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); }
+.news-grid-wide { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+nav a { white-space: nowrap; margin: 0 11px; }
+@media (max-width: 1280px) { nav a { margin: 0 8px; font-size: .9rem; } }

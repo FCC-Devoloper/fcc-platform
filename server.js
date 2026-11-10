@@ -1,3 +1,4 @@
+try { require('dotenv').config(); } catch (e) {}
 const express = require('express');
 const http = require('http');
 const path = require('path');
@@ -8,11 +9,16 @@ const db = require('./db');
 const { getBotReply } = require('./routes/bot');
 const { authenticateToken, requireAdmin, optionalAuth, verifyWsToken } = require('./middleware/auth');
 const identity = require('./lib/identity');
+const { securityHeaders, rateLimit } = require('./middleware/security');
 const adminRoutes = require('./routes/admin');
+const { UPLOAD_DIR, ensureUploadDir } = require('./lib/storage');
 
 db.initDB();
 
 const app = express();
+// Railway/other reverse proxies forward the real visitor IP in X-Forwarded-For.
+// Trust only the first proxy hop so req.ip resolves to the visitor address.
+app.set('trust proxy', 1);
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
 
@@ -24,11 +30,143 @@ const adminSockets = new Set();
 let adminOnline = false;
 let adminLastHeartbeat = 0;
 
-app.use(cors());
+app.use(securityHeaders);
+// CORS: по умолчанию только свой сайт. Другие адреса — через CORS_ORIGINS=https://a.com,https://b.com в .env
+const corsOrigins = String(process.env.CORS_ORIGINS || '').split(',').map(x => x.trim()).filter(Boolean);
+if (corsOrigins.length) {
+    app.use(cors({ origin: corsOrigins, credentials: true }));
+}
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
+
+
+// ===== FCC Learning Center — geo gate (isolated module) =====
+const learningGeoCache = new Map();
+const LEARNING_GEO_TTL_MS = 30 * 60 * 1000;
+
+function getVisitorIp(req) {
+    const forwarded = String(req.headers['x-forwarded-for'] || '');
+    const firstForwarded = forwarded.split(',')[0].trim();
+    const ip = firstForwarded || String(req.ip || req.socket?.remoteAddress || '').trim();
+    return ip.replace(/^::ffff:/i, '');
+}
+
+function normalizePlace(value) {
+    return String(value || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-zа-яё0-9]+/gi, ' ')
+        .trim();
+}
+
+function isLearningCity(city) {
+    const c = normalizePlace(city);
+    if (!c) return false;
+    const aliases = [
+        'hisor', 'gissar', 'hissar', 'hisor city', 'gissar city',
+        'dushanbe', 'dushанбе'
+    ];
+    return aliases.some(alias => c === alias || c.startsWith(alias + ' '));
+}
+
+function isPrivateOrLocalIp(ip) {
+    const v = String(ip || '').toLowerCase();
+    if (!v || v === '::1' || v === 'localhost') return true;
+    if (/^127\./.test(v) || /^10\./.test(v) || /^192\.168\./.test(v)) return true;
+    const m = v.match(/^172\.(\d+)\./);
+    if (m && Number(m[1]) >= 16 && Number(m[1]) <= 31) return true;
+    if (v.includes(':') && (v.startsWith('fc') || v.startsWith('fd') || v.startsWith('fe8') || v.startsWith('fe9') || v.startsWith('fea') || v.startsWith('feb'))) return true;
+    return false;
+}
+
+async function resolveLearningLocation(req) {
+    const ip = getVisitorIp(req);
+    const cached = learningGeoCache.get(ip);
+    if (cached && cached.expires > Date.now()) return cached.data;
+
+    if (isPrivateOrLocalIp(ip)) {
+        const data = { allowed: false, city: '', country: '', source: 'local' };
+        learningGeoCache.set(ip, { expires: Date.now() + 5 * 60 * 1000, data });
+        return data;
+    }
+
+    try {
+        const url = `https://ipapi.co/${encodeURIComponent(ip)}/json/`;
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 5000);
+        const response = await fetch(url, {
+            signal: controller.signal,
+            headers: { 'User-Agent': 'FCC-Learning-Center/1.0' }
+        });
+        clearTimeout(timer);
+        if (!response.ok) throw new Error('Geo provider HTTP ' + response.status);
+        const geo = await response.json();
+        const city = String(geo.city || '').trim();
+        const country = String(geo.country_code || geo.country || '').trim();
+        const data = {
+            allowed: (country === 'TJ' || country === 'Tajikistan') && isLearningCity(city),
+            city,
+            country,
+            latitude: Number.isFinite(Number(geo.latitude)) ? Number(geo.latitude) : null,
+            longitude: Number.isFinite(Number(geo.longitude)) ? Number(geo.longitude) : null,
+            source: 'ipapi'
+        };
+        learningGeoCache.set(ip, { expires: Date.now() + LEARNING_GEO_TTL_MS, data });
+        return data;
+    } catch (e) {
+        console.warn('[Learning Center] geo lookup failed:', e.message);
+        const data = { allowed: false, city: '', country: '', source: 'error' };
+        learningGeoCache.set(ip, { expires: Date.now() + 2 * 60 * 1000, data });
+        return data;
+    }
+}
+
+function learningCenterUnavailable(res) {
+    return res.status(404).send(`<!doctype html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FCC Learning Center</title><link rel="stylesheet" href="/css/main.css"></head><body><main style="max-width:760px;margin:12vh auto;padding:32px;text-align:center"><div class="card"><h1>FCC Learning Center</h1><p class="muted">Раздел доступен только посетителям из Гиссара и Душанбе.</p><a class="btn-primary" href="/">Вернуться на FCC</a></div></main></body></html>`);
+}
+// Server-gate admin page: require valid admin JWT via Authorization or cookie
+function extractBearerOrCookie(req) {
+    const h = req.headers['authorization'] || req.headers['Authorization'];
+    if (h && String(h).startsWith('Bearer ')) return String(h).slice(7);
+    const raw = req.headers.cookie || '';
+    const m = String(raw).match(/(?:^|;\s*)fcc_admin_token=([^;]+)/);
+    return m ? decodeURIComponent(m[1]) : null;
+}
+
+function gateAdminPage(req, res, next) {
+    const token = extractBearerOrCookie(req);
+    // Allow login page assets; HTML itself is gated
+    if (!token) {
+        return res.sendFile(path.join(__dirname, 'public', 'admin-login.html'));
+    }
+    try {
+        const payload = require('jsonwebtoken').verify(token, require('./middleware/auth').JWT_SECRET);
+        if (payload && payload.role === 'admin') return next();
+    } catch (e) {}
+    return res.sendFile(path.join(__dirname, 'public', 'admin-login.html'));
+}
+
+app.get('/team-portal.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'team-portal.html'));
+});
+app.get('/dev.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'dev.html'));
+});
+
+app.get(['/admin.html', '/admin'], gateAdminPage, (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'admin.html'));
+});
+app.get('/admin-partials/*', (req, res, next) => {
+    // partials only useful inside admin; still require token
+    const token = extractBearerOrCookie(req);
+    if (!token) return res.status(401).send('Unauthorized');
+    try {
+        const payload = require('jsonwebtoken').verify(token, require('./middleware/auth').JWT_SECRET);
+        if (payload && payload.role === 'admin') return next();
+    } catch (e) {}
+    return res.status(401).send('Unauthorized');
+});
 
 app.set('db', db);
 app.set('clients', clients);
@@ -152,6 +290,7 @@ function notifyClientOrderStatus(order) {
     identity.sendToIdentity(clients, ident, { type: 'new_notification', notification: n });
 }
 
+app.set('resolveLearningLocation', resolveLearningLocation);
 app.set('broadcastToAdmins', broadcastToAdmins);
 app.set('sendToClient', sendToClient);
 app.set('getClientList', getClientList);
@@ -159,8 +298,32 @@ app.set('notifyClientOrderStatus', notifyClientOrderStatus);
 app.set('rebindIdentitySockets', rebindIdentitySockets);
 app.set('pushNotification', pushNotification);
 
+app.get('/api/learning-center/access', async (req, res) => {
+    const geo = await resolveLearningLocation(req);
+    res.set('Cache-Control', 'no-store');
+    res.json({ success: true, allowed: !!geo.allowed, city: geo.city || '', country: geo.country || '', source: geo.source || '' });
+});
+
+app.get('/learning-center', async (req, res) => {
+    const geo = await resolveLearningLocation(req);
+    if (!geo.allowed) return learningCenterUnavailable(res);
+    return res.sendFile(path.join(__dirname, 'public', 'learning-center.html'));
+});
+
+function byNewest(a, b) {
+    return String(b.published_at || b.created_at || '').localeCompare(String(a.published_at || a.created_at || ''));
+}
+
+// Список проектов: только опубликованные, без исходного кода демо (код отдаётся по id)
 app.get('/api/projects', (req, res) => {
-    res.json({ success: true, projects: db.getData().projects || [] });
+    const projects = (db.getData().projects || [])
+        .filter(p => p.is_published !== 0)
+        .sort((a, b) => (b.is_featured || 0) - (a.is_featured || 0) || (b.sort || 0) - (a.sort || 0) || byNewest(a, b))
+        .map(p => {
+            const { html_code, python_code, ...rest } = p;
+            return { ...rest, has_demo: !!(html_code || python_code) };
+        });
+    res.json({ success: true, projects });
 });
 
 app.get('/api/projects/:id', (req, res) => {
@@ -172,8 +335,19 @@ app.get('/api/projects/:id', (req, res) => {
 });
 
 app.get('/api/news', (req, res) => {
-    const news = (db.getData().news || []).filter(n => n.is_published !== 0);
+    let news = (db.getData().news || [])
+        .filter(n => n.is_published !== 0)
+        .filter(n => !n.published_at || new Date(n.published_at).getTime() <= Date.now())
+        .sort((a, b) => (b.pinned || 0) - (a.pinned || 0) || byNewest(a, b));
+    const limit = Number(req.query.limit);
+    if (Number.isFinite(limit) && limit > 0) news = news.slice(0, Math.min(limit, 100));
     res.json({ success: true, news });
+});
+
+app.get('/api/news/:id', (req, res) => {
+    const item = (db.getData().news || []).find(n => String(n.id) === String(req.params.id));
+    if (!item || item.is_published === 0) return res.status(404).json({ success: false, error: 'Новость не найдена' });
+    res.json({ success: true, news: item });
 });
 
 app.get('/api/promotions', (req, res) => {
@@ -194,23 +368,58 @@ app.get('/api/plans', (req, res) => {
     res.json({ success: true, plans: db.getData().plans || [] });
 });
 
-app.post('/api/projects/:id/react', async (req, res) => {
-    const emotion = String(req.body.emotion || '').toLowerCase();
+app.post('/api/projects/:id/react', rateLimit({ windowMs: 60 * 1000, max: 30, message: 'Слишком часто. Попробуйте через минуту.' }), async (req, res) => {
+    const emotion = String((req.body && req.body.emotion) || '').toLowerCase();
     const allowed = ['like', 'fire', 'heart', 'wow'];
     if (!allowed.includes(emotion)) return res.status(400).json({ error: 'Неизвестная реакция' });
     const store = db.getData();
-    const project = (store.projects || []).find(p => p.id === req.params.id);
-    if (!project) return res.status(404).json({ error: 'Проект не найден' });
+    const project = (store.projects || []).find(p => String(p.id) === String(req.params.id));
+    if (!project || project.is_published === 0) return res.status(404).json({ error: 'Проект не найден' });
     if (!project.reactions) project.reactions = { like: 0, fire: 0, heart: 0, wow: 0 };
     project.reactions[emotion] = (project.reactions[emotion] || 0) + 1;
     await db.saveDB();
     res.json({ success: true, reactions: project.reactions });
 });
 
-app.use('/api/auth', require('./routes/auth'));
+app.use('/api/auth', rateLimit({ windowMs: 15 * 60 * 1000, max: 30 }), require('./routes/auth'));
 app.use('/api/orders', require('./routes/orders'));
+app.use('/api/learning-center', require('./routes/learning-center').router);
 app.use('/api/chat', require('./routes/chat'));
 app.use('/api/admin', authenticateToken, requireAdmin, adminRoutes);
+app.use('/api/dev', require('./routes/dev'));
+
+app.get('/api/public-config', (req, res) => {
+    res.json({
+        success: true,
+        googleClientId: process.env.GOOGLE_CLIENT_ID || '',
+        inviteHint: true
+    });
+});
+
+// Интро показываем не чаще раза в 8 часов (для вошедших — по аккаунту, для гостей — по браузеру)
+const INTRO_COOLDOWN_MS = 8 * 60 * 60 * 1000;
+
+app.get('/api/intro/status', optionalAuth, (req, res) => {
+    const store = db.getData();
+    if (req.user && req.user.id) {
+        const user = (store.users || []).find(u => String(u.id) === String(req.user.id));
+        const last = Number(user && user.intro_seen_at) || 0;
+        return res.json({ success: true, show: Date.now() - last >= INTRO_COOLDOWN_MS });
+    }
+    res.json({ success: true, show: true, guest: true });
+});
+
+app.post('/api/intro/seen', optionalAuth, async (req, res) => {
+    const store = db.getData();
+    if (req.user && req.user.id) {
+        const user = (store.users || []).find(u => String(u.id) === String(req.user.id));
+        if (user) {
+            user.intro_seen_at = Date.now();
+            await db.saveDB();
+        }
+    }
+    res.json({ success: true });
+});
 
 app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', adminOnline, time: new Date().toISOString() });
@@ -252,6 +461,11 @@ app.post('/api/notifications/read', optionalAuth, async (req, res) => {
 
     res.json({ success: true });
 });
+
+// Static AFTER all /api/* routes
+app.use(express.static(path.join(__dirname, 'public')));
+ensureUploadDir();
+app.use('/uploads', express.static(UPLOAD_DIR));
 
 wss.on('connection', (ws) => {
     let clientId = null;
@@ -318,10 +532,14 @@ wss.on('connection', (ws) => {
                     ws._fccIdent = ident;
                     identity.bindSocket(clients, ident, ws);
 
-                    const history = identity.messagesFor(store, clientId);
+                    const history = identity.messagesFor(store, ident.id || clientId);
+                    // Always prefer server canonical identity (user.id after login)
+                    const publicClientId = ident.kind === 'user' && ident.user
+                        ? ident.user.id
+                        : (ident.guest ? ident.guest.client_id : (ident.id || requestedId));
                     ws.send(JSON.stringify({
                         type: 'init_ok',
-                        clientId: ident.kind === 'guest' ? (ident.guest ? ident.guest.client_id : requestedId) : requestedId,
+                        clientId: publicClientId,
                         canonicalId: ident.id,
                         userId: ident.user ? ident.user.id : null,
                         history,

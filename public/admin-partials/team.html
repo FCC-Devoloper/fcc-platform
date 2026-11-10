@@ -1,0 +1,34 @@
+<h2>Команда FCC</h2>
+<p class="muted">Публичные карточки на сайте + привязка к логину разработчика (роль dev).</p>
+<div class="card">
+  <div id="team-edit-banner" class="edit-banner" hidden>
+    <span>✏️ Редактирование: <b id="team-edit-name"></b></span>
+    <button type="button" class="btn-outline" onclick="resetTeamForm()">Отменить правку</button>
+  </div>
+  <form id="form-team" onsubmit="saveTeamMember(event)">
+    <input type="hidden" id="team-id" value="">
+    <input type="text" id="team-name" placeholder="Имя" required>
+    <input type="text" id="team-role" placeholder="Роль (Frontend, Python…)" required>
+    <input type="text" id="team-skills" placeholder="Навыки через запятую (Node.js, React)">
+    <textarea id="team-bio" placeholder="О себе / что умеет" rows="3"></textarea>
+    <input type="text" id="team-photo" placeholder="URL фото (опционально)">
+    <input type="file" id="team-file" accept="image/*">
+    <div class="check-row">
+      <label class="check"><input type="checkbox" id="team-public" checked> Показывать на сайте</label>
+      <label class="check">Порядок <input type="number" id="team-sort" value="0" style="width:80px"></label>
+    </div>
+    <input type="text" id="team-user-id" placeholder="user_id логина dev (опционально)">
+    <div class="form-actions"><button type="submit" class="btn-action" id="team-save-btn">Сохранить в команду</button>
+    <button type="button" class="btn-outline" onclick="resetTeamForm()">Очистить</button></div>
+  </form>
+</div>
+<div id="team-admin-list"></div>
+
+<h3 style="margin-top:24px;">Сообщение разработчику</h3>
+<div class="card">
+  <form onsubmit="sendDevMessage(event)">
+    <input type="text" id="devmsg-to" placeholder="user_id разработчика" required>
+    <textarea id="devmsg-text" placeholder="Текст сообщения" rows="2" required></textarea>
+    <button type="submit" class="btn-action">Отправить</button>
+  </form>
+</div>

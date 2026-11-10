@@ -6,21 +6,25 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <title>Новости | Fast Coding Crew</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800&family=Rajdhani:wght@500;600;700&family=Russo+One&family=Unbounded:wght@500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
     <link id="site-theme" rel="stylesheet" href="css/theme-original.css">
+    <link rel="stylesheet" href="css/fonts.css">
 </head>
 <body class="inner-page">
     <header id="navbar">
         <a class="logo" href="index.html">FCC<span class="dot">.</span></a>
         <button class="nav-toggle" id="nav-toggle" type="button">☰</button>
         <nav id="site-nav">
-            <a href="index.html">Главная</a>
-            <a href="projects.html">Проекты</a>
-            <a href="news.html">Новости</a>
-            <a href="plans.html">Планы</a>
-            <a href="contacts.html">Контакты</a>
-        </nav>
+                <a href="/">Главная</a>
+                <a href="/#about">О нас</a>
+                <a href="/#services">Услуги</a>
+                <a id="learning-center-nav" href="/learning-center" hidden>Learning Center</a>
+                <a href="/projects.html">Проекты</a>
+                <a href="/news.html">Новости</a>
+                <a href="/plans.html">Планы</a>
+                <a href="/contacts.html">Контакты</a>
+            </nav>
         <div class="header-right">
             <button class="btn-primary" type="button" onclick="openOrderModal()">Оставить заявку</button>
             <div class="theme-switcher">
@@ -68,9 +72,18 @@
     <div id="auth-modal" class="modal-overlay"><div class="modal-content"><button class="close-btn" onclick="closeAuthModal()">✕</button><h3>Вход</h3><form id="auth-form" onsubmit="handleAuth(event)"><input id="auth-username" required><input id="auth-password" type="password" required><button class="btn-primary" type="submit">Войти</button></form></div></div>
     <div id="python-modal" class="modal-overlay"><div class="modal-content"><button class="close-btn" onclick="closePythonModal()">✕</button><h3>Python</h3></div></div>
     <script src="js/site-render.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/client/00-globals.js"></script>
+    <script src="js/client/toast.js"></script>
+    <script src="js/client/auth.js"></script>
+    <script src="js/client/orders.js"></script>
+    <script src="js/client/icons.js"></script>
+    <script src="js/client/backgrounds.js"></script>
+    <script src="js/client/a11y.js"></script>
+    <script src="js/client/promos.js"></script>
+    <script src="js/client/cms.js"></script>
+    <script src="js/fx.js"></script>
     <script src="js/chat.js"></script>
     <script src="js/theme-manager.js"></script>
-    <script>document.addEventListener('DOMContentLoaded', () => FCCRender.renderNews('#page-news'));</script>
+    <script>document.addEventListener('DOMContentLoaded', () => FCCRender.renderNews('#page-news', { filters: true }));</script>
 </body>
 </html>

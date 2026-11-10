@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FCC MATRIX — Цифровая инфраструктура будущего</title>
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800&family=Rajdhani:wght@500;600;700&family=Russo+One&family=Unbounded:wght@500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
     <link rel="stylesheet" href="css/main.css">
     <link id="site-theme" rel="stylesheet" href="css/theme-original.css">
-    <script src="https://grok.com/grok-app-builder/extensions.js"></script>
+    <link rel="stylesheet" href="css/fonts.css">
 </head>
 <body>
     <div id="partial-intro"></div>
@@ -15,8 +18,10 @@
     <div id="main-content" style="display: none;">
         <div id="partial-header"></div>
         <div id="partial-hero"></div>
+        <div id="partial-about"></div>
         <div id="partial-services"></div>
         <div id="partial-projects"></div>
+        <div id="partial-process"></div>
         <div id="partial-features"></div>
         <div id="partial-news"></div>
         <div id="partial-plans"></div>
@@ -30,7 +35,7 @@
     <script>
     (async function () {
         const parts = [
-            'intro', 'header', 'hero', 'services', 'projects', 'features',
+            'intro', 'header', 'hero', 'about', 'services', 'projects', 'process', 'features',
             'news', 'plans', 'team', 'contacts', 'footer', 'widgets', 'modals'
         ];
         await Promise.all(parts.map(async (name) => {
@@ -52,11 +57,17 @@
             'js/client/toast.js',
             'js/client/auth.js',
             'js/client/orders.js',
+            'js/client/icons.js',
+            'js/client/backgrounds.js',
+            'js/client/a11y.js',
+            'js/client/promos.js',
+            'js/site-render.js',
             'js/client/cms.js',
             'js/intro.js',
-            'js/site-render.js',
+            'js/fx.js',
             'js/chat.js',
-            'js/theme-manager.js'
+            'js/theme-manager.js',
+            'js/learning-center.js'
         ];
         for (const src of scripts) {
             await new Promise((resolve, reject) => {
@@ -67,6 +78,7 @@
                 document.body.appendChild(s);
             });
         }
+        window.__fccReady = true;
         window.dispatchEvent(new Event('fcc-partials-ready'));
     })();
     </script>

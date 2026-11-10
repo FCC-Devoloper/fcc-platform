@@ -1,0 +1,20 @@
+<h2>🎓 FCC Learning Center</h2>
+<p class="muted">Отдельные заявки учебного центра. Логика FCC MATRIX, чат, проекты и обычные заявки не изменяются.</p>
+<div id="learning-center-admin-stats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:14px 0"></div>
+
+<div class="card" style="margin-top:14px">
+  <h3 style="margin-top:0">📍 Местоположение Learning Center</h3>
+  <p class="muted">Карта остаётся прежней. Здесь можно только изменить точку, название места и адрес.</p>
+  <form id="learning-center-map-form" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">
+    <label>Город<input id="lc-map-city" type="text" value="Гиссар" maxlength="120"></label>
+    <label>Село / джамоат<input id="lc-map-village" type="text" maxlength="120"></label>
+    <label>Адрес<input id="lc-map-address" type="text" maxlength="250"></label>
+    <label>Широта<input id="lc-map-lat" type="number" step="0.000001" required></label>
+    <label>Долгота<input id="lc-map-lon" type="number" step="0.000001" required></label>
+    <div style="display:flex;align-items:end;gap:8px"><button class="btn-primary" type="submit">Сохранить место</button><span id="lc-map-settings-msg" class="muted" aria-live="polite"></span></div>
+  </form>
+</div>
+<div class="card">
+  <div class="muted" style="margin-bottom:10px">Статус, тариф, Гиссар/село, браузер и устройство сохраняются вместе с заявкой.</div>
+  <div id="learning-center-admin-list"><p class="muted">Загрузка…</p></div>
+</div>

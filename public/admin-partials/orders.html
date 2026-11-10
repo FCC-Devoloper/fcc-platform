@@ -1,3 +1,8 @@
 <h2>Заявки</h2>
-<p class="muted">Статусы: новая → в работе → ждём клиента → готово. Отказ требует причину. Готово может содержать ссылку на результат.</p>
+<p class="muted">Как почта: переключай папки. Отказ исчезает через ~24ч. Клиент — одна неподтверждённая заявка.</p>
+<div class="orders-tabs" style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0;">
+  <button type="button" class="btn-action orders-tab active" data-folder="new">Новые</button>
+  <button type="button" class="btn-outline orders-tab" data-folder="old">Старые</button>
+  <button type="button" class="btn-outline orders-tab" data-folder="all">Все заявки</button>
+</div>
 <div id="orders-list-container"><p class="muted">Заявок пока нет</p></div>

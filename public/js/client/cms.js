@@ -11,6 +11,7 @@ function fccWhenReady(fn) {
 
 // ===== 4. СИСТЕМНАЯ ЛОГИКА И CMS =====
 function maybeSkipIntro() {
+    if (isPreviewMode()) document.body.classList.add('ve-active');
     const params = new URLSearchParams(window.location.search);
     if (!params.has('preview') && !params.has('nointro') && window.self === window.top) return;
     const intro = document.getElementById('intro-screen');
@@ -55,28 +56,97 @@ function updateServerStatus(isOnline) {
     }
 }
 
-function applyCmsMap(settings) {
-    const map = [
-        ['hero.tag', 'client-hero-tag'],
-        ['hero_tag', 'client-hero-tag'],
-        ['hero.title', 'client-hero-title'],
-        ['hero_title', 'client-hero-title'],
-        ['hero.description', 'client-hero-desc'],
-        ['hero_desc', 'client-hero-desc']
-    ];
-    map.forEach(([key, id]) => {
-        const el = document.getElementById(id);
-        if (el && settings[key] && settings[key].value_ru) el.innerText = settings[key].value_ru;
-    });
-
-    document.querySelectorAll('[data-cms-key]').forEach(el => {
-        const key = el.getAttribute('data-cms-key');
-        const item = settings[key];
-        if (!item || item.value_ru == null || item.value_ru === '') return;
-        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.value = item.value_ru;
-        else el.innerText = item.value_ru;
+function applyTelegramLinks(map) {
+    map = map || {};
+    const tgLink = document.getElementById('contact-telegram-link');
+    if (tgLink) {
+        const raw = (map['contact.telegram'] && (map['contact.telegram'].value_ru || map['contact.telegram'].value)) || 'https://t.me/fcc_studio';
+        const href = String(raw).startsWith('http') ? String(raw) : ('https://t.me/' + String(raw).replace(/^@/, ''));
+        tgLink.href = href;
+        tgLink.target = '_blank';
+        tgLink.rel = 'noopener noreferrer';
+    }
+    document.querySelectorAll('a[data-contact="telegram"], a.contact-telegram').forEach((a) => {
+        a.href = (map['contact.telegram'] && map['contact.telegram'].value_ru) || 'https://t.me/fcc_studio';
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
     });
 }
+
+// Режим предпросмотра внутри визуального редактора админки: /?preview=1 в iframe
+function isPreviewMode() {
+    return window.self !== window.top && new URLSearchParams(window.location.search).has('preview');
+}
+
+function cmsSafeUrl(url) {
+    const v = String(url || '').trim();
+    return /^(https?:\/\/|mailto:|tel:|#|\/)/i.test(v) ? v : '';
+}
+
+function cmsRunAction(action, url) {
+    if (action === 'modal' && typeof openOrderModal === 'function') openOrderModal();
+    else if (action === 'chat' && typeof toggleChatWindow === 'function') toggleChatWindow();
+    else if (action === 'scroll') {
+        const id = String(url || '').replace(/^#/, '');
+        const target = id && document.getElementById(id);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+    } else if (action === 'url') {
+        const safe = cmsSafeUrl(url);
+        if (!safe) return;
+        if (/^https?:\/\//i.test(safe)) window.open(safe, '_blank', 'noopener');
+        else window.location.href = safe;
+    }
+}
+
+/** Применяет к элементу сохранённый в админке текст, стиль и действие. */
+function applyCmsItem(el, item) {
+    if (!el || !item) return;
+    if (el.dataset.cmsDefault === undefined) el.dataset.cmsDefault = (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') ? el.value : el.innerText;
+    if (item.value_ru != null && item.value_ru !== '') {
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.value = item.value_ru;
+        else el.innerText = item.value_ru;
+    }
+    const st = item.styles || {};
+    el.style.color = st.color || '';
+    el.style.fontSize = st.fontSize ? st.fontSize + 'px' : '';
+    el.style.textAlign = st.textAlign || '';
+
+    if (item.action) {
+        el.setAttribute('data-cms-action', item.action);
+        el.setAttribute('data-cms-url', item.url || '');
+        if (!isPreviewMode() && !el._cmsBound) {
+            el._cmsBound = true;
+            el.removeAttribute('onclick');
+            el.addEventListener('click', (e) => {
+                const act = el.getAttribute('data-cms-action');
+                if (!act) return;
+                e.preventDefault();
+                cmsRunAction(act, el.getAttribute('data-cms-url'));
+            });
+        }
+    }
+}
+
+function applyCmsMap(settings) {
+    if (window.FCCBg) window.FCCBg.apply(settings);
+    document.querySelectorAll('[data-cms-key]').forEach(el => {
+        applyCmsItem(el, settings[el.getAttribute('data-cms-key')]);
+    });
+    const seoTitle = settings['seo.title'] && settings['seo.title'].value_ru;
+    if (seoTitle) document.title = seoTitle;
+    const seoDesc = settings['seo.description'] && settings['seo.description'].value_ru;
+    if (seoDesc) {
+        let meta = document.querySelector('meta[name="description"]');
+        if (!meta) {
+            meta = document.createElement('meta');
+            meta.setAttribute('name', 'description');
+            document.head.appendChild(meta);
+        }
+        meta.setAttribute('content', seoDesc);
+    }
+}
+
+window.FCCCms = { applyItem: applyCmsItem, isPreview: isPreviewMode };
 
 function escapeHtml(str) {
     return String(str || '')
@@ -89,35 +159,48 @@ function escapeHtml(str) {
 
 async function loadSiteContent() {
     try {
-        const resSettings = await fetch('/api/admin/settings');
-        const settingsData = await resSettings.json();
-        if (settingsData.success && settingsData.settings) {
-            applyCmsMap(settingsData.settings);
-        }
+        // Public content only — never /api/admin/* (requires JWT)
+        try {
+            const resContent = await fetch('/api/content');
+            const contentData = await resContent.json().catch(() => ({}));
+            if (contentData.success && contentData.content) {
+                applyCmsMap(contentData.content);
+                applyTelegramLinks(contentData.content);
+            }
+        } catch (e) { console.warn('[cms] content', e); }
 
         if (window.FCCRender) {
-            await window.FCCRender.renderProjects('#client-projects-grid');
-            await window.FCCRender.renderNews('#client-news-grid', 3);
+            await window.FCCRender.renderProjects('#client-projects-grid', { limit: 3 });
+            await window.FCCRender.renderNews('#client-news-grid', { limit: 3 });
             await window.FCCRender.renderPlans('#client-plans-grid');
             await window.FCCRender.renderContacts();
+            if (window.FCCRender.renderTeam) await window.FCCRender.renderTeam('#client-team-grid');
         }
 
-        const promoRes = await fetch('/api/promotions');
-        const promoData = await promoRes.json();
-        const promoBox = document.getElementById('client-promo-row');
-        const promotions = Array.isArray(promoData.promotions) ? promoData.promotions : [];
-        if (promoBox && promotions.length) {
-            promoBox.innerHTML = promotions.map(p => (
-                '<div class="promo-chip"><strong>' + escapeHtml(p.title_ru || p.discount || '') + '</strong> ' +
-                escapeHtml(p.description_ru || '') + '</div>'
-            )).join('');
-            setupPromoWidget(promotions);
-        } else {
-            if (promoBox) promoBox.innerHTML = '';
-            hidePromoWidget();
-        }
+        try {
+            const promoRes = await fetch('/api/promotions');
+            const promoData = await promoRes.json().catch(() => ({}));
+            const promotions = Array.isArray(promoData.promotions) ? promoData.promotions : [];
+            if (window.FCCPromos) {
+                window.FCCPromos.render(promotions);
+            } else {
+                const promoBox = document.getElementById('client-promo-row');
+                if (promoBox && promotions.length) {
+                    promoBox.innerHTML = promotions.map(p => (
+                        '<div class="promo-chip"><strong>' + escapeHtml(p.title_ru || p.discount || '') + '</strong> ' +
+                        escapeHtml(p.description_ru || '') + '</div>'
+                    )).join('');
+                    setupPromoWidget(promotions);
+                } else {
+                    if (promoBox) promoBox.innerHTML = '';
+                    hidePromoWidget();
+                }
+            }
+        } catch (e) { console.warn('[cms] promos', e); }
     } catch (err) {
         console.error('Ошибка загрузки данных:', err);
+    } finally {
+        window.__fccContentReady = true;
     }
 }
 

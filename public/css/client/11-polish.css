@@ -1,0 +1,86 @@
+/* v2.2: шрифты, скругления, большие кнопки чата/акций, анимации кнопок и скролла.
+   Интро (#start-overlay и т.п.) не затрагивается. */
+:root {
+  --font-text: 'Manrope', 'Inter', system-ui, sans-serif;
+  --font-display: 'Unbounded', 'Montserrat', 'Space Grotesk', sans-serif;
+  --font-tech: 'Rajdhani', 'Exo 2', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+  --r-sm: 12px; --r-md: 18px; --r-lg: 26px;
+}
+body { font-family: var(--font-text); }
+.hero-content h1, .section-header h2, .cta-box h2, .about-block h2, .modal-content h3 {
+  font-family: var(--font-display); letter-spacing: -.01em;
+}
+.hero-content h1 { font-size: clamp(2rem, 5vw, 3.3rem); }
+.section-header h2 { font-size: clamp(1.5rem, 3.4vw, 2.1rem); }
+.logo { font-family: 'Montserrat', var(--font-logo); font-weight: 800; letter-spacing: .02em; }
+.card h3, .hero-content .tag, .status-indicator, nav a, .btn-primary, .btn-secondary, .btn-outline, .btn-python { font-family: var(--font-tech); letter-spacing: .04em; }
+.card h3 { font-size: 1.25rem; font-weight: 700; }
+.hero-content .tag, .badge, code, pre { font-family: var(--font-mono); }
+nav a { font-weight: 600; font-size: .95rem; white-space: nowrap; }
+header nav, .main-nav, .nav-links { flex-wrap: nowrap; gap: 4px; }
+header nav a { margin: 0 6px !important; }
+
+/* скругления вместо углов */
+.card, .project-card, .news-card, .plan-card, .team-card, .modal-content, .cta-box, .about-contacts, .contact-chip {
+  border-radius: var(--r-md) !important;
+}
+.project-preview { border-radius: var(--r-sm) !important; }
+.modal-content input, .modal-content select, .modal-content textarea, input, select, textarea { border-radius: var(--r-sm) !important; }
+.btn, .btn-primary, .btn-secondary, .btn-outline, .btn-python, .filter-btn, .chip { border-radius: 999px !important; }
+
+/* кнопки: hover / нажатие / блик */
+.btn, .btn-primary, .btn-secondary, .btn-outline, .btn-python, .filter-btn { display:inline-block; transition: transform .18s ease, box-shadow .25s ease, filter .2s ease, background .2s; position: relative; overflow: hidden; }
+.btn:hover, .btn-primary:hover, .btn-secondary:hover, .btn-outline:hover, .btn-python:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,.35), 0 0 18px var(--accent, #00e5ff)33; filter: brightness(1.08); }
+.btn:active, .btn-primary:active, .btn-secondary:active, .btn-outline:active, .btn-python:active { transform: translateY(0) scale(.96); }
+.btn::after, .btn-primary::after, .btn-secondary::after, .btn-outline::after, .btn-python::after { content:''; position:absolute; top:0; left:-120%; width:60%; height:100%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent); transform:skewX(-20deg); transition:left .6s ease; pointer-events:none; }
+.btn:hover::after, .btn-primary:hover::after, .btn-secondary:hover::after, .btn-outline:hover::after, .btn-python:hover::after { left:140%; }
+.fx-ripple { position:absolute; border-radius:50%; background:rgba(255,255,255,.4); transform:scale(0); animation:fxRipple .6s ease-out forwards; pointer-events:none; }
+@keyframes fxRipple { to { transform:scale(3.2); opacity:0; } }
+.card { transition: transform .25s ease, box-shadow .25s ease, border-color .25s; }
+.card:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgba(0,0,0,.4); }
+
+/* появление при прокрутке (вниз и вверх) */
+.fx-reveal { opacity: 0; transform: translateY(34px) scale(.98); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+.fx-reveal.fx-up { transform: translateY(-34px) scale(.98); }
+.fx-reveal.fx-in { opacity: 1; transform: none; }
+#fx-progress { position:fixed; top:0; left:0; height:3px; width:0; z-index:9998; background:linear-gradient(90deg,var(--accent,#00e5ff),#ff5b4d); transition:width .1s linear; pointer-events:none; }
+#fx-top { position:fixed; left:18px; bottom:22px; width:48px; height:48px; border-radius:50%; border:1px solid var(--card-border,#333); background:rgba(20,24,34,.85); color:#fff; font-size:20px; cursor:pointer; z-index:900; opacity:0; transform:translateY(20px) scale(.8); pointer-events:none; transition:.3s; padding:0; }
+#fx-top.show { opacity:1; transform:none; pointer-events:auto; }
+#fx-top:hover { background:var(--accent,#00e5ff); color:#000; transform:translateY(-3px); }
+
+/* кнопки чата и акций: крупнее на ПК, круглые */
+#chat-widget-btn {
+  height: 76px !important; min-width: 76px !important; padding: 0 28px !important;
+  font-size: 1.15rem !important; border-radius: 999px !important; font-weight: 700;
+}
+.promo-widget-btn {
+  height: 68px !important; min-width: 100px !important; padding: 0 24px !important;
+  font-size: 1.1rem !important; border-radius: 999px !important; bottom: 108px !important; right: 20px !important;
+}
+#fcc-promo-fab-root { left: 20px !important; bottom: 24px !important; }
+.fcc-promo-fab { min-width: 96px !important; height: 80px !important; padding: 0 22px !important; border-radius: 28px !important; }
+.fcc-promo-fab-pct { font-size: 1.6rem !important; }
+.fcc-promo-fab-label { font-size: .85rem !important; }
+#chat-widget-btn:hover, .promo-widget-btn:hover { transform: translateY(-4px) scale(1.06); }
+@media (max-width: 768px) {
+  #chat-widget-btn { height: 60px !important; min-width: 60px !important; padding: 0 18px !important; font-size: 1rem !important; }
+  .fcc-promo-fab { min-width: 72px !important; height: 60px !important; padding: 0 14px !important; }
+  .promo-widget-btn { height: 52px !important; min-width: 72px !important; bottom: 92px !important; }
+  #fx-top { bottom: 90px; }
+}
+
+/* блок контактов в «О нас» */
+.about-contacts { margin: 28px 0; padding: 22px; background: rgba(255,255,255,.03); border: 1px solid var(--card-border,#222); }
+.about-contacts h3 { font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 14px; }
+.about-contacts h3 small { display:block; font-family: var(--font-text); font-size:.72rem; color: var(--text-muted,#888); font-weight:400; margin-top:4px; }
+.contact-chips { display:grid; grid-template-columns: repeat(auto-fit,minmax(190px,1fr)); gap:12px; }
+.contact-chip { display:flex; flex-direction:column; gap:4px; padding:14px 16px; text-decoration:none; color:inherit; background:rgba(255,255,255,.04); border:1px solid var(--card-border,#222); transition:.25s; }
+.contact-chip b { font-family: var(--font-tech); font-size:1.05rem; }
+.contact-chip span { color: var(--accent,#00e5ff); font-size:.92rem; word-break:break-all; }
+.contact-chip:hover { transform: translateY(-3px); border-color: var(--accent,#00e5ff); }
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-reveal { opacity:1 !important; transform:none !important; transition:none; }
+  .btn-primary::after, .btn-secondary::after, .btn-outline::after, .fx-ripple { display:none; }
+}

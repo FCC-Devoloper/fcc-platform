@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Регистрация — FCC</title>
+  <style>
+    body { min-height:100vh; margin:0; display:flex; align-items:center; justify-content:center; background:#0a0a0f; color:#eee; font-family:system-ui,sans-serif; }
+    .box { width:min(400px,92vw); padding:28px 24px; border-radius:16px; border:1px solid #2a2a38; background:#12121a; }
+    h1 { margin:0 0 8px; font-size:1.35rem; text-align:center; }
+    .sub { text-align:center; color:#888; font-size:13px; margin:0 0 20px; }
+    .btn { width:100%; padding:12px 16px; margin:8px 0; border-radius:999px; border:1px solid #3a3a48; background:#14141c; color:#eee; cursor:pointer; }
+    .btn-primary { background:linear-gradient(90deg,#00ff9d,#5b8cff); color:#04110a; border:0; font-weight:700; }
+    input { width:100%; box-sizing:border-box; padding:12px; margin:6px 0; border-radius:10px; border:1px solid #333; background:#0a0a0f; color:#eee; }
+    .err { color:#ff5b4d; font-size:13px; display:none; margin-top:10px; text-align:center; }
+    .hidden { display:none !important; }
+    .link { text-align:center; margin-top:16px; font-size:13px; }
+    .link a { color:#5b8cff; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Регистрация</h1>
+    <p class="sub">Только реальный email — пришлём код подтверждения</p>
+
+    <div id="step-form">
+      <input type="text" id="username" placeholder="Логин" required maxlength="32" autocomplete="username">
+      <input type="email" id="email" placeholder="Email (обязательно)" required autocomplete="email">
+      <input type="password" id="password" placeholder="Пароль (мин. 4)" required minlength="4" autocomplete="new-password">
+      <button type="button" class="btn btn-primary" id="btn-reg">Получить код и зарегистрироваться</button>
+    </div>
+
+    <div id="step-code" class="hidden">
+      <p class="sub">Код на <span id="email-show"></span></p>
+      <input type="text" id="code" placeholder="Код из письма" inputmode="numeric">
+      <button type="button" class="btn btn-primary" id="btn-verify">Подтвердить</button>
+    </div>
+
+    <div class="err" id="err"></div>
+    <p class="link">Уже есть аккаунт? <a href="/login.html">Войти</a></p>
+  </div>
+  <script>
+  let pending=null;
+  function err(m){const e=document.getElementById('err');e.style.display=m?'block':'none';e.textContent=m||'';}
+  document.getElementById('btn-reg').onclick=async()=>{
+    err('');
+    const username=document.getElementById('username').value.trim();
+    const email=document.getElementById('email').value.trim();
+    const password=document.getElementById('password').value;
+    if(!username||username.length<2){err('Логин слишком короткий');return;}
+    if(!email||!email.includes('@')){err('Email обязателен');return;}
+    if(!password||password.length<4){err('Пароль минимум 4 символа');return;}
+    const res=await fetch('/api/auth/otp/request',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,purpose:'register'})});
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok){err(data.error||'Не удалось отправить код');return;}
+    pending={username,email,password,clientId:localStorage.getItem('fcc_client_id')};
+    document.getElementById('email-show').textContent=email;
+    document.getElementById('step-form').classList.add('hidden');
+    document.getElementById('step-code').classList.remove('hidden');
+    if(data.devCode){console.log('[FCC OTP]',data.devCode);err('DEV-код (SMTP нет): '+data.devCode); setTimeout(()=>err(''),12000);}
+  };
+  document.getElementById('btn-verify').onclick=async()=>{
+    err('');
+    if(!pending)return;
+    const code=document.getElementById('code').value.trim();
+    const res=await fetch('/api/auth/otp/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...pending,code,purpose:'register'})});
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok){err(data.error||'Неверный код');return;}
+    localStorage.setItem('fcc_token',data.token);
+    localStorage.setItem('fcc_user',JSON.stringify({id:data.userId,username:data.username,role:'client',email:pending.email}));
+    if(data.userId) localStorage.setItem('fcc_client_id',data.userId);
+    location.href='/cabinet.html';
+  };
+  </script>
+</body>
+</html>

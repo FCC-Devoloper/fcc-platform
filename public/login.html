@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Вход — FCC</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body { min-height:100vh; margin:0; display:flex; align-items:center; justify-content:center; background:#0a0a0f; color:#eee; font-family:system-ui,sans-serif; }
+    .box { width:min(400px,92vw); padding:28px 24px; border-radius:16px; border:1px solid #2a2a38; background:#12121a; }
+    h1 { margin:0 0 8px; font-size:1.35rem; text-align:center; }
+    .sub { text-align:center; color:#888; font-size:13px; margin:0 0 20px; }
+    .btn { width:100%; display:flex; align-items:center; justify-content:center; gap:10px; padding:12px 16px; margin:8px 0; border-radius:999px; border:1px solid #3a3a48; background:#14141c; color:#eee; font-size:0.95rem; cursor:pointer; }
+    .btn:hover { border-color:#5b8cff; }
+    .btn-google { border-color:#5b8cff; }
+    .btn-primary { background:linear-gradient(90deg,#00ff9d,#5b8cff); color:#04110a; border:0; font-weight:700; margin-top:12px; }
+    input { width:100%; box-sizing:border-box; padding:12px; margin:6px 0; border-radius:10px; border:1px solid #333; background:#0a0a0f; color:#eee; }
+    .err { color:#ff5b4d; font-size:13px; display:none; margin-top:10px; text-align:center; }
+    .hidden { display:none !important; }
+    .link { text-align:center; margin-top:16px; font-size:13px; }
+    .link a { color:#5b8cff; }
+    #g_id_signin { display:flex; justify-content:center; margin:8px 0; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Войти в аккаунт</h1>
+    <p class="sub">Клиенты FCC Studio</p>
+
+    <button type="button" class="btn btn-google" id="btn-google">G  Войти через Google</button>
+    <div id="g_id_onload" data-client_id="" data-callback="onGoogle" data-auto_prompt="false"></div>
+    <div class="g_id_signin" id="g_id_signin" data-type="standard" data-theme="filled_black" data-size="large" data-text="continue_with" data-shape="pill"></div>
+
+    <hr style="border:0;border-top:1px solid #222;margin:16px 0">
+
+    <div id="step-email">
+      <input type="email" id="email" placeholder="Email" required autocomplete="email">
+      <button type="button" class="btn btn-primary" id="btn-send-code">Получить код на email</button>
+    </div>
+
+    <div id="step-code" class="hidden">
+      <p class="sub">Код отправлен на <span id="email-show"></span></p>
+      <input type="text" id="code" placeholder="Код из письма" inputmode="numeric" autocomplete="one-time-code">
+      <button type="button" class="btn btn-primary" id="btn-verify">Войти</button>
+      <button type="button" class="btn" id="btn-back">← Другой email</button>
+    </div>
+
+    <div class="err" id="err"></div>
+    <p class="link">Нет аккаунта? <a href="/register.html">Регистрация</a></p>
+  </div>
+  <script>
+  function err(m){const e=document.getElementById('err');e.style.display=m?'block':'none';e.textContent=m||'';}
+  function saveSession(data){
+    if(data.role==='admin'||data.role==='dev'){err('Этот аккаунт не для клиентского входа');return false;}
+    localStorage.setItem('fcc_token',data.token);
+    localStorage.setItem('fcc_user',JSON.stringify({id:data.userId||data.user?.id,username:data.username,role:'client',email:data.user?.email}));
+    if(data.userId) localStorage.setItem('fcc_client_id',data.userId);
+    localStorage.removeItem('fcc_admin_token');
+    return true;
+  }
+  document.getElementById('btn-send-code').onclick=async()=>{
+    err('');
+    const email=document.getElementById('email').value.trim();
+    if(!email||!email.includes('@')){err('Укажите настоящий email');return;}
+    const res=await fetch('/api/auth/otp/request',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,purpose:'login'})});
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok){err(data.error||'Не удалось отправить код');return;}
+    document.getElementById('email-show').textContent=email;
+    document.getElementById('step-email').classList.add('hidden');
+    document.getElementById('step-code').classList.remove('hidden');
+    if(data.devCode){console.log('[FCC OTP]',data.devCode);err('DEV-код (SMTP нет): '+data.devCode); setTimeout(()=>err(''),8000);}
+  };
+  document.getElementById('btn-back').onclick=()=>{
+    document.getElementById('step-code').classList.add('hidden');
+    document.getElementById('step-email').classList.remove('hidden');
+  };
+  document.getElementById('btn-verify').onclick=async()=>{
+    err('');
+    const email=document.getElementById('email').value.trim();
+    const code=document.getElementById('code').value.trim();
+    const clientId=localStorage.getItem('fcc_client_id')||undefined;
+    const res=await fetch('/api/auth/otp/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,code,purpose:'login',clientId})});
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok){err(data.error||'Неверный код');return;}
+    if(!saveSession(data))return;
+    location.href='/cabinet.html';
+  };
+  window.onGoogle=async(resp)=>{
+    const res=await fetch('/api/auth/google',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({credential:resp.credential,clientId:localStorage.getItem('fcc_client_id')})});
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok){err(data.error||'Google вход не удался');return;}
+    if(!saveSession(data))return;
+    location.href='/cabinet.html';
+  };
+  (async()=>{
+    try{
+      const c=await fetch('/api/public-config').then(r=>r.json());
+      if(c.googleClientId){
+        window.FCC_GOOGLE_CLIENT_ID=c.googleClientId;
+        document.getElementById('g_id_onload').setAttribute('data-client_id',c.googleClientId);
+        const s=document.createElement('script');s.src='https://accounts.google.com/gsi/client';s.async=true;document.head.appendChild(s);
+      } else {
+        document.getElementById('btn-google').onclick=()=>err('Google пока не настроен (GOOGLE_CLIENT_ID)');
+        document.getElementById('g_id_signin').style.display='none';
+      }
+    }catch(e){}
+  })();
+  document.getElementById('btn-google').onclick=()=>{
+    // GIS button is below; focus user on it
+    const g=document.querySelector('#g_id_signin div[role=button]');
+    if(g) g.click();
+  };
+  </script>
+</body>
+</html>
