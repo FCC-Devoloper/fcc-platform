@@ -1,0 +1,20 @@
+# Dependencies and local environment
+node_modules/
+.env
+.env.*
+!.env.example
+
+# Private application data (never commit user accounts/orders/messages)
+/data/*.json
+/data/*.bak
+/data/*.backup-*
+/data/backup/
+
+# Uploaded user content
+/public/uploads/*
+!/public/uploads/.gitkeep
+
+# Runtime / local files
+*.log
+.DS_Store
+Thumbs.db
