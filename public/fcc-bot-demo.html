@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070b16">
+  <title>FCC Bot — 3D Prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/fcc-bot-demo.css">
+</head>
+<body>
+  <main class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="FCC home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
+        <span class="brand-name">FCC</span>
+        <span class="brand-divider"></span>
+        <span class="brand-caption">FAST CODING CREW</span>
+      </a>
+      <div class="top-status"><span class="status-dot"></span> CHARACTER LAB <span class="version">v0.1</span></div>
+    </header>
+
+    <section class="intro">
+      <div class="eyebrow"><span class="eyebrow-line"></span> YOUR DIGITAL GUIDE</div>
+      <h1>Знакомься.<br><span>Это FCC Bot.</span></h1>
+      <p class="intro-copy">Твой маленький проводник по миру Fast Coding Crew. Он поможет освоиться на платформе и найти нужный раздел.</p>
+      <div class="intro-actions">
+        <button class="primary-button" id="hello-button" type="button"><span>Поздороваться</span><span aria-hidden="true">↗</span></button>
+        <button class="secondary-button" id="mood-button" type="button">Сменить выражение</button>
+      </div>
+      <div class="spec-row">
+        <div class="spec"><span class="spec-icon blue"></span><span>FCC BLUE LIGHT</span></div>
+        <div class="spec"><span class="spec-icon green"></span><span>GREEN LED EYES</span></div>
+        <div class="spec"><span class="spec-icon white"></span><span>FLOATING DESIGN</span></div>
+      </div>
+    </section>
+
+    <section class="bot-area" aria-label="Интерактивная 3D-модель FCC Bot">
+      <div class="stage-grid" aria-hidden="true"></div>
+      <div class="stage-orbit orbit-one" aria-hidden="true"></div>
+      <div class="stage-orbit orbit-two" aria-hidden="true"></div>
+      <div class="stage-tag"><span class="tag-pulse"></span> 3D MODEL / LIVE</div>
+      <div id="robot-stage" class="robot-stage">
+        <div class="robot-loading" id="robot-loading">Загрузка FCC Bot…</div>
+      </div>
+      <div class="stage-caption"><span class="caption-dash"></span> DESIGNED FOR FCC <span class="caption-separator">/</span> BUILT TO HELP</div>
+      <div class="stage-hint">Нажми на робота, чтобы поздороваться</div>
+    </section>
+
+    <aside class="guide-card">
+      <div class="card-topline"><span>FCC ASSISTANT</span><span class="online-label"><i></i> ONLINE</span></div>
+      <div class="bot-message">
+        <div class="message-avatar" aria-hidden="true"><span class="avatar-eye"></span><span class="avatar-eye"></span></div>
+        <div>
+          <div class="message-name">FCC Bot <span>●</span></div>
+          <p id="bot-message" aria-live="polite">Привет! Рад знакомству. Я помогу тебе найти свой путь в FCC.</p>
+        </div>
+      </div>
+      <div class="card-divider"></div>
+      <div class="quick-title">ЧЕМ ПОМОЧЬ?</div>
+      <div class="quick-actions">
+        <button class="quick-button" type="button" data-question="learning"><span class="quick-icon">⌘</span><span><b>Обучение</b><small>Где начать учиться?</small></span><span class="quick-arrow">↗</span></button>
+        <button class="quick-button" type="button" data-question="projects"><span class="quick-icon">{ }</span><span><b>Проекты</b><small>Что создаёт FCC?</small></span><span class="quick-arrow">↗</span></button>
+        <button class="quick-button" type="button" data-question="contacts"><span class="quick-icon">✳</span><span><b>Контакты</b><small>Как связаться с командой?</small></span><span class="quick-arrow">↗</span></button>
+      </div>
+      <div class="card-footer"><span class="footer-spark">✦</span><span>Скоро я узнаю о FCC ещё больше.</span></div>
+    </aside>
+
+    <footer class="bottom-bar">
+      <span>FAST CODING CREW <b>©</b> 2026</span>
+      <span class="bottom-center">INTERACTIVE CHARACTER PROTOTYPE</span>
+      <span class="bottom-tech">THREE.JS <i></i> WEBGL</span>
+    </footer>
+  </main>
+
+  <script type="module" src="/js/fcc-bot-demo.js"></script>
+</body>
+</html>
