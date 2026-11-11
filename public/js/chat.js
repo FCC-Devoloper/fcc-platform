@@ -39,9 +39,77 @@ function getOrCreateClientId() {
     return id;
 }
 
+
+function clearChatDom() {
+    const container = document.getElementById('chat-messages');
+    if (!container) return;
+    container.innerHTML = '<div class="message bot"><div class="msg-text">Здравствуйте! Я автоматический ассистент FCC. Чем могу помочь?</div></div>';
+    unread = 0;
+    const badge = document.getElementById('unread-count');
+    if (badge) badge.style.display = 'none';
+}
+
+function bindIdentityAfterAuth(user) {
+    if (!user || !user.id) return;
+    // Server is source of truth — local id becomes user id
+    clientId = user.id;
+    localStorage.setItem('fcc_client_id', user.id);
+    localStorage.setItem('fcc_canonical_id', user.id);
+    clearChatDom();
+    if (socket && socket.readyState === 1) {
+        try { socket.close(); } catch (e) {}
+    }
+    initWebSocket();
+}
+
+function resetGuestSession() {
+    localStorage.removeItem('fcc_token');
+    localStorage.removeItem('fcc_user');
+    localStorage.removeItem('fcc_canonical_id');
+    // New anonymous guest for this browser only (not chat history for accounts)
+    let id;
+    if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+        id = 'guest_' + crypto.randomUUID().replace(/-/g, '').slice(0, 12).toUpperCase();
+    } else {
+        id = 'guest_' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 8).toUpperCase();
+    }
+    localStorage.setItem('fcc_client_id', id);
+    clientId = id;
+    clearChatDom();
+    if (socket && socket.readyState === 1) {
+        try { socket.close(); } catch (e) {}
+    }
+    initWebSocket();
+}
+
+window.reconnectChatIdentity = function () {
+    const user = getLoggedUser();
+    if (user && user.id) bindIdentityAfterAuth(user);
+    else {
+        if (socket && socket.readyState === 1) {
+            try { socket.close(); } catch (e) {}
+        }
+        initWebSocket();
+    }
+};
+window.resetGuestSession = resetGuestSession;
+window.clearChatDom = clearChatDom;
+
+
 clientId = getOrCreateClientId();
 
+// If already logged in, prefer user id over guest
+(function () {
+    const u = getLoggedUser();
+    if (u && u.id) {
+        clientId = u.id;
+        localStorage.setItem('fcc_client_id', u.id);
+    }
+})();
+
 fccWhenReady(() => {
+    // В предпросмотре визуального редактора чат не подключаем: иначе в админке появляются «гости»
+    if (window.self !== window.top && new URLSearchParams(window.location.search).has('preview')) return;
     initWebSocket();
 });
 

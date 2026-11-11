@@ -58,13 +58,16 @@ async function submitOrder(e) {
             headers,
             body: JSON.stringify(payload)
         });
+        const data = await res.json().catch(() => ({}));
         if (res.ok) {
             showToast('Заявка успешно отправлена!');
             closeOrderModal();
             const form = document.getElementById('order-form');
             if (form) form.reset();
+        } else if (res.status === 429) {
+            showToast(data.error || 'Уже есть заявка без подтверждения. Дождитесь диспетчера.', 'error');
         } else {
-            showToast('Ошибка при отправке заявки.', 'error');
+            showToast(data.error || 'Ошибка при отправке заявки.', 'error');
         }
     } catch (err) {
         showToast('Нет соединения с сервером.', 'error');

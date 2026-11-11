@@ -1,44 +1,81 @@
-<!-- Расширенные Новости & Визуальная вёрстка -->
-<h2>Новости & Конструктор медиа-блоков</h2>
-            <div class="card">
-                <form id="form-news" onsubmit="saveNews(event)">
-                    <input type="hidden" id="news-id">
-                    <input type="text" id="news-title" placeholder="Главный заголовок новости" required>
-                    <input type="text" id="news-subtitle" placeholder="Подзаголовок / Краткое введение">
-                    <textarea id="news-content" placeholder="Основной текст новости..." rows="4"></textarea>
-                    
-                    <div class="form-row-grid">
-                        <div>
-                            <label>Тип медиа</label>
-                            <select id="news-media-type">
-                                <option value="image">Картинка (URL)</option>
-                                <option value="video">Видео (URL / HTML5)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label>Расположение медиа</label>
-                            <select id="news-media-align">
-                                <option value="full">На всю ширину (Top Full)</option>
-                                <option value="left">Слева от текста</option>
-                                <option value="center">По центру (Centered)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label>Масштаб / Ширина (%)</label>
-                            <input type="number" id="news-media-scale" placeholder="100" min="20" max="100" value="100">
-                        </div>
-                    </div>
+<h2>Новости</h2>
+<p class="muted">Создавайте, редактируйте, закрепляйте и скрывайте новости. Пустая строка между абзацами = новый абзац на сайте.</p>
+<div class="card">
+    <div id="news-edit-banner" class="edit-banner" hidden>
+        <span>✏️ Редактирование: <b id="news-edit-name"></b></span>
+        <button type="button" class="btn-outline" onclick="resetNewsForm()">Отменить правку</button>
+    </div>
+    <form id="form-news" onsubmit="saveNews(event)">
+        <input type="hidden" id="news-id">
+        <label>Заголовок *</label>
+        <input type="text" id="news-title" maxlength="200" placeholder="Главный заголовок новости" required>
+        <label>Подзаголовок (виден в карточке)</label>
+        <input type="text" id="news-subtitle" maxlength="300" placeholder="Короткое введение в одну строку">
+        <label>Текст новости <span class="muted" id="news-content-count"></span></label>
+        <textarea id="news-content" rows="8" maxlength="20000" placeholder="Основной текст. Абзацы разделяйте пустой строкой."></textarea>
 
-                    <input type="url" id="news-media-url" placeholder="Ссылка на медиафайл">
-                    <label>Или загрузить файл с компьютера</label>
-                    <input type="file" id="news-file" accept="image/*,video/*">
-
-                    <div class="form-row-grid" style="margin-top: 10px;">
-                        <input type="text" id="news-btn-text" placeholder="Текст кнопки-ссылки (напр. Узнать больше)">
-                        <input type="url" id="news-btn-url" placeholder="Ссылка для кнопки (https://...)">
-                    </div>
-
-                    <button type="submit" class="btn-action" style="margin-top: 10px;">Опубликовать новость</button>
-                </form>
+        <div class="form-row-grid">
+            <div>
+                <label>Рубрика</label>
+                <input type="text" id="news-category" list="news-cat-list" maxlength="60" placeholder="Обновления, События…">
+                <datalist id="news-cat-list"></datalist>
             </div>
-            <div id="news-list-container"></div>
+            <div>
+                <label>Дата публикации (пусто = сейчас)</label>
+                <input type="date" id="news-published-at">
+            </div>
+        </div>
+
+        <div class="form-row-grid">
+            <div>
+                <label>Тип медиа</label>
+                <select id="news-media-type">
+                    <option value="image">Картинка</option>
+                    <option value="video">Видео</option>
+                </select>
+            </div>
+            <div>
+                <label>Расположение медиа</label>
+                <select id="news-media-align">
+                    <option value="full">На всю ширину</option>
+                    <option value="left">Слева</option>
+                    <option value="center">По центру</option>
+                </select>
+            </div>
+            <div>
+                <label>Ширина медиа (%)</label>
+                <input type="number" id="news-media-scale" min="20" max="100" value="100">
+            </div>
+        </div>
+
+        <label>Ссылка на картинку/видео</label>
+        <input type="text" id="news-media-url" placeholder="https://… или загрузите файл ниже">
+        <label>Или загрузить файл (JPG, PNG, WEBP, GIF до 5 МБ)</label>
+        <input type="file" id="news-file" accept="image/*">
+        <div id="news-media-preview" class="media-preview" hidden></div>
+
+        <div class="form-row-grid">
+            <div><label>Текст кнопки</label><input type="text" id="news-btn-text" maxlength="60" placeholder="Узнать больше"></div>
+            <div><label>Ссылка кнопки (https://… или #order)</label><input type="text" id="news-btn-url" placeholder="https://…"></div>
+        </div>
+
+        <div class="check-row">
+            <label class="check"><input type="checkbox" id="news-published" checked> Опубликовано</label>
+            <label class="check"><input type="checkbox" id="news-pinned"> Закрепить сверху</label>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-action" id="news-save-btn">Опубликовать новость</button>
+            <button type="button" class="btn-outline" onclick="resetNewsForm()">Очистить форму</button>
+        </div>
+    </form>
+</div>
+<div class="list-toolbar">
+    <h3>Все новости <span class="muted" id="news-total"></span></h3>
+    <select id="news-filter" onchange="loadNews()">
+        <option value="all">Все</option>
+        <option value="published">Опубликованные</option>
+        <option value="hidden">Скрытые</option>
+    </select>
+</div>
+<div id="news-list-container"></div>

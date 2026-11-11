@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
     <title>FCC MATRIX // Панель Главного Диспетчера</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800&family=Rajdhani:wght@500;600;700&family=Russo+One&family=Unbounded:wght@500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/admin.css">
-    <script src="https://grok.com/grok-app-builder/extensions.js"></script>
 </head>
 <body class="admin-body">
 
@@ -19,12 +21,15 @@
             <button class="nav-btn" data-tab="visual" type="button">Visual Editor</button>
             <button class="nav-btn" data-tab="notifications" type="button">📢 Уведомления</button>
             <button class="nav-btn" data-tab="projects" type="button">Проекты</button>
-            <button class="nav-btn" data-tab="news" type="button">Новости & Визуал</button>
+            <button class="nav-btn" data-tab="news" type="button">Новости</button>
             <button class="nav-btn" data-tab="promos" type="button">Акции & Скидки</button>
             <button class="nav-btn" data-tab="site-cms" type="button">Тексты сайта</button>
+            <button class="nav-btn" data-tab="backgrounds" type="button">🎨 Фоны</button>
             <button class="nav-btn" data-tab="contacts" type="button">Контакты</button>
             <button class="nav-btn" data-tab="plans" type="button">Планы</button>
             <button class="nav-btn" data-tab="orders" type="button">Заявки</button>
+            <button class="nav-btn" data-tab="learning-center" type="button">🎓 Learning Center</button>
+            <button class="nav-btn" data-tab="team" type="button">Команда</button>
             <button class="nav-btn" data-tab="users" type="button">Админы</button>
         </div>
         <button class="nav-btn logout" type="button" onclick="logoutAdmin()">Выйти</button>
@@ -43,6 +48,8 @@
 
         <section id="tab-projects" class="tab-content" data-partial="projects" style="display:none;"></section>
 
+        <section id="tab-backgrounds" class="tab-content" data-partial="backgrounds" style="display:none;"></section>
+
         <section id="tab-site-cms" class="tab-content" data-partial="site-cms" style="display:none;"></section>
 
         <section id="tab-contacts" class="tab-content" data-partial="contacts" style="display:none;"></section>
@@ -50,7 +57,9 @@
         <section id="tab-plans" class="tab-content" data-partial="plans" style="display:none;"></section>
 
         <section id="tab-orders" class="tab-content" data-partial="orders" style="display:none;"></section>
+        <section id="tab-learning-center" class="tab-content" data-partial="learning-center" style="display:none;"></section>
 
+        <section id="tab-team" class="tab-content" data-partial="team" style="display:none;"></section>
         <section id="tab-users" class="tab-content" data-partial="users" style="display:none;"></section>
     </main>
 
@@ -83,5 +92,8 @@
     </div>
 
     <script src="js/admin.js"></script>
+    <script src="js/admin-editors.js"></script>
+    <script src="js/client/backgrounds.js"></script>
+    <script src="js/admin-backgrounds.js"></script>
 </body>
 </html>

@@ -2,18 +2,40 @@
 <h2>Акции и Промо-скидки</h2>
             <div class="card">
                 <form id="form-promo" onsubmit="savePromotion(event)">
+                    <input type="hidden" id="promo-id" value="">
                     <input type="text" id="promo-title" placeholder="Заголовок акции (напр. Летний Буст)" required>
                     <div class="form-row-grid">
                         <input type="text" id="promo-discount" placeholder="Размер скидки (напр. -30% или CODE2026)" required>
                         <input type="text" id="promo-target" placeholder="На что действует (напр. На все веб-решения)" required>
                     </div>
                     <textarea id="promo-desc" placeholder="Полные условия акции и правила применения..." rows="3"></textarea>
-                    <input type="text" id="promo-action-link" placeholder="Ссылка или действие при клике">
+                    <div class="form-row-grid">
+                        <input type="text" id="promo-action-link" placeholder="Ссылка «Перейти» (URL или #order)">
+                        <input type="text" id="promo-details-link" placeholder="Доп. ссылка подробнее (опционально)">
+                    </div>
+                    <div class="form-row-grid">
+                        <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#888;">
+                            Позиция на сайте
+                            <select id="promo-position">
+                                <option value="TOP">TOP — под hero</option>
+                                <option value="MIDDLE">MIDDLE — перед услугами</option>
+                                <option value="BOTTOM" selected>BOTTOM — внизу / виджет-зона</option>
+                                <option value="CHAT">CHAT — у виджета чата</option>
+                            </select>
+                        </label>
+                        <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#888;">
+                            Видимость
+                            <select id="promo-visibility">
+                                <option value="VISIBLE" selected>VISIBLE — показывать</option>
+                                <option value="HIDDEN">HIDDEN — скрыта</option>
+                            </select>
+                        </label>
+                    </div>
                     <div class="form-row-grid">
                         <input type="date" id="promo-start" title="Дата начала">
                         <input type="date" id="promo-end" title="Дата окончания">
                     </div>
-                    <button type="submit" class="btn-action" style="margin-top: 10px;">Запустить акцию</button>
+                    <button type="submit" class="btn-action" style="margin-top: 10px;">Сохранить акцию</button>
                 </form>
             </div>
             <div id="promotions-list"></div>

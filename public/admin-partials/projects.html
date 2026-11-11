@@ -1,23 +1,65 @@
 <h2>Проекты</h2>
-            <div class="card">
-                <form id="form-project" onsubmit="saveProject(event)">
-                    <input type="hidden" id="project-id">
-                    <input type="text" id="project-title" placeholder="Название проекта" required>
-                    <textarea id="project-desc" placeholder="Описание..." rows="3"></textarea>
-                    <input type="url" id="project-demo" placeholder="Внешнее демо / URL">
-                    <select id="project-runtime">
-                        <option value="">Автоопределение</option>
-                        <option value="html">HTML / Web</option>
-                        <option value="python">Python</option>
-                    </select>
-                    <input type="text" id="project-tech" placeholder="Технологии (Node.js, WebSockets)">
-                    <input type="text" id="project-features" placeholder="Фишки через запятую">
-                    <input type="url" id="project-image" placeholder="Картинка проекта (URL)">
-                    <label>HTML-код демо</label>
-                    <textarea id="project-html" rows="8" placeholder="Вставь HTML/CSS/JS-код, который клиент сможет запустить в браузере"></textarea>
-                    <label>Python-код демо</label>
-                    <textarea id="project-python" rows="8" placeholder="Вставь Python-код для запуска прямо в браузере"></textarea>
-                    <button type="submit" class="btn-action">Сохранить проект</button>
-                </form>
+<p class="muted">Карточка проекта на сайте: краткое описание видно в списке, подробное — в окне «Подробнее».</p>
+<div class="card">
+    <div id="project-edit-banner" class="edit-banner" hidden>
+        <span>✏️ Редактирование: <b id="project-edit-name"></b></span>
+        <button type="button" class="btn-outline" onclick="resetProjectForm()">Отменить правку</button>
+    </div>
+    <form id="form-project" onsubmit="saveProject(event)">
+        <input type="hidden" id="project-id">
+        <label>Название *</label>
+        <input type="text" id="project-title" maxlength="160" placeholder="Название проекта" required>
+        <label>Краткое описание (в карточке)</label>
+        <textarea id="project-desc" rows="2" maxlength="600" placeholder="1–2 предложения"></textarea>
+        <label>Подробное описание (в окне «Подробнее»)</label>
+        <textarea id="project-full" rows="6" maxlength="8000" placeholder="Задача, что сделали, как работает. Абзацы — через пустую строку."></textarea>
+        <label>Результат</label>
+        <textarea id="project-results" rows="2" maxlength="1000" placeholder="Чего достигли: сроки, цифры, отзыв заказчика"></textarea>
+
+        <div class="form-row-grid">
+            <div><label>Категория</label><input type="text" id="project-category" list="project-cat-list" maxlength="60" placeholder="Сайты, Боты…"><datalist id="project-cat-list"></datalist></div>
+            <div><label>Заказчик</label><input type="text" id="project-client" maxlength="120" placeholder="Название компании"></div>
+            <div><label>Год</label><input type="text" id="project-year" maxlength="10" placeholder="2026"></div>
+        </div>
+
+        <label>Технологии (через запятую)</label>
+        <input type="text" id="project-tech" maxlength="300" placeholder="Node.js, WebSockets">
+        <label>Фишки (через запятую)</label>
+        <input type="text" id="project-features" placeholder="Live-метрики, Админка">
+
+        <label>Картинка проекта (ссылка)</label>
+        <input type="text" id="project-image" placeholder="https://… или загрузите файл ниже">
+        <input type="file" id="project-file" accept="image/*">
+        <div id="project-media-preview" class="media-preview" hidden></div>
+
+        <div class="form-row-grid">
+            <div><label>Внешнее демо (https://…)</label><input type="text" id="project-demo" placeholder="https://…"></div>
+            <div><label>Тип демо-кода</label>
+                <select id="project-runtime">
+                    <option value="">Автоопределение</option>
+                    <option value="html">HTML / Web</option>
+                    <option value="python">Python</option>
+                </select>
             </div>
-            <div id="projects-list-container"></div>
+        </div>
+        <label>HTML-код демо (запускается в браузере посетителя)</label>
+        <textarea id="project-html" rows="7" class="mono" placeholder="Полный HTML/CSS/JS"></textarea>
+        <label>Python-код демо</label>
+        <textarea id="project-python" rows="6" class="mono" placeholder="Python-код"></textarea>
+
+        <div class="check-row">
+            <label class="check"><input type="checkbox" id="project-published" checked> Показывать на сайте</label>
+            <label class="check"><input type="checkbox" id="project-featured"> ★ Выбор студии (в начало списка)</label>
+            <label class="check">Порядок <input type="number" id="project-sort" value="0" style="width:80px"></label>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-action" id="project-save-btn">Сохранить проект</button>
+            <button type="button" class="btn-outline" onclick="resetProjectForm()">Очистить форму</button>
+        </div>
+    </form>
+</div>
+<div class="list-toolbar">
+    <h3>Все проекты <span class="muted" id="projects-total"></span></h3>
+</div>
+<div id="projects-list-container"></div>

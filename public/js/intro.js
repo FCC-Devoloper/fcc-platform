@@ -1,3 +1,42 @@
+/* Интро: не чаще одного раза в 8 часов. Перезагрузка страницы его не повторяет. */
+(function () {
+  const KEY = 'fcc_intro_seen_at';
+  const COOLDOWN_MS = 8 * 60 * 60 * 1000;
+
+  function seenRecently() {
+    try {
+      const last = Number(localStorage.getItem(KEY)) || 0;
+      return last > 0 && Date.now() - last < COOLDOWN_MS && Date.now() >= last;
+    } catch (e) { return false; }
+  }
+
+  window.FCCIntroGate = {
+    async shouldShow() {
+      if (new URLSearchParams(window.location.search).has('intro')) return true; // ?intro=1 — показать принудительно
+      if (seenRecently()) return false;
+      try {
+        const token = localStorage.getItem('fcc_token');
+        const headers = token ? { Authorization: 'Bearer ' + token } : {};
+        const res = await fetch('/api/intro/status', { headers });
+        const data = await res.json();
+        if (data && data.show === false) {
+          try { localStorage.setItem(KEY, String(Date.now())); } catch (e) {}
+          return false;
+        }
+      } catch (e) {}
+      return true;
+    },
+    // Вызывается в момент показа интро, чтобы даже обновление страницы посреди интро его не повторяло
+    async markSeen() {
+      try { localStorage.setItem(KEY, String(Date.now())); } catch (e) {}
+      try {
+        const token = localStorage.getItem('fcc_token');
+        if (!token) return;
+        await fetch('/api/intro/seen', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token }, body: '{}' });
+      } catch (e) {}
+    }
+  };
+})();
 
 function fccWhenReady(fn) {
     if (document.readyState === 'loading') {
@@ -261,11 +300,8 @@ function fccWhenReady(fn) {
     setTimeout(() => {
       cleanupAudio();
 
-      if (introScreen && introScreen.parentNode) {
-        introScreen.remove();
-      }
-
-      console.log('🚀 [FCC System] Успешный вход на сайт');
+      if (introScreen && introScreen.parentNode) introScreen.remove();
+      document.body.classList.add('intro-done');
     }, 850);
   }
 
@@ -322,15 +358,43 @@ function fccWhenReady(fn) {
     skipAndEnterSite();
   }
 
-  fccWhenReady( () => {
+  function bypassIntro() {
+    isFinished = true;
+    const screen = document.getElementById('intro-screen');
+    if (screen && screen.parentNode) screen.remove();
+    mainContent = document.getElementById('main-content');
+    if (mainContent) {
+      mainContent.style.display = 'block';
+      mainContent.style.opacity = '1';
+    }
+    document.body.classList.add('intro-done');
+  }
+
+  fccWhenReady(async () => {
     introScreen = document.getElementById('intro-screen');
-    startOverlay = document.getElementById('start-overlay'); // <-- Получаем элемент
+    startOverlay = document.getElementById('start-overlay');
     mainContent = document.getElementById('main-content');
     introAudio = document.getElementById('intro-audio');
     orbitWrapper = document.getElementById('orbit-wrapper');
     fccLogo = document.getElementById('fcc-logo-intro');
     textBox = document.querySelector('.intro-text-box');
     textElement = document.getElementById('intro-competency');
+
+    // Не чаще раза в 8 часов — иначе пропускаем интро целиком
+    try {
+      if (window.FCCIntroGate) {
+        const show = await window.FCCIntroGate.shouldShow();
+        if (!show) {
+          bypassIntro();
+          return;
+        }
+      }
+    } catch (e) {
+      console.warn('[FCC Intro] gate', e);
+    }
+
+    // Интро показывается: сразу запоминаем это, чтобы перезагрузка не запускала его заново
+    if (window.FCCIntroGate) window.FCCIntroGate.markSeen();
 
     if (introAudio) {
       introAudio.preload = 'auto';
@@ -341,12 +405,9 @@ function fccWhenReady(fn) {
       introScreen.addEventListener('click', () => {
         if (!isReady) {
           pendingStart = true;
-
-          // Preserve the real click as the media gesture.
           playAudioFromGesture();
           return;
         }
-
         startIntro();
       });
     }

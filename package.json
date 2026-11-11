@@ -4,7 +4,9 @@
   "description": "Fast Coding Crew - Cyber Premium Web Studio Platform",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "reset-admin": "node scripts/reset-admin.js",
+    "clean-data": "node scripts/clean-data.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -14,5 +16,8 @@
     "jsonwebtoken": "^9.0.2",
     "uuid": "^14.0.2",
     "ws": "^8.16.0"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }

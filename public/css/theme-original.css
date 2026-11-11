@@ -24,3 +24,44 @@ html[data-theme="theme-original"] .tag {
 html[data-theme="theme-original"] .card {
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
 }
+
+/* Chat readable on original (dark) theme */
+.chat-drawer,
+.chat-drawer,
+.chat-drawer {
+    background: #141820 !important;
+    color: #e8eaef !important;
+    border: 1px solid #2a3140;
+}
+.chat-messages,
+.chat-messages {
+    background: #0f1218 !important;
+}
+.message.bot .msg-text,
+.message.bot .msg-text {
+    background: #1c2330 !important;
+    color: #e6eaf2 !important;
+}
+.message.user .msg-text,
+.message.user .msg-text {
+    background: #1a3a2a !important;
+    color: #d8ffe8 !important;
+}
+.chat-header,
+.chat-header {
+    background: #1a2030 !important;
+    color: #f0f2f8 !important;
+    border-bottom: 1px solid #2a3140;
+}
+.chat-input-area input,
+.chat-input-area input {
+    background: #1c2330 !important;
+    color: #eef1f7 !important;
+    border: 1px solid #3a4458 !important;
+}
+#chat-widget-btn,
+#chat-widget-btn {
+    background: #1a2030 !important;
+    color: #e8eaef !important;
+    border: 1px solid #3a4458 !important;
+}

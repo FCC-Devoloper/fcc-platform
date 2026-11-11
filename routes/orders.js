@@ -16,6 +16,23 @@ router.post('/', optionalAuth, async (req, res) => {
         const lookupId = (req.user && req.user.role === 'client' && req.user.id) || clientId || 'guest';
         const ident = resolveIdentity(store, lookupId);
 
+        // Only ONE order while developer has not confirmed yet (status still "new").
+        // After admin moves it to in_progress / waiting / done / rejected — client may submit again.
+        const keys = ident.keys && ident.keys.size ? ident.keys : new Set([String(lookupId)]);
+        const pending = (store.orders || []).filter((o) => {
+            if (o.deleted_at) return false;
+            if (o.status !== 'new') return false;
+            const cid = String(o.client_id || '');
+            const uid = String(o.user_id || '');
+            const match = keys.has(cid) || keys.has(uid) || (ident.id && (cid === String(ident.id) || uid === String(ident.id)));
+            return match;
+        });
+        if (pending.length >= 1) {
+            return res.status(429).json({
+                error: 'У вас уже есть заявка, ожидающая подтверждения. Новую можно подать после того, как диспетчер возьмёт текущую в работу или ответит.'
+            });
+        }
+
         const newOrder = stampRecord({
             id: 'ord_' + uuidv4().slice(0, 8),
             title: String(title).trim(),

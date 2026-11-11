@@ -284,17 +284,19 @@
     }
 
     function handleLogout() {
-        if (confirm('Вы действительно хотите выйти из аккаунта?')) {
+        if (!confirm('Вы действительно хотите выйти из аккаунта?')) return;
+        if (typeof window.resetGuestSession === 'function') {
+            window.resetGuestSession();
+        } else {
             localStorage.removeItem('fcc_token');
             localStorage.removeItem('fcc_user');
-            
-            closeCabinetModal();
-            updateHeaderUI(null);
-            renderGuestCabinet();
-
-            if (typeof window.updateAuthUI === 'function') {
-                window.updateAuthUI();
-            }
+            localStorage.removeItem('fcc_canonical_id');
+        }
+        closeCabinetModal();
+        updateHeaderUI(null);
+        renderGuestCabinet();
+        if (typeof window.updateAuthUI === 'function') {
+            window.updateAuthUI();
         }
     }
 
@@ -325,3 +327,82 @@
 
     document.addEventListener('DOMContentLoaded', initCabinet);
 })();
+
+
+
+
+function openDeleteAccountPrompt() {
+    let modal = document.getElementById('fcc-delete-modal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'fcc-delete-modal';
+        modal.className = 'modal-overlay';
+        modal.style.display = 'flex';
+        modal.innerHTML =
+            '<div class="modal-content" style="max-width:360px;text-align:center;">' +
+            '<h3 style="margin:0 0 10px;">Удалить аккаунт?</h3>' +
+            '<p class="muted" style="font-size:14px;line-height:1.45;margin:0 0 18px;">Сообщения очистятся, заявки обезличатся. Это действие необратимо.</p>' +
+            '<div style="display:flex;gap:10px;justify-content:center;">' +
+            '<button type="button" class="btn-outline" id="fcc-delete-cancel">Отмена</button>' +
+            '<button type="button" class="btn-danger-outline" id="fcc-delete-confirm">Удалить</button>' +
+            '</div></div>';
+        document.body.appendChild(modal);
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) closeDeleteAccountModal();
+        });
+        document.getElementById('fcc-delete-cancel').onclick = closeDeleteAccountModal;
+        document.getElementById('fcc-delete-confirm').onclick = function () {
+            closeDeleteAccountModal();
+            handleDeleteAccount();
+        };
+    }
+    modal.style.display = 'flex';
+}
+function closeDeleteAccountModal() {
+    const modal = document.getElementById('fcc-delete-modal');
+    if (modal) modal.style.display = 'none';
+}
+window.openDeleteAccountPrompt = openDeleteAccountPrompt;
+window.closeDeleteAccountModal = closeDeleteAccountModal;
+
+async function handleDeleteAccount() {
+    const token = localStorage.getItem('fcc_token');
+    if (!token) {
+        if (typeof showToast === 'function') showToast('Нужно войти в аккаунт', 'error');
+        else alert('Нужно войти в аккаунт');
+        return false;
+    }
+    try {
+        const u = JSON.parse(localStorage.getItem('fcc_user') || '{}');
+        if (u && u.role === 'admin') {
+            alert('Админ-аккаунт здесь не удаляется.');
+            return false;
+        }
+    } catch (e) {}
+
+    try {
+        const res = await fetch('/api/auth/account', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({})
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+            alert(data.error || ('Не удалось удалить (' + res.status + ')'));
+            return false;
+        }
+        localStorage.removeItem('fcc_token');
+        localStorage.removeItem('fcc_user');
+        localStorage.removeItem('fcc_client_id');
+        localStorage.removeItem('fcc_admin_token');
+        if (typeof window.resetGuestSession === 'function') window.resetGuestSession();
+        window.location.href = '/';
+    } catch (err) {
+        alert('Ошибка сети');
+    }
+    return false;
+}
+window.handleDeleteAccount = handleDeleteAccount;
